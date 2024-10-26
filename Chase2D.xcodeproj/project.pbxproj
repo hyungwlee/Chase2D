@@ -38,10 +38,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		9E3A12D32CCC45140003D097 /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		9E3A12D42CCC45140003D097 /* GameModeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModeType.swift; sourceTree = "<group>"; };
 		9E3A12D52CCC45140003D097 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
 		9E3A12D62CCC45140003D097 /* GameType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
+=======
+		1AB93CB82CCD7081004123CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+>>>>>>> bc17fa91ef5d2ce5c41ce3d4725e90fcbdc564d4
 		9E8F399F2CCC358200F418E3 /* Chase2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chase2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DApp.swift; sourceTree = "<group>"; };
 		9E8F39A42CCC358200F418E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				9E8F39B32CCC358600F418E3 /* Chase2DTests */,
 				9E8F39BD2CCC358700F418E3 /* Chase2DUITests */,
 				9E8F39A02CCC358200F418E3 /* Products */,
+				1AB93CB82CCD7081004123CF /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
