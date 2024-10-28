@@ -11,6 +11,9 @@
 		9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D42CCC45140003D097 /* GameModeType.swift */; };
 		9E3A12D92CCC45140003D097 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D52CCC45140003D097 /* GameContext.swift */; };
 		9E3A12DA2CCC45140003D097 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D62CCC45140003D097 /* GameType.swift */; };
+		9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90452CD00BC200137DE8 /* CTGameContext.swift */; };
+		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
+		9E7B90552CD00F4800137DE8 /* CTBoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTBoxNode.swift */; };
 		9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */; };
 		9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A42CCC358200F418E3 /* ContentView.swift */; };
 		9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8F39A62CCC358600F418E3 /* Assets.xcassets */; };
@@ -18,6 +21,9 @@
 		9E8F39B52CCC358700F418E3 /* Chase2DTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39B42CCC358700F418E3 /* Chase2DTests.swift */; };
 		9E8F39BF2CCC358700F418E3 /* Chase2DUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39BE2CCC358700F418E3 /* Chase2DUITests.swift */; };
 		9E8F39C12CCC358700F418E3 /* Chase2DUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39C02CCC358700F418E3 /* Chase2DUITestsLaunchTests.swift */; };
+		9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18F72CD010C80005DE27 /* CTGameInfo.swift */; };
+		9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */; };
+		9E9F18FC2CD011C50005DE27 /* CTGameIdelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,11 +44,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AB93CB82CCD7081004123CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E3A12D32CCC45140003D097 /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		9E3A12D42CCC45140003D097 /* GameModeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModeType.swift; sourceTree = "<group>"; };
 		9E3A12D52CCC45140003D097 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
 		9E3A12D62CCC45140003D097 /* GameType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
-		1AB93CB82CCD7081004123CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9E7B90452CD00BC200137DE8 /* CTGameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameContext.swift; sourceTree = "<group>"; };
+		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
+		9E7B90542CD00F4800137DE8 /* CTBoxNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTBoxNode.swift; sourceTree = "<group>"; };
 		9E8F399F2CCC358200F418E3 /* Chase2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chase2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DApp.swift; sourceTree = "<group>"; };
 		9E8F39A42CCC358200F418E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +63,9 @@
 		9E8F39BA2CCC358700F418E3 /* Chase2DUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Chase2DUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8F39BE2CCC358700F418E3 /* Chase2DUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DUITests.swift; sourceTree = "<group>"; };
 		9E8F39C02CCC358700F418E3 /* Chase2DUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9E9F18F72CD010C80005DE27 /* CTGameInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTGameInfo.swift; path = Code/CTGameInfo.swift; sourceTree = SOURCE_ROOT; };
+		9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTLayoutInfo.swift; path = Code/CTLayoutInfo.swift; sourceTree = SOURCE_ROOT; };
+		9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGameIdelState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +96,12 @@
 		9E3A12DB2CCC454B0003D097 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				9E7B90452CD00BC200137DE8 /* CTGameContext.swift */,
+				9E7B90472CD00BC200137DE8 /* CTGameScene.swift */,
+				9E9F18F62CD010AF0005DE27 /* Models */,
+				9E7B90512CD00EEF00137DE8 /* Helpers */,
+				9E7B905E2CD00F7100137DE8 /* States */,
+				9E7B90532CD00F4000137DE8 /* Nodes */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -105,6 +123,31 @@
 				9E8F39A62CCC358600F418E3 /* Assets.xcassets */,
 			);
 			path = Assets;
+			sourceTree = "<group>";
+		};
+		9E7B90512CD00EEF00137DE8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9E9F18F72CD010C80005DE27 /* CTGameInfo.swift */,
+				9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		9E7B90532CD00F4000137DE8 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				9E7B90542CD00F4800137DE8 /* CTBoxNode.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		9E7B905E2CD00F7100137DE8 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */,
+			);
+			path = States;
 			sourceTree = "<group>";
 		};
 		9E8F39962CCC358200F418E3 = {
@@ -165,6 +208,13 @@
 				9E8F39C02CCC358700F418E3 /* Chase2DUITestsLaunchTests.swift */,
 			);
 			path = Chase2DUITests;
+			sourceTree = "<group>";
+		};
+		9E9F18F62CD010AF0005DE27 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,9 +347,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */,
+				9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */,
 				9E3A12D72CCC45140003D097 /* Dependencies.swift in Sources */,
+				9E7B90552CD00F4800137DE8 /* CTBoxNode.swift in Sources */,
 				9E3A12D92CCC45140003D097 /* GameContext.swift in Sources */,
 				9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */,
+				9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */,
+				9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */,
+				9E9F18FC2CD011C50005DE27 /* CTGameIdelState.swift in Sources */,
 				9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */,
 				9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */,
 				9E3A12DA2CCC45140003D097 /* GameType.swift in Sources */,
