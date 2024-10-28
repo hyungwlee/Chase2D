@@ -23,6 +23,10 @@ class CTGameContext: GameContext{
         super.init(dependencies: dependencies)
     }
     
+    func updateLayoutInfo(withScreenSize size: CGSize){
+        layoutInfo = CTLayoutInfo(screenSize: size)
+    }
+    
     func configureStates() {
         guard let gameScene else { return }
         print("did configure states")

@@ -25,10 +25,27 @@ class CTGameScene: SKScene {
         guard let context else {
             return
         }
-        context.scene = self
-        context.configureStates()
+        prepareGameContext()
+        prepareStartNodes()
+        context.stateMachine?.enter(CTGameIdleState.self)
+        
+    }
+    
+    func prepareGameContext(){
+    
+        guard let context else {
+            return
+        }
 
-        context.layoutInfo = CTLayoutInfo(screenSize: size)
+        context.scene = self
+        context.updateLayoutInfo(withScreenSize: size)
+        context.configureStates()
+    }
+
+    func prepareStartNodes() {
+        guard let context else {
+            return
+        }
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.boxSize.width / 2.0,
                              y: size.height / 2.0)
         let box = CTBoxNode()
@@ -36,10 +53,6 @@ class CTGameScene: SKScene {
         box.position = center
         addChild(box)
         self.box = box
-        
-        
-        context.stateMachine?.enter(CTGameIdleState.self)
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

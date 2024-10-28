@@ -109,8 +109,8 @@
 		9E3A12DC2CCC455F0003D097 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				9E3A12D32CCC45140003D097 /* Dependencies.swift */,
 				9E3A12D52CCC45140003D097 /* GameContext.swift */,
+				9E3A12D32CCC45140003D097 /* Dependencies.swift */,
 				9E3A12D42CCC45140003D097 /* GameModeType.swift */,
 				9E3A12D62CCC45140003D097 /* GameType.swift */,
 			);
