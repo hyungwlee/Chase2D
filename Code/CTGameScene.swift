@@ -1,8 +1,7 @@
+//  CTGameScene.swift
+//  Chase2D
 //
-//  TTGameScene.swift
-//  Test
-//
-//  Created by Hyung Lee on 10/20/24.
+//  Created by Roshan Thapa Magar on 10/26/24.
 //
 
 import SpriteKit

@@ -1,8 +1,13 @@
+//  CTGameContext.swift
+//  Chase2D
+//
+//  Created by Roshan Thapa Magar on 10/26/24.
+//
+
 import Combine
 import GameplayKit
 
-
-class CTGameContext: GameContext {
+class CTGameContext: GameContext{
     var gameScene: CTGameScene? {
         scene as? CTGameScene
     }
@@ -25,5 +30,5 @@ class CTGameContext: GameContext {
             CTGameIdleState(scene: gameScene, context: self)
         ])
     }
-
 }
+
