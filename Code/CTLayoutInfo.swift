@@ -9,5 +9,5 @@ import Foundation
 
 struct CTLayoutInfo{
     let screenSize: CGSize
-    let boxSize: CGSize = .init(width: 6, height: 10)
+    let playerCarSize: CGSize = .init(width: 6, height: 10)
 }

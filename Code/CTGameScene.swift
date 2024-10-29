@@ -10,7 +10,7 @@ import GameplayKit
 class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
-    var car: CTCarNode?
+    var playerCarNode: CTCarNode?
     let worldNode = CTWorldNode()
     let cameraNode = SKCameraNode()
     
@@ -41,8 +41,13 @@ class CTGameScene: SKScene {
         
         prepareGameContext()
         prepareStartNodes()
+        
         context.stateMachine?.enter(CTGameIdleState.self)
         
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        context?.stateMachine?.update(deltaTime: currentTime)
     }
     
     func prepareGameContext(){
@@ -55,18 +60,18 @@ class CTGameScene: SKScene {
         context.updateLayoutInfo(withScreenSize: size)
         context.configureStates()
     }
-
+    
     func prepareStartNodes() {
         guard let context else {
             return
         }
-        let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.boxSize.width / 2.0,
+        let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
                              y: size.height / 2.0)
         let car = CTCarNode()
 //        car.setup(screenSize: size, layoutInfo: context.layoutInfo)
         car.position = center
         addChild(car)
-        self.car = car
+        self.playerCarNode = car
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -74,13 +79,6 @@ class CTGameScene: SKScene {
             return
         }
         state.handleTouch(touch)
-    }
-
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGameIdleState else {
-            return
-        }
-        state.handleTouchMoved(touch)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
