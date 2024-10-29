@@ -11,6 +11,7 @@ class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
     var box: CTBoxNode?
+    let worldNode = CTWorldNode()
     
     init(context: CTGameContext, size: CGSize) {
         self.context = context
@@ -25,6 +26,11 @@ class CTGameScene: SKScene {
         guard let context else {
             return
         }
+        
+        worldNode.setup(screenSize: size)
+        worldNode.zPosition = 0
+        addChild(worldNode)
+        
         prepareGameContext()
         prepareStartNodes()
         context.stateMachine?.enter(CTGameIdleState.self)
