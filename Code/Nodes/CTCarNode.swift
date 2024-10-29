@@ -5,7 +5,9 @@ class CTCarNode: SKSpriteNode {
     init(){
         let texture = SKTexture(imageNamed: "Truck0")
         texture.filteringMode = .nearest
+        
         super.init(texture: texture, color: .clear, size: texture.size())
+        self.setScale(0.15)
     }
     
     required init?(coder aDecoder: NSCoder){

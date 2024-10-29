@@ -13,7 +13,7 @@
 		9E3A12DA2CCC45140003D097 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D62CCC45140003D097 /* GameType.swift */; };
 		9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90452CD00BC200137DE8 /* CTGameContext.swift */; };
 		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
-		9E7B90552CD00F4800137DE8 /* CTBoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTBoxNode.swift */; };
+		9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTCarNode.swift */; };
 		9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */; };
 		9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A42CCC358200F418E3 /* ContentView.swift */; };
 		9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8F39A62CCC358600F418E3 /* Assets.xcassets */; };
@@ -52,7 +52,7 @@
 		9E3A12D62CCC45140003D097 /* GameType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
 		9E7B90452CD00BC200137DE8 /* CTGameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameContext.swift; sourceTree = "<group>"; };
 		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
-		9E7B90542CD00F4800137DE8 /* CTBoxNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTBoxNode.swift; sourceTree = "<group>"; };
+		9E7B90542CD00F4800137DE8 /* CTCarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCarNode.swift; sourceTree = "<group>"; };
 		9E8F399F2CCC358200F418E3 /* Chase2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chase2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DApp.swift; sourceTree = "<group>"; };
 		9E8F39A42CCC358200F418E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 		9E7B90532CD00F4000137DE8 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				9E7B90542CD00F4800137DE8 /* CTBoxNode.swift */,
+				9E7B90542CD00F4800137DE8 /* CTCarNode.swift */,
 				9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */,
 			);
 			path = Nodes;
@@ -353,7 +353,7 @@
 				9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */,
 				9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */,
 				9E3A12D72CCC45140003D097 /* Dependencies.swift in Sources */,
-				9E7B90552CD00F4800137DE8 /* CTBoxNode.swift in Sources */,
+				9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */,
 				9E3A12D92CCC45140003D097 /* GameContext.swift in Sources */,
 				9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */,
 				9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */,
