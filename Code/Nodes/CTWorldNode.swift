@@ -10,6 +10,7 @@ import SpriteKit
 class CTWorldNode: SKSpriteNode{
     init(){
         let texture = SKTexture(imageNamed: "World")
+        texture.filteringMode = .nearest
         super.init(texture: texture, color: .clear, size: texture.size())
     }
     

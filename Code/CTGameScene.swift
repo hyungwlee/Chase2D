@@ -10,8 +10,9 @@ import GameplayKit
 class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
-    var box: CTBoxNode?
+    var car: CTCarNode?
     let worldNode = CTWorldNode()
+    let cameraNode = SKCameraNode()
     
     init(context: CTGameContext, size: CGSize) {
         self.context = context
@@ -30,6 +31,13 @@ class CTGameScene: SKScene {
         worldNode.setup(screenSize: size)
         worldNode.zPosition = 0
         addChild(worldNode)
+        
+        cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
+        addChild(cameraNode)
+        camera = cameraNode
+        
+        let zoomInAction = SKAction.scale(to: 0.3, duration: 0.2)
+        cameraNode.run(zoomInAction)
         
         prepareGameContext()
         prepareStartNodes()
@@ -54,11 +62,11 @@ class CTGameScene: SKScene {
         }
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.boxSize.width / 2.0,
                              y: size.height / 2.0)
-        let box = CTBoxNode()
-        box.setup(screenSize: size, layoutInfo: context.layoutInfo)
-        box.position = center
-        addChild(box)
-        self.box = box
+        let car = CTCarNode()
+//        car.setup(screenSize: size, layoutInfo: context.layoutInfo)
+        car.position = center
+        addChild(car)
+        self.car = car
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
