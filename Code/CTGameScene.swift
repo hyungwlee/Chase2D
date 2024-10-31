@@ -42,6 +42,7 @@ class CTGameScene: SKScene {
         prepareGameContext()
         prepareStartNodes()
         
+        self.view?.showsPhysics = true;
         context.stateMachine?.enter(CTGameIdleState.self)
         
     }
@@ -78,7 +79,7 @@ class CTGameScene: SKScene {
         guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGameIdleState else {
             return
         }
-        state.handleTouch(touch)
+        state.handleTouchStart(touch)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

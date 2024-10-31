@@ -20,5 +20,8 @@ class CTWorldNode: SKSpriteNode{
     
     func setup(screenSize: CGSize){
         position = CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
+        physicsBody = SKPhysicsBody()
+        physicsBody?.isDynamic = false
+        physicsBody?.friction = 0.5
     }
 }

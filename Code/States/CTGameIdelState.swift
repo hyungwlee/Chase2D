@@ -10,7 +10,9 @@ import GameplayKit
 class CTGameIdleState: GKState {
     weak var scene: CTGameScene?
     weak var context: CTGameContext?
-    var deltaTime = 0.0
+    var moveDirection: CGFloat = 0.0
+    var isTouching: Bool = false
+    var touchLocation: CGPoint?
     
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -26,40 +28,37 @@ class CTGameIdleState: GKState {
    }
     
     override func update(deltaTime seconds: TimeInterval) {
-        self.deltaTime = seconds
+        guard let scene else { return }
        
         handleCameraMovement()
-        handleCarMovementSetup()
+        scene.playerCarNode?.drive()
+        
+        if(self.touchLocation != nil && isTouching == true){
+            self.moveDirection = self.touchLocation?.x ?? 0.0 < scene.frame.midX ? -1.0 : 1.0
+        }
+        scene.playerCarNode?.steer(moveDirection: self.moveDirection)
+        
     }
        
-    func handleTouch(_ touch: UITouch) {
+    func handleTouchStart(_ touch: UITouch) {
         guard let scene, let context else { return }
         print("touched \(touch)")
-        let touchLocation = touch.location(in: scene)
-        let newCarPos = CGPoint(x: touchLocation.x - context.layoutInfo.playerCarSize.width / 2.0,
-                                y: touchLocation.y - context.layoutInfo.playerCarSize.height / 2.0)
-        scene.playerCarNode?.position = newCarPos
+        self.touchLocation = touch.location(in: scene.view)
+        
+        
+        isTouching = true
     }
     
     func handleTouchEnded(_ touch: UITouch) {
         print("touched ended \(touch)")
+        isTouching = false
+        self.moveDirection = 0
     }
     
     func handleCameraMovement() {
         let targetPosition = CGPoint(x: scene?.playerCarNode?.position.x ?? 0.0, y: scene?.playerCarNode?.position.y ?? 0.0)
         let moveAction = SKAction.move(to: targetPosition, duration: 0.1)
         scene?.cameraNode.run(moveAction)
-    }
-    
-    func handleCarMovementSetup(){
-       
-        let directionX = sin(scene?.playerCarNode!.zRotation ?? 0.0)
-        let directionY = cos(scene?.playerCarNode?.zRotation ?? 0.0)
-        let moveForce: CGFloat = self.deltaTime * 0.05
-        
-        let force = CGVector(dx: directionX * moveForce, dy: directionY * moveForce)
-        scene?.playerCarNode?.physicsBody?.applyForce(force)
-        
     }
     
 }
