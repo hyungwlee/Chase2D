@@ -12,6 +12,7 @@ class CTWorldNode: SKSpriteNode{
         let texture = SKTexture(imageNamed: "World")
         texture.filteringMode = .nearest
         super.init(texture: texture, color: .clear, size: texture.size())
+        self.setScale(1)
     }
     
     required init?(coder aDecoder: NSCoder){
