@@ -44,8 +44,6 @@ class CTGameIdleState: GKState {
         guard let scene, let context else { return }
         print("touched \(touch)")
         self.touchLocation = touch.location(in: scene.view)
-        
-        
         isTouching = true
     }
     
@@ -58,7 +56,7 @@ class CTGameIdleState: GKState {
     func handleCameraMovement() {
         let targetPosition = CGPoint(x: scene?.playerCarNode?.position.x ?? 0.0, y: scene?.playerCarNode?.position.y ?? 0.0)
         let moveAction = SKAction.move(to: targetPosition, duration: 0.1)
-        scene?.cameraNode.run(moveAction)
+        scene?.cameraNode?.run(moveAction)
     }
     
 }

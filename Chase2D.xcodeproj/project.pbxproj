@@ -14,6 +14,7 @@
 		9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90452CD00BC200137DE8 /* CTGameContext.swift */; };
 		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
 		9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTCarNode.swift */; };
+		9E8A88A52CD41CE300FC9ED1 /* CTGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */; };
 		9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */; };
 		9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A42CCC358200F418E3 /* ContentView.swift */; };
 		9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8F39A62CCC358600F418E3 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		9E7B90452CD00BC200137DE8 /* CTGameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameContext.swift; sourceTree = "<group>"; };
 		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
 		9E7B90542CD00F4800137DE8 /* CTCarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCarNode.swift; sourceTree = "<group>"; };
+		9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CTGameScene.sks; sourceTree = "<group>"; };
 		9E8F399F2CCC358200F418E3 /* Chase2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chase2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DApp.swift; sourceTree = "<group>"; };
 		9E8F39A42CCC358200F418E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				9E8F39A62CCC358600F418E3 /* Assets.xcassets */,
+				9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 			files = (
 				9E8F39AB2CCC358600F418E3 /* Preview Assets.xcassets in Resources */,
 				9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */,
+				9E8A88A52CD41CE300FC9ED1 /* CTGameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

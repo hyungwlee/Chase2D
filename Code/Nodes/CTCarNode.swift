@@ -20,19 +20,17 @@ class CTCarNode: SKSpriteNode {
         fatalError("init(coder:) has not been implemended")
     }
     
-    func setup(screenSize: CGSize){
-        position = CGPoint(x: screenSize.width / 2, y: screenSize.height / 2)
-    }
-    
     func enablePhysics(){
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
-        self.physicsBody?.isDynamic = true
-        self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.mass = 50 // Adjust for realistic movement
-        self.physicsBody?.friction = 10
-        self.physicsBody?.restitution = 5 // Controls bounciness
-        self.physicsBody?.angularDamping = 8 // Dampen rotational movement
-        self.physicsBody?.linearDamping = 10 // Dampen forward movement slightly
+        if(physicsBody == nil){
+            physicsBody = SKPhysicsBody(rectangleOf: self.size)
+            physicsBody?.isDynamic = true
+            physicsBody?.affectedByGravity = false
+            physicsBody?.mass = 50 // Adjust for realistic movement
+            physicsBody?.friction = 10
+            physicsBody?.restitution = 5 // Controls bounciness
+            physicsBody?.angularDamping = 8 // Dampen rotational movement
+            physicsBody?.linearDamping = 10 // Dampen forward movement slightly
+        }
     }
     
     func steer(moveDirection: CGFloat){
@@ -41,7 +39,6 @@ class CTCarNode: SKSpriteNode {
         // drift
         guard let angularVelocity = self.physicsBody?.angularVelocity else { return }
         let driftFactor = tanh(pow(angularVelocity, 2) / (DRIFT_VELOCITY_THRESHOLD))
-        print(driftFactor)
         
         let directionX = cos(self.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor // -1 to flip direction from moveDirection
         let directionY = sin(self.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor;

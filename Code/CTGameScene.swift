@@ -11,38 +11,30 @@ class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
     var playerCarNode: CTCarNode?
-    let worldNode = CTWorldNode()
-    let cameraNode = SKCameraNode()
+    var worldNode: CTWorldNode?
+    var cameraNode: SKCameraNode?
     
-    init(context: CTGameContext, size: CGSize) {
-        self.context = context
-        super.init(size: size)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+//        fatalError("init(coder:) has not been implemented")
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+//    init(context: CTGameContext, size: CGSize) {
+//        self.context = context
+//        super.init(size: size)
+//    }
+        
     override func didMove(to view: SKView) {
         guard let context else {
             return
         }
         
-        worldNode.setup(screenSize: size)
-        worldNode.zPosition = 0
-        addChild(worldNode)
-        
-        cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
-        addChild(cameraNode)
-        camera = cameraNode
-        
-        let zoomInAction = SKAction.scale(to: 0.3, duration: 0.2)
-        cameraNode.run(zoomInAction)
+        view.showsFPS = true
+        view.showsPhysics = true
         
         prepareGameContext()
-        prepareStartNodes()
+        //prepareStartNodes()
         
-        self.view?.showsPhysics = true;
         context.stateMachine?.enter(CTGameIdleState.self)
         
     }
@@ -57,7 +49,7 @@ class CTGameScene: SKScene {
             return
         }
 
-        context.scene = self
+        context.scene = scene
         context.updateLayoutInfo(withScreenSize: size)
         context.configureStates()
     }
@@ -66,13 +58,29 @@ class CTGameScene: SKScene {
         guard let context else {
             return
         }
+        let worldNode = CTWorldNode()
+        worldNode.setup(screenSize: size)
+        worldNode.zPosition = 0
+        self.worldNode = worldNode
+        addChild(worldNode)
+        
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
                              y: size.height / 2.0)
         let car = CTCarNode()
-//        car.setup(screenSize: size, layoutInfo: context.layoutInfo)
+        car.zPosition = 1
         car.position = center
-        addChild(car)
         self.playerCarNode = car
+        addChild(car)
+        
+        let cameraNode = SKCameraNode()
+        cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
+        addChild(cameraNode)
+        self.cameraNode = cameraNode
+        camera = self.cameraNode
+        
+        let zoomInAction = SKAction.scale(to: 0.3, duration: 0.2)
+        cameraNode.run(zoomInAction)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

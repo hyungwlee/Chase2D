@@ -15,15 +15,30 @@ struct ContentView: View {
                                 gameMode: .single)
     let screenSize: CGSize = UIScreen.main.bounds.size
     
+    let scene: SKScene
+    
+    init(){
+        if let loadedScene = SKScene(fileNamed: "CTGameScene") as? CTGameScene {
+            loadedScene.context = context
+            loadedScene.size = screenSize
+            self.scene = loadedScene
+            
+        }else{
+            self.scene = SKScene(size: screenSize)
+        }
+    }
     var body: some View {
-        SpriteView(scene: CTGameScene(context: context,
-                                      size: screenSize))
+        VStack{
+            SpriteView(scene: self.scene)
+        }
+        
+    }
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+                .ignoresSafeArea()
+                .statusBarHidden()
+        }
     }
 }
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-
