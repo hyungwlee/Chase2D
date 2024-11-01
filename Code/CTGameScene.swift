@@ -11,7 +11,6 @@ class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
     var playerCarNode: CTCarNode?
-    var worldNode: CTWorldNode?
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
     
@@ -37,7 +36,7 @@ class CTGameScene: SKScene {
         addChild(gameInfo.scoreLabel) //not sure if this belongs here -j
         
         prepareGameContext()
-        //prepareStartNodes()
+        prepareStartNodes()
         
         context.stateMachine?.enter(CTGameIdleState.self)
         
@@ -63,11 +62,6 @@ class CTGameScene: SKScene {
         guard let context else {
             return
         }
-        let worldNode = CTWorldNode()
-        worldNode.setup(screenSize: size)
-        worldNode.zPosition = 0
-        self.worldNode = worldNode
-        addChild(worldNode)
         
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
                              y: size.height / 2.0)
