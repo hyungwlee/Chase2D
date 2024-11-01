@@ -13,8 +13,10 @@ class CTGameScene: SKScene {
     var playerCarNode: CTCarNode?
     var worldNode: CTWorldNode?
     var cameraNode: SKCameraNode?
+    var gameInfo: CTGameInfo
     
     required init?(coder aDecoder: NSCoder) {
+        self.gameInfo = CTGameInfo()
         super.init(coder: aDecoder)
 //        fatalError("init(coder:) has not been implemented")
     }
@@ -32,6 +34,8 @@ class CTGameScene: SKScene {
         view.showsFPS = true
         view.showsPhysics = true
         
+        addChild(gameInfo.scoreLabel) //not sure if this belongs here -j
+        
         prepareGameContext()
         //prepareStartNodes()
         
@@ -41,6 +45,7 @@ class CTGameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         context?.stateMachine?.update(deltaTime: currentTime)
+        gameInfo.updateScore(deltaTime: currentTime)
     }
     
     func prepareGameContext(){

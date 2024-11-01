@@ -12,17 +12,17 @@ class CTGameContext: GameContext{
         scene as? CTGameScene
     }
     let gameMode: GameModeType
-    let gameInfo: CTGameInfo
+//    var gameInfo: CTGameInfo
     var layoutInfo: CTLayoutInfo = .init(screenSize: .zero)
     
     private(set) var stateMachine: GKStateMachine?
     
     init(dependencies: Dependencies, gameMode: GameModeType) {
-        self.gameInfo = CTGameInfo()
+//        self.gameInfo = gameInfo
         self.gameMode = gameMode
         super.init(dependencies: dependencies)
     }
-    
+        
     func updateLayoutInfo(withScreenSize size: CGSize){
         layoutInfo = CTLayoutInfo(screenSize: size)
     }

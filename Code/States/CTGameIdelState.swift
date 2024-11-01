@@ -10,6 +10,7 @@ import GameplayKit
 class CTGameIdleState: GKState {
     weak var scene: CTGameScene?
     weak var context: CTGameContext?
+//    var gameInfo: CTGameInfo?
     var moveDirection: CGFloat = 0.0
     var isTouching: Bool = false
     var touchLocation: CGPoint?
@@ -17,6 +18,7 @@ class CTGameIdleState: GKState {
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
         self.context = context
+//        self.gameInfo = gameInfo
         super.init()
     }
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
