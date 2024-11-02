@@ -12,8 +12,10 @@ class CTGameIdleState: GKState {
     weak var context: CTGameContext?
 //    var gameInfo: CTGameInfo?
     var moveDirection: CGFloat = 0.0
-    var isTouching: Bool = false
-    var touchLocation: CGPoint?
+    var isTouchingSingle: Bool = false
+    var isTouchingDouble: Bool = false
+    var touchLocations: Array<CGPoint> = []
+    var driveDir = CTCarNode.driveDir.forward
     
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -33,26 +35,59 @@ class CTGameIdleState: GKState {
         guard let scene else { return }
        
         handleCameraMovement()
-        scene.playerCarNode?.drive()
+        scene.playerCarNode?.drive(driveDir: self.driveDir)
         
-        if(self.touchLocation != nil && isTouching == true){
-            self.moveDirection = self.touchLocation?.x ?? 0.0 < scene.frame.midX ? -1.0 : 1.0
+        if(self.touchLocations != []){
+            if(isTouchingDouble){
+                
+            }
+            else if(isTouchingSingle){
+                self.moveDirection = self.touchLocations[0].x < scene.frame.midX ? -1.0 : 1.0
+            }
         }
         scene.playerCarNode?.steer(moveDirection: self.moveDirection)
         
     }
        
-    func handleTouchStart(_ touch: UITouch) {
+    func handleTouchStart(_ touches: Set<UITouch>) {
         guard let scene, let context else { return }
-        print("touched \(touch)")
-        self.touchLocation = touch.location(in: scene.view)
-        isTouching = true
+        isTouchingSingle = false
+        isTouchingDouble = false
+         
+        let loc = touches.first?.location(in: scene.view)
+        print(loc?.y)
+        
+        // this code is for emulator only
+        if(loc?.y ?? 0.0 > (scene.frame.height - 100)){
+            isTouchingDouble = true
+            self.driveDir = CTCarNode.driveDir.backward
+            for touch in touches{
+                self.touchLocations.append(touch.location(in: scene.view))
+                return
+            }
+        }else if(touches.count == 1){
+            isTouchingSingle = true
+            self.driveDir = CTCarNode.driveDir.forward
+            self.touchLocations.append((touches.first?.location(in: scene.view))!)
+        }
+        
+//        if(touches.count > 1){
+//            isTouchingDouble = true
+//            for touch in touches{
+//                self.touchLocations?.append(touch.location(in: scene.view))
+//            }
+//        }else if(touches.count == 1){
+//            isTouchingSingle = true
+//            self.touchLocations?.append((touches.first?.location(in: scene.view))!)
+//        }
     }
     
     func handleTouchEnded(_ touch: UITouch) {
-        print("touched ended \(touch)")
-        isTouching = false
+        isTouchingSingle = false
+        isTouchingDouble = false
+        self.touchLocations = []
         self.moveDirection = 0
+        self.driveDir = CTCarNode.driveDir.forward
     }
     
     func handleCameraMovement() {

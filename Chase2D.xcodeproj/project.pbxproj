@@ -26,6 +26,7 @@
 		9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */; };
 		9E9F18FC2CD011C50005DE27 /* CTGameIdelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */; };
 		9E9F19002CD099930005DE27 /* CTWorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */; };
+		9EEE45712CD56EAF00297666 /* CTObstacleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTLayoutInfo.swift; path = Code/CTLayoutInfo.swift; sourceTree = SOURCE_ROOT; };
 		9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGameIdelState.swift; sourceTree = "<group>"; };
 		9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTWorldNode.swift; sourceTree = "<group>"; };
+		9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTObstacleNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			children = (
 				9E7B90542CD00F4800137DE8 /* CTCarNode.swift */,
 				9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */,
+				9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				9E9F18FC2CD011C50005DE27 /* CTGameIdelState.swift in Sources */,
 				9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */,
 				9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */,
+				9EEE45712CD56EAF00297666 /* CTObstacleNode.swift in Sources */,
 				9E3A12DA2CCC45140003D097 /* GameType.swift in Sources */,
 				9E9F19002CD099930005DE27 /* CTWorldNode.swift in Sources */,
 			);

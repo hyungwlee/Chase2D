@@ -17,6 +17,7 @@ class CTGameScene: SKScene {
     required init?(coder aDecoder: NSCoder) {
         self.gameInfo = CTGameInfo()
         super.init(coder: aDecoder)
+        self.view?.isMultipleTouchEnabled = true
 //        fatalError("init(coder:) has not been implemented")
     }
 
@@ -37,6 +38,10 @@ class CTGameScene: SKScene {
         
         prepareGameContext()
         prepareStartNodes()
+        
+        
+        // set player car from scene
+        self.playerCarNode = childNode(withName: "CTCarNode") as? CTCarNode
         
         context.stateMachine?.enter(CTGameIdleState.self)
         
@@ -65,11 +70,6 @@ class CTGameScene: SKScene {
         
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
                              y: size.height / 2.0)
-        let car = CTCarNode()
-        car.zPosition = 1
-        car.position = center
-        self.playerCarNode = car
-        addChild(car)
         
         let cameraNode = SKCameraNode()
         cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
@@ -83,11 +83,14 @@ class CTGameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGameIdleState else {
+        guard let state = context?.stateMachine?.currentState as? CTGameIdleState else {
             return
         }
-        state.handleTouchStart(touch)
+        state.handleTouchStart(touches)
     }
+    
+    // only for testing purpose
+    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGameIdleState else {
