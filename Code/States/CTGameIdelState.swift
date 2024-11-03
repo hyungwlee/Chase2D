@@ -56,10 +56,12 @@ class CTGameIdleState: GKState {
          
         let loc = touches.first?.location(in: scene.view)
         
+        
         // this code is for emulator only
         if(loc?.y ?? 0.0 > (scene.frame.height - 100)){
             isTouchingDouble = true
             self.driveDir = CTCarNode.driveDir.backward
+            self.moveDirection = -1.0
             for touch in touches{
                 self.touchLocations.append(touch.location(in: scene.view))
                 return

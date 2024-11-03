@@ -9,7 +9,6 @@ import Foundation
 
 struct CTPhysicsCategory {
     static let none: UInt32     = 0
-    static let car: UInt32      = 0b1
-    static let cop: UInt32      = 0b1 << 1
-    static let building: UInt32 = 0b1 << 2
+    static let car: UInt32      = 0b1 << 0
+    static let building: UInt32 = 0b1 << 1
 }

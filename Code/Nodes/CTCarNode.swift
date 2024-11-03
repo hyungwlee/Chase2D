@@ -12,6 +12,7 @@ class CTCarNode: SKSpriteNode{
     enum driveDir {
         case forward
         case backward
+        case none
     }
     
     required init?(coder aDecoder: NSCoder){
@@ -32,7 +33,8 @@ class CTCarNode: SKSpriteNode{
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
         physicsBody?.categoryBitMask = CTPhysicsCategory.car
-        physicsBody?.collisionBitMask = 1
+        physicsBody?.collisionBitMask = CTPhysicsCategory.building
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.building
     }
     
     func steer(moveDirection: CGFloat){
@@ -46,7 +48,6 @@ class CTCarNode: SKSpriteNode{
         let directionY = sin(self.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor;
         let force = CGVector(dx: directionX, dy: directionY)
         physicsBody?.applyImpulse(force)
-        print(angularVelocity)
        
     }
     
@@ -60,6 +61,8 @@ class CTCarNode: SKSpriteNode{
         case .backward:
             moveDir = -1.0
             break
+        case .none:
+            moveDir = 0.0
         }
        
         let directionX = -sin(self.zRotation) * MOVE_FORCE * moveDir
@@ -67,6 +70,6 @@ class CTCarNode: SKSpriteNode{
         
         let force = CGVector(dx: directionX, dy: directionY)
         physicsBody?.applyImpulse(force)
-        
+       
     }
 }

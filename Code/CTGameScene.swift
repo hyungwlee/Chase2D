@@ -30,6 +30,7 @@ class CTGameScene: SKScene {
         guard let context else {
             return
         }
+        physicsWorld.contactDelegate = self
         
         view.showsFPS = true
         view.showsPhysics = true
@@ -48,6 +49,10 @@ class CTGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
+        if(playerCarNode?.health ?? 100 <= 0.0){
+            context?.stateMachine?.enter(CTGameOverState.self)
+        }
         context?.stateMachine?.update(deltaTime: currentTime)
         gameInfo.updateScore(deltaTime: currentTime)
     }
@@ -100,12 +105,22 @@ class CTGameScene: SKScene {
     }
 }
 
+
 extension CTGameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let categoryA = contact.bodyA.categoryBitMask
         let categoryB = contact.bodyB.categoryBitMask
         
-        print(categoryA, categoryB)
+        let collision = categoryA | categoryB
+        
+        if collision == (CTPhysicsCategory.building | CTPhysicsCategory.car){
+            let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
+            
+            
+            let carVelocityMag:CGFloat = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
+            carNode?.health -= carVelocityMag * 0.001
+            
+        }
         
     }
 }
