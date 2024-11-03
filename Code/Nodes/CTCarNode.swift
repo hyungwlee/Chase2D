@@ -1,11 +1,13 @@
 import SpriteKit
 
-class CTCarNode: SKSpriteNode {
+class CTCarNode: SKSpriteNode{
     
     let STEER_IMPULSE = 0.05
     let MOVE_FORCE:CGFloat = 1200
-    let DRIFT_FORCE:CGFloat = 1000
-    let DRIFT_VELOCITY_THRESHOLD: CGFloat = 25;
+    let DRIFT_FORCE:CGFloat = 800
+    let DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
+    
+    var health = 100.0
     
     enum driveDir {
         case forward
@@ -25,23 +27,26 @@ class CTCarNode: SKSpriteNode {
         physicsBody?.isDynamic = true
         physicsBody?.affectedByGravity = false
         physicsBody?.mass = 50 // Adjust for realistic movement
-        physicsBody?.friction = 10
+        physicsBody?.friction = 0
         physicsBody?.restitution = 1 // Controls bounciness
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
+        physicsBody?.categoryBitMask = CTPhysicsCategory.car
+        physicsBody?.collisionBitMask = 1
     }
     
     func steer(moveDirection: CGFloat){
-        self.physicsBody?.applyAngularImpulse(moveDirection * STEER_IMPULSE * -1.0);
-       
-        // drift
-        guard let angularVelocity = self.physicsBody?.angularVelocity else { return }
-        let driftFactor = tanh(pow(angularVelocity, 2) / (DRIFT_VELOCITY_THRESHOLD))
         
+        // drift
+        let angularVelocity = self.physicsBody?.angularVelocity ?? 0.0
+        let driftFactor = tanh(abs(angularVelocity) / (DRIFT_VELOCITY_THRESHOLD))
+        
+        self.physicsBody?.applyAngularImpulse(moveDirection * STEER_IMPULSE * -1.0 + STEER_IMPULSE * driftFactor * moveDirection * -1.0);
         let directionX = cos(self.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor // -1 to flip direction from moveDirection
         let directionY = sin(self.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor;
         let force = CGVector(dx: directionX, dy: directionY)
         physicsBody?.applyImpulse(force)
+        print(angularVelocity)
        
     }
     

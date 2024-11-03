@@ -55,7 +55,6 @@ class CTGameIdleState: GKState {
         isTouchingDouble = false
          
         let loc = touches.first?.location(in: scene.view)
-        print(loc?.y)
         
         // this code is for emulator only
         if(loc?.y ?? 0.0 > (scene.frame.height - 100)){

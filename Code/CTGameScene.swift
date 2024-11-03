@@ -99,3 +99,13 @@ class CTGameScene: SKScene {
         state.handleTouchEnded(touch)
     }
 }
+
+extension CTGameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        let categoryA = contact.bodyA.categoryBitMask
+        let categoryB = contact.bodyB.categoryBitMask
+        
+        print(categoryA, categoryB)
+        
+    }
+}
