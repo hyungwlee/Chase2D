@@ -2,10 +2,10 @@ import SpriteKit
 
 class CTCarNode: SKSpriteNode{
     
-    let STEER_IMPULSE = 0.05
-    let MOVE_FORCE:CGFloat = 1200
-    let DRIFT_FORCE:CGFloat = 800
-    let DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
+    var STEER_IMPULSE = 0.05
+    var MOVE_FORCE:CGFloat = 500
+    var DRIFT_FORCE:CGFloat = 1000
+    var DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
     
     var health = 100.0
     
@@ -15,10 +15,16 @@ class CTCarNode: SKSpriteNode{
         case none
     }
     
-    required init?(coder aDecoder: NSCoder){
-        super.init(coder: aDecoder)
-        texture?.filteringMode = .nearest
+    init(imageNamed: String, size: CGSize){
+        let texture = SKTexture(imageNamed: imageNamed )
+        texture.filteringMode = .nearest
+        
+        super.init(texture: texture, color: .clear, size: size)
         enablePhysics()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("NSCoder not implemented")
     }
     
     func enablePhysics(){
@@ -32,9 +38,9 @@ class CTCarNode: SKSpriteNode{
         physicsBody?.restitution = 1 // Controls bounciness
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
-        physicsBody?.categoryBitMask = CTPhysicsCategory.car
-        physicsBody?.collisionBitMask = CTPhysicsCategory.building
-        physicsBody?.contactTestBitMask = CTPhysicsCategory.building
+        physicsBody?.categoryBitMask = CTPhysicsCategory.collidableObstacle
+        physicsBody?.collisionBitMask = CTPhysicsCategory.collidableObstacle
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.collidableObstacle
     }
     
     func steer(moveDirection: CGFloat){
@@ -52,8 +58,9 @@ class CTCarNode: SKSpriteNode{
     }
     
     func drive(driveDir: driveDir){
-        
         var moveDir = 0.0
+         
+       
         switch driveDir {
         case .forward:
             moveDir = 1.0
@@ -71,5 +78,16 @@ class CTCarNode: SKSpriteNode{
         let force = CGVector(dx: directionX, dy: directionY)
         physicsBody?.applyImpulse(force)
        
+    }
+    
+    func calculateAngle(pointA: CGPoint, pointB: CGPoint) -> CGFloat{
+        let dY = pointB.y - pointA.y
+        let dX = pointB.x - pointA.x
+        
+        return atan2(dY, dX)
+    }
+    
+    func calculateSquareDistance(pointA: CGPoint, pointB: CGPoint) -> CGFloat {
+        return pow(pointA.x - pointB.x, 2) + pow(pointA.y - pointB.y, 2)
     }
 }

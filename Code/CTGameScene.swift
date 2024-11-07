@@ -11,6 +11,8 @@ class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
     var playerCarNode: CTCarNode?
+    var pedCarSpawner: CTPedAINode?
+    var pedCars: [CTPedCarNode] = []
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
     
@@ -41,9 +43,7 @@ class CTGameScene: SKScene {
         prepareStartNodes()
         
         
-        // set player car from scene
-        self.playerCarNode = childNode(withName: "CTCarNode") as? CTCarNode
-        
+       
         context.stateMachine?.enter(CTGameIdleState.self)
         
     }
@@ -58,6 +58,12 @@ class CTGameScene: SKScene {
         
         gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 50)
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 100)
+        
+        // ped car drive
+        
+        for pedCar in pedCars{
+            pedCar.drive(driveDir: .forward)
+        }
     }
     
     func prepareGameContext(){
@@ -78,6 +84,14 @@ class CTGameScene: SKScene {
         
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
                              y: size.height / 2.0)
+         // set player car from scene
+        playerCarNode = CTCarNode(imageNamed: "red", size: CGSize(width: 5.2, height: 12.8))
+        scene?.addChild(playerCarNode ?? CTCarNode(imageNamed: "red", size: CGSize(width: 5.2, height: 12.8)))
+        
+        // spawns ped cars
+        pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
+        pedCarSpawner?.context = self.context
+        pedCarSpawner?.populateAI()
         
         let cameraNode = SKCameraNode()
         cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
@@ -85,7 +99,7 @@ class CTGameScene: SKScene {
         self.cameraNode = cameraNode
         camera = self.cameraNode
         
-        let zoomInAction = SKAction.scale(to: 0.3, duration: 0.2)
+        let zoomInAction = SKAction.scale(to: 1, duration: 0.2)
         cameraNode.run(zoomInAction)
         
     }
@@ -116,7 +130,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         let collision = categoryA | categoryB
         
-        if collision == (CTPhysicsCategory.building | CTPhysicsCategory.car){
+        if collision == (CTPhysicsCategory.collidableObstacle | CTPhysicsCategory.car){
             let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
             
             

@@ -11,7 +11,7 @@ class CTObstacleNode: SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         texture?.filteringMode = .nearest
-        physicsBody?.categoryBitMask = CTPhysicsCategory.building
+        physicsBody?.categoryBitMask = CTPhysicsCategory.collidableObstacle
         physicsBody?.contactTestBitMask = CTPhysicsCategory.car
         physicsBody?.collisionBitMask = CTPhysicsCategory.car
     }
