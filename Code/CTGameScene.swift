@@ -19,6 +19,8 @@ class CTGameScene: SKScene {
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
 //        fatalError("init(coder:) has not been implemented")
+        self.addChild(gameInfo.scoreLabel)
+        self.addChild(gameInfo.timeLabel)
     }
 
 //    init(context: CTGameContext, size: CGSize) {
@@ -34,8 +36,6 @@ class CTGameScene: SKScene {
         
         view.showsFPS = true
         view.showsPhysics = true
-        
-        addChild(gameInfo.scoreLabel) //not sure if this belongs here -j
         
         prepareGameContext()
         prepareStartNodes()
@@ -55,6 +55,9 @@ class CTGameScene: SKScene {
         }
         context?.stateMachine?.update(deltaTime: currentTime)
         gameInfo.updateScore(deltaTime: currentTime)
+        
+        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 50)
+        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 100)
     }
     
     func prepareGameContext(){
