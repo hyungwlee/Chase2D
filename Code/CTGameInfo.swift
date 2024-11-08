@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 struct CTGameInfo {
-//    var gameOver = false
+    var gameOver = false
 //    var stateMachine: GKStateMachine?
     
     // player health and player speed to be implemented later on gameInfo
@@ -20,7 +20,7 @@ struct CTGameInfo {
     
     
     // gameplay speed
-    var gameplaySpeed = 1
+    var gameplaySpeed = 0.01
     
     var score = 0
     let SCORE_INCREMENT_AMOUNT = 1
@@ -33,8 +33,9 @@ struct CTGameInfo {
     var scoreLabel = SKLabelNode(fontNamed: "Arial")
     var timeLabel = SKLabelNode(fontNamed: "Arial")
     var healthLabel = SKLabelNode(fontNamed: "Arial")
+    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")/*, currentState: GKState*/) {
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")) {
         self.score = score
         
         self.scoreLabel = scoreLabel
@@ -48,6 +49,15 @@ struct CTGameInfo {
         self.healthLabel = healthLabel
         healthLabel.fontSize = 12
         healthLabel.zPosition = 100
+        
+        self.gameOverLabel = gameOverLabel
+        gameOverLabel.fontSize = 36
+        gameOverLabel.zPosition = 100
+    }
+    
+    mutating func setGameOver()
+    {
+        gameOver = true
     }
     
     func setHealthLabel(value : Double)
@@ -62,6 +72,16 @@ struct CTGameInfo {
 //        {
 //            return
 //        }
+        if gameOver
+        {
+            gameOverLabel.text = "GAME OVER"
+            return
+        }
+        
+        if (gameplaySpeed < 1)
+        {
+            gameplaySpeed += 0.01
+        }
         
         seconds += (phoneRuntime - pastValue)
         pastValue = phoneRuntime

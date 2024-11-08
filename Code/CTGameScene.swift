@@ -26,6 +26,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.scoreLabel)
         self.addChild(gameInfo.timeLabel)
         self.addChild(gameInfo.healthLabel)
+        self.addChild(gameInfo.gameOverLabel)
     }
 
 //    init(context: CTGameContext, size: CGSize) {
@@ -67,6 +68,7 @@ class CTGameScene: SKScene {
         gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 50)
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 75)
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 100)
+        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
         // ped car drive
         
