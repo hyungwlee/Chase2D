@@ -10,78 +10,64 @@ import SpriteKit
 import GameplayKit
 
 struct CTGameInfo {
-//    var gameOver = false
-//    var stateMachine: GKStateMachine?
-    
     var score = 0
-    var scoreIncrementAmount = 1
-    let scoreChangeThreshold = 5
+    let SCORE_INCREMENT_AMOUNT = 1
+    let FREQUENCY_CHANGE_THRESHHOLD = 5 //seconds
+    var scoreChangeFrequency = 1.0
+    
+    var seconds = 0.0
+    var pastValue = ProcessInfo.processInfo.systemUptime
     
     var scoreLabel = SKLabelNode(fontNamed: "Arial")
     var timeLabel = SKLabelNode(fontNamed: "Arial")
+    var healthLabel = SKLabelNode(fontNamed: "Arial")
     
-    var storedSecond = 0
-    var secondPassed = false
-    var numSecondsPassed = 0
-    
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")) {
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")/*, currentState: GKState*/) {
         self.score = score
-        self.scoreIncrementAmount = scoreIncrementAmount
         
         self.scoreLabel = scoreLabel
-//        scoreLabel.text = String(self.score)
         scoreLabel.fontSize = 12
         scoreLabel.zPosition = 100
-//        scoreLabel.position = CGPoint(x: 100, y: 400) // Adjust as needed
         
         self.timeLabel = timeLabel
         timeLabel.fontSize = 12
         timeLabel.zPosition = 100
+        
+        self.healthLabel = healthLabel
+        healthLabel.fontSize = 12
+        healthLabel.zPosition = 100
     }
     
-    mutating func updateScore(deltaTime seconds: TimeInterval)
+    func setHealthLabel(value : Double)
     {
-//        if stateMachine?.currentState is CTGameOverState
-//        {
-//            gameOver = true
-//        }
-//        if gameOver
-//        {
-//            return
-//        }
+//        print(String(Int(value)))
+        healthLabel.text = "Health: " + String(Int(value))
+    }
+    
+    mutating func updateScore(phoneRuntime: TimeInterval)
+    {
 //        guard stateMachine?.currentState is CTGameIdleState else
 //        {
 //            return
 //        }
         
-        var tempSeconds = seconds
-        tempSeconds.round(.down)
-     
-        timeLabel.text = "Time: " + String(numSecondsPassed)
+        seconds += (phoneRuntime - pastValue)
+        pastValue = phoneRuntime
         
-        if ((Int(tempSeconds) - storedSecond) >= 1)
-        {
-            secondPassed = true
-            numSecondsPassed += 1
-            score += scoreIncrementAmount
-            scoreLabel.text = "Score: " + String(score)
-    //        print("seconds: " + String(seconds))
-        }
-        else
-        {
-            secondPassed = false
-        }
-        storedSecond = Int(tempSeconds)
+        timeLabel.text = "Time: " + String(Int(seconds))
+        scoreLabel.text = "Score: " + String(score)
         
-//        if (((score % scoreChangeThreshold) == 0) && secondPassed)
-//        {
-//            scoreIncrementAmount = scoreIncrementAmount - (scoreIncrementAmount % 5)
-//            scoreIncrementAmount += 5
-//        }
-        if (((numSecondsPassed % scoreChangeThreshold) == 0) && secondPassed)
+        let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
+        if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
         {
-            scoreIncrementAmount = scoreIncrementAmount - (scoreIncrementAmount % 5)
-            scoreIncrementAmount += 5
+//            print("REALLY Increasing Score")
+            score += SCORE_INCREMENT_AMOUNT
+        }
+        
+        if (((Int(seconds) % FREQUENCY_CHANGE_THRESHHOLD) == 0) && scoreChangeFrequency >= 0.2)
+        {
+            scoreChangeFrequency -= 0.1
+            //increase gamespeed here as well??
         }
     }
 }
