@@ -141,8 +141,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         let collision = categoryA | categoryB
         
-        if collision == (CTPhysicsCategory.collidableObstacle | CTPhysicsCategory.car){
-            let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
+        if collision == (CTPhysicsCategory.collidableObstacle | CTPhysicsCategory.collidableObstacle){
+            let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.collidableObstacle) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
             
             
             let carVelocityMag:CGFloat = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
