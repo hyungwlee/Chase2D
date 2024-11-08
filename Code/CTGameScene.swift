@@ -38,6 +38,8 @@ class CTGameScene: SKScene {
         guard let context else {
             return
         }
+        
+        // for collision
         physicsWorld.contactDelegate = self
         
         view.showsFPS = true
@@ -57,7 +59,6 @@ class CTGameScene: SKScene {
             self.scene?.speed += 0.001
             self.scene?.physicsWorld.speed += 0.001
         }
-        print(self.scene?.physicsWorld.speed)
        
         if(playerCarNode?.health ?? 100 <= 0.0){
             context?.stateMachine?.enter(CTGameOverState.self)
@@ -152,12 +153,20 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         let collision = categoryA | categoryB
         
-        if collision == (CTPhysicsCategory.collidableObstacle | CTPhysicsCategory.collidableObstacle){
-            let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.collidableObstacle) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
+        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.building) ||
+           collision == (CTPhysicsCategory.car | CTPhysicsCategory.enemy) ||
+           collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
+            
+            let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
+            let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
             
             
             let carVelocityMag:CGFloat = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
-            carNode?.health -= carVelocityMag * 0.001
+            let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
+            
+            print(abs(carVelocityMag - colliderVelocityMag) * 0.001)
+            // impact force depends on the relative velocity
+            carNode?.health -= abs(carVelocityMag - colliderVelocityMag) * 0.001
         }
         
     }

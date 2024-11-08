@@ -38,9 +38,9 @@ class CTCarNode: SKSpriteNode{
         physicsBody?.restitution = 1 // Controls bounciness
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
-        physicsBody?.categoryBitMask = CTPhysicsCategory.collidableObstacle
-        physicsBody?.collisionBitMask = CTPhysicsCategory.collidableObstacle
-        physicsBody?.contactTestBitMask = CTPhysicsCategory.collidableObstacle
+        physicsBody?.categoryBitMask = CTPhysicsCategory.car
+        physicsBody?.collisionBitMask = CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy | CTPhysicsCategory.car
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy | CTPhysicsCategory.car
     }
     
     func steer(moveDirection: CGFloat){

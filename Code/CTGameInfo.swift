@@ -51,7 +51,7 @@ struct CTGameInfo {
         healthLabel.zPosition = 100
         
         self.gameOverLabel = gameOverLabel
-        gameOverLabel.fontSize = 36
+        gameOverLabel.fontSize = 18
         gameOverLabel.zPosition = 100
     }
     

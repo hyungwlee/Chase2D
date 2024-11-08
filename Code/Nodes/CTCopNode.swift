@@ -20,7 +20,23 @@ class CTCopNode: CTPedCarNode {
         self.MOVE_FORCE = 1200
         self.DRIFT_FORCE = 100
         self.DRIFT_VELOCITY_THRESHOLD = 6
-        
+        enablePhysics()
+    }
+    
+    override func enablePhysics(){
+        if(physicsBody == nil){
+            physicsBody = SKPhysicsBody(rectangleOf: self.size)
+        }
+        physicsBody?.isDynamic = true
+        physicsBody?.affectedByGravity = false
+        physicsBody?.mass = 50 // Adjust for realistic movement
+        physicsBody?.friction = 0
+        physicsBody?.restitution = 1 // Controls bounciness
+        physicsBody?.angularDamping = 24 // Dampen rotational movement
+        physicsBody?.linearDamping = 10 // Dampen forward movement slightly
+        physicsBody?.categoryBitMask = CTPhysicsCategory.enemy
+        physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy
     }
     
     required init?(coder aDecoder: NSCoder) {
