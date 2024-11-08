@@ -155,7 +155,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         if collision == (CTPhysicsCategory.car | CTPhysicsCategory.building) ||
            collision == (CTPhysicsCategory.car | CTPhysicsCategory.enemy) ||
-           collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
             
             let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
@@ -165,8 +165,13 @@ extension CTGameScene: SKPhysicsContactDelegate {
             let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             
             print(abs(carVelocityMag - colliderVelocityMag) * 0.001)
-            // impact force depends on the relative velocity
+         // impact force depends on the relative velocity
+               
             carNode?.health -= abs(carVelocityMag - colliderVelocityMag) * 0.001
+            
+            if(carNode?.health ?? 100 <= 0){
+                carNode?.health = 0
+            }
         }
         
     }
