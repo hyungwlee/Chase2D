@@ -54,7 +54,7 @@ class CTPedCarNode: CTCarNode {
         avoidObstacles()
         
         // change currentTarget if the pedCar reaches the checkpoint
-        if calculateSquareDistance(pointA: self.position, pointB: currentTarget) < CHECKPOINT_RADIUS_SQUARED{
+        if calculateSquareDistance(pointA: self.position, pointB: currentTarget) < CHECKPOINT_RADIUS_SQUARED && checkPointsList.count != 0{
             currentTargetIndex += 1
             
             currentTargetIndex = currentTargetIndex % (checkPointsList.count - 1)
@@ -108,23 +108,18 @@ class CTPedCarNode: CTCarNode {
                 switch(ray.key){
                     case "Right":
                         self.steer(moveDirection: -1.0)
-                        print("going left")
                         break;
                     case "Left":
                         self.steer(moveDirection: 1.0)
-                        print("going right")
                         break;
                     case "FarLeft":
                         self.steer(moveDirection: 0.5)
-                        print("going right")
                         break;
                     case "FarRight":
                         self.steer(moveDirection: -0.5)
-                        print("going left")
                         break;
                     case "Up":
                         self.steer(moveDirection: -1.0)
-                        print("going right")
                         break;
                     default:
                         self.steer(moveDirection: 0.0)

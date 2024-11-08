@@ -12,7 +12,9 @@ class CTGameScene: SKScene {
     
     var playerCarNode: CTCarNode?
     var pedCarSpawner: CTPedAINode?
+    var copCarSpawner: CTCopAINode?
     var pedCars: [CTPedCarNode] = []
+    var copCars: [CTCopNode] = []
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
     
@@ -64,6 +66,10 @@ class CTGameScene: SKScene {
         for pedCar in pedCars{
             pedCar.drive(driveDir: .forward)
         }
+        
+        for copCar in copCars{
+            copCar.drive(driveDir: .forward)
+        }
     }
     
     func prepareGameContext(){
@@ -92,6 +98,11 @@ class CTGameScene: SKScene {
         pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
         pedCarSpawner?.context = self.context
         pedCarSpawner?.populateAI()
+        
+        // spawns cop cars
+        copCarSpawner = self.childNode(withName: "CopAI") as? CTCopAINode
+        copCarSpawner?.context = self.context
+        copCarSpawner?.populateAI()
         
         let cameraNode = SKCameraNode()
         cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)

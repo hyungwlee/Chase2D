@@ -3,7 +3,7 @@ import SpriteKit
 class CTCarNode: SKSpriteNode{
     
     var STEER_IMPULSE = 0.05
-    var MOVE_FORCE:CGFloat = 1000
+    var MOVE_FORCE:CGFloat = 1500
     var DRIFT_FORCE:CGFloat = 1000
     var DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
     
