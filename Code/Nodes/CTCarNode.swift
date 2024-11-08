@@ -3,7 +3,7 @@ import SpriteKit
 class CTCarNode: SKSpriteNode{
     
     var STEER_IMPULSE = 0.05
-    var MOVE_FORCE:CGFloat = 500
+    var MOVE_FORCE:CGFloat = 1000
     var DRIFT_FORCE:CGFloat = 1000
     var DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
     
@@ -81,10 +81,10 @@ class CTCarNode: SKSpriteNode{
     }
     
     func calculateAngle(pointA: CGPoint, pointB: CGPoint) -> CGFloat{
-        let dY = pointB.y - pointA.y
-        let dX = pointB.x - pointA.x
+        let a1 = atan(pointA.y / pointA.x) < 0 ? .pi + atan(pointA.y / pointA.x) : atan(pointA.y / pointA.x)
+        let a2 = atan(pointB.y / pointB.x) < 0 ? .pi + atan(pointB.y / pointB.x) : atan(pointB.y / pointB.x)
         
-        return atan2(dY, dX)
+        return a2 - a1
     }
     
     func calculateSquareDistance(pointA: CGPoint, pointB: CGPoint) -> CGFloat {

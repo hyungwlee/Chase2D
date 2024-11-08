@@ -8,7 +8,7 @@
 import SpriteKit
 class CTPedCarNode: CTCarNode {
     
-    let CHECKPOINT_RADIUS_SQUARED = 1000.0
+    let CHECKPOINT_RADIUS_SQUARED = 500.0
  
     struct PointPairs {
         var start: CGPoint
@@ -18,7 +18,7 @@ class CTPedCarNode: CTCarNode {
    
     var rays: Dictionary<String, PointPairs>
     var isDetectingObstacle: Bool = false
-    var currentTarget: CGPoint = CGPoint(x: 0, y: 0)
+    var currentTarget: CGPoint = CGPoint(x: 100, y: 50)
     var checkPointsList: [SKNode] = []
     var currentTargetIndex = 0
     
@@ -71,24 +71,24 @@ class CTPedCarNode: CTCarNode {
     func follow(target: CGPoint){
         if(isDetectingObstacle) { return }
         
-        let angle = CGFloat(GLKMathRadiansToDegrees(Float(calculateAngle(pointA: self.position, pointB: target))))
-        // since the car is facing vertical up we add a 90
-        let carForwardAngle = CGFloat(GLKMathRadiansToDegrees(Float(zRotation)) + 90)
+        let angleToTarget = atan2(target.y - position.y, target.x - position.x)
+                
+        // Calculate the shortest angle difference
+        var angleDifference = angleToTarget - zRotation + .pi / 2.0
         
-        
-        var finalAngle = (carForwardAngle - angle).truncatingRemainder(dividingBy: 360)
-        finalAngle = finalAngle > 180 ? 360 - (angle + finalAngle) : finalAngle
-        print(finalAngle)
-        
-        // TODO: make some changes here
-        if finalAngle > 10 {
-            steer(moveDirection: 0.8)
-        } else if finalAngle < -10 {
-            steer(moveDirection: -0.8)
-        } else {
-            steer(moveDirection: 0.0)
+        if angleDifference > .pi {
+            angleDifference -= 2 * .pi
+        } else if angleDifference < -.pi {
+            angleDifference += 2 * .pi
         }
-       
+        
+        if angleDifference > 0.1 {
+             steer(moveDirection: 1.0) // Steer right
+         } else if angleDifference < -0.1 {
+             steer(moveDirection: -1.0) // Steer left
+         } else {
+             steer(moveDirection: 0.0) // Go straight if close enough to target angle
+         }
     }
    
     func avoidObstacles(){
@@ -133,31 +133,6 @@ class CTPedCarNode: CTCarNode {
             }else{
                 isDetectingObstacle = false
             }
-            
-            // debug purposes
-//            
-//             let visibleRay = CGMutablePath()
-//             visibleRay.move(to: rayStart)
-//             visibleRay.addLine(to: rayEnd)
-//             visibleRay.closeSubpath()
-//                 
-//             if(!raysAdded) {
-//                 print(ray.key)
-//                 let line = SKShapeNode(path: visibleRay)
-//                 line.name = "rayLine" + ray.key
-//                 line.strokeColor = .green
-//                 line.fillColor = .green
-//
-//                 rayAddCount += 1
-//                 scene?.addChild(line)
-//                 if rayAddCount == self.rays.count {
-//                     raysAdded = true
-//                 }
-//             } else {
-//                 let currentLine = scene?.childNode(withName: "rayLine" + ray.key) as? SKShapeNode
-//                 currentLine?.path = visibleRay
-//             }
-
         }
     }
     
