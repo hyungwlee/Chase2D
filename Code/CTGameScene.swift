@@ -25,6 +25,7 @@ class CTGameScene: SKScene {
 //        fatalError("init(coder:) has not been implemented")
         self.addChild(gameInfo.scoreLabel)
         self.addChild(gameInfo.timeLabel)
+        self.addChild(gameInfo.healthLabel)
     }
 
 //    init(context: CTGameContext, size: CGSize) {
@@ -47,7 +48,6 @@ class CTGameScene: SKScene {
         
        
         context.stateMachine?.enter(CTGameIdleState.self)
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -62,10 +62,11 @@ class CTGameScene: SKScene {
             context?.stateMachine?.enter(CTGameOverState.self)
         }
         context?.stateMachine?.update(deltaTime: currentTime)
-        gameInfo.updateScore(deltaTime: currentTime)
+        gameInfo.updateScore(phoneRuntime: currentTime)
         
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 50)
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 100)
+        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 50)
+        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 75)
+        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 100)
         
         // ped car drive
         
@@ -76,6 +77,8 @@ class CTGameScene: SKScene {
         for copCar in copCars{
             copCar.drive(driveDir: .forward)
         }
+        
+        gameInfo.setHealthLabel(value: playerCarNode!.health)
     }
     
     func prepareGameContext(){
@@ -153,7 +156,6 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
             let carVelocityMag:CGFloat = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             carNode?.health -= carVelocityMag * 0.001
-            
         }
         
     }
