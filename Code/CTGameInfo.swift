@@ -13,6 +13,15 @@ struct CTGameInfo {
 //    var gameOver = false
 //    var stateMachine: GKStateMachine?
     
+    // player health and player speed to be implemented later on gameInfo
+    // implemented individually now
+    var playerHealth = 100
+    var playerSpeed = 1300
+    
+    
+    // gameplay speed
+    var gameplaySpeed = 1
+    
     var score = 0
     var scoreIncrementAmount = 1
     let scoreChangeThreshold = 5

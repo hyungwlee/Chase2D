@@ -52,6 +52,12 @@ class CTGameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
+        if self.scene?.physicsWorld.speed ?? 0 < 3 {
+            self.scene?.speed += 0.001
+            self.scene?.physicsWorld.speed += 0.001
+        }
+        print(self.scene?.physicsWorld.speed)
+       
         if(playerCarNode?.health ?? 100 <= 0.0){
             context?.stateMachine?.enter(CTGameOverState.self)
         }
@@ -92,7 +98,7 @@ class CTGameScene: SKScene {
                              y: size.height / 2.0)
          // set player car from scene
         playerCarNode = CTCarNode(imageNamed: "red", size: CGSize(width: 5.2, height: 12.8))
-        scene?.addChild(playerCarNode ?? CTCarNode(imageNamed: "red", size: CGSize(width: 5.2, height: 12.8)))
+        scene?.addChild(playerCarNode ?? CTCarNode(imageNamed: "red", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8)))
         
         // spawns ped cars
         pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
@@ -110,7 +116,7 @@ class CTGameScene: SKScene {
         self.cameraNode = cameraNode
         camera = self.cameraNode
         
-        let zoomInAction = SKAction.scale(to: 1, duration: 0.2)
+        let zoomInAction = SKAction.scale(to: 0.5, duration: 0.2)
         cameraNode.run(zoomInAction)
         
     }

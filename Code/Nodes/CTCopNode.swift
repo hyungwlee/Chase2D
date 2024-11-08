@@ -37,7 +37,6 @@ class CTCopNode: CTPedCarNode {
         
         // extra code needed to be added because of inheritance
         // clean up using gameplaykit components
-//        checkPointsList = [player.position ?? CGPoint(x: 0, y: 0)]
          
         currentTarget = player?.position ?? CGPoint(x: 0, y: 0)
         

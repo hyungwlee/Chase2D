@@ -30,6 +30,12 @@ class CTGameOverState: GKState {
     func handlePlayerDeath(){
         print("You died!")
         scene?.playerCarNode?.drive(driveDir: .none)
+        
+        // change cop car speed
+        for cop in scene!.copCars {
+            cop.MOVE_FORCE = 50
+            cop.STEER_IMPULSE = 0.001
+        }
     }
     
 }

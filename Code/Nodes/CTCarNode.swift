@@ -7,7 +7,7 @@ class CTCarNode: SKSpriteNode{
     var DRIFT_FORCE:CGFloat = 1000
     var DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
     
-    var health = 150.0
+    var health = 100.0
     
     enum driveDir {
         case forward
@@ -58,6 +58,7 @@ class CTCarNode: SKSpriteNode{
     }
     
     func drive(driveDir: driveDir){
+        
         var moveDir = 0.0
          
        

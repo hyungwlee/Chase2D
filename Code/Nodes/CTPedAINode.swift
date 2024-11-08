@@ -22,7 +22,7 @@ class CTPedAINode: SKNode{
         guard let checkPointsHolder else { fatalError("PedCarCheckpoints not found") }
         
         for child in checkPointsHolder.children{
-            let pedCar = CTPedCarNode(imageNamed: "yelow", size: CGSize(width: 5.2, height: 12.8))
+            let pedCar = CTPedCarNode(imageNamed: "yelow", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
             pedCar.checkPointsList = checkPointsHolder.children
             pedCar.position = child.position
 //        pedCar.position = checkPointsHolder.children[0].position
