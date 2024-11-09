@@ -39,19 +39,19 @@ struct CTGameInfo {
         self.score = score
         
         self.scoreLabel = scoreLabel
-        scoreLabel.fontSize = 12
+        scoreLabel.fontSize = 6
         scoreLabel.zPosition = 100
         
         self.timeLabel = timeLabel
-        timeLabel.fontSize = 12
+        timeLabel.fontSize = 6
         timeLabel.zPosition = 100
         
         self.healthLabel = healthLabel
-        healthLabel.fontSize = 12
+        healthLabel.fontSize = 6
         healthLabel.zPosition = 100
         
         self.gameOverLabel = gameOverLabel
-        gameOverLabel.fontSize = 18
+        gameOverLabel.fontSize = 12
         gameOverLabel.zPosition = 100
     }
     

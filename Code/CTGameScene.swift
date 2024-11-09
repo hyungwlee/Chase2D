@@ -66,10 +66,10 @@ class CTGameScene: SKScene {
         context?.stateMachine?.update(deltaTime: currentTime)
         gameInfo.updateScore(phoneRuntime: currentTime)
         
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 50)
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 75)
-        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x - 50, y: cameraNode!.position.y - 100)
-        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 10)
+        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 20)
+        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 30 )
+        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
         
         // ped car drive
         
@@ -103,7 +103,7 @@ class CTGameScene: SKScene {
         let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
                              y: size.height / 2.0)
          // set player car from scene
-        playerCarNode = CTCarNode(imageNamed: "red", size: CGSize(width: 5.2, height: 12.8))
+        playerCarNode = CTCarNode(imageNamed: "red", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
         scene?.addChild(playerCarNode ?? CTCarNode(imageNamed: "red", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8)))
         
         // spawns ped cars
@@ -122,7 +122,7 @@ class CTGameScene: SKScene {
         self.cameraNode = cameraNode
         camera = self.cameraNode
         
-        let zoomInAction = SKAction.scale(to: 0.5, duration: 0.2)
+        let zoomInAction = SKAction.scale(to: 0.3, duration: 0.2)
         cameraNode.run(zoomInAction)
         
     }
