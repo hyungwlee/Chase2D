@@ -23,10 +23,12 @@ class CTCopAINode: SKNode{
         
         for child in checkPointsHolder.children{
             let copCar = CTCopNode(imageNamed: "black", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
-            copCar.player = context?.gameScene?.playerCarNode
             copCar.position = child.position
+            
+            let carEntity = CTCopCarEntity(carNode: copCar)
+            
             context?.gameScene?.addChild(copCar)
-            context?.gameScene?.copCars.append(copCar)
+            context?.gameScene?.copCarEntities.append(carEntity)
         }
         
        

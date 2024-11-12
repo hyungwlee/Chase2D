@@ -10,29 +10,26 @@ import GameplayKit
 class CTGameScene: SKScene {
     weak var context: CTGameContext?
     
-    var playerCarNode: CTCarNode?
+    var playerCarEntity: CTPlayerCarEntity?
     var pedCarSpawner: CTPedAINode?
     var copCarSpawner: CTCopAINode?
-    var pedCars: [CTPedCarNode] = []
-    var copCars: [CTCopNode] = []
+    var pedCarEntities: [CTPedCarEntity] = []
+    var copCarEntities: [CTCopCarEntity] = []
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
+    
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         self.gameInfo = CTGameInfo()
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
-//        fatalError("init(coder:) has not been implemented")
         self.addChild(gameInfo.scoreLabel)
         self.addChild(gameInfo.timeLabel)
         self.addChild(gameInfo.healthLabel)
         self.addChild(gameInfo.gameOverLabel)
     }
-
-//    init(context: CTGameContext, size: CGSize) {
-//        self.context = context
-//        super.init(size: size)
-//    }
         
     override func didMove(to view: SKView) {
         guard let context else {
@@ -60,28 +57,51 @@ class CTGameScene: SKScene {
             self.scene?.physicsWorld.speed += 0.001
         }
        
-        if(playerCarNode?.health ?? 100 <= 0.0){
+        if(gameInfo.gameOver){
             context?.stateMachine?.enter(CTGameOverState.self)
         }
         context?.stateMachine?.update(deltaTime: currentTime)
-        gameInfo.updateScore(phoneRuntime: currentTime)
         
+        gameInfo.updateScore(phoneRuntime: currentTime)
         gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 10)
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 20)
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 30 )
         gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
+        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
         
-        // ped car drive
+
+        updateCopCarComponents()
+        updatePedCarComponents()
         
-        for pedCar in pedCars{
-            pedCar.drive(driveDir: .forward)
+    }
+    
+    func updatePedCarComponents(){
+
+        for pedCarEntity in pedCarEntities {
+            
+            pedCarEntity.updateCurrentTarget()
+            
+             if let trackingComponent = pedCarEntity.component(ofType: CTSelfDrivingComponent.self) {
+                 trackingComponent.follow(target: pedCarEntity.currentTarget)
+                trackingComponent.avoidObstacles()
+            }
+            if let drivingComponent = pedCarEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
         }
-        
-        for copCar in copCars{
-            copCar.drive(driveDir: .forward)
+    }
+    
+    func updateCopCarComponents(){
+        // copCar drive
+        for copCarEntity in copCarEntities{
+            if let trackingComponent = copCarEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+                trackingComponent.avoidObstacles()
+            }
+            if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
         }
-        
-        gameInfo.setHealthLabel(value: playerCarNode!.health)
     }
     
     func prepareGameContext(){
@@ -100,29 +120,31 @@ class CTGameScene: SKScene {
             return
         }
         
-        let center = CGPoint(x: size.width / 2.0 - context.layoutInfo.playerCarSize.width / 2.0,
-                             y: size.height / 2.0)
-         // set player car from scene
-        playerCarNode = CTCarNode(imageNamed: "red", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
-        scene?.addChild(playerCarNode ?? CTCarNode(imageNamed: "red", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8)))
+        // set player car from scene
+        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
+        playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
+        addChild(playerCarNode)
         
+       
         // spawns ped cars
         pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
-        pedCarSpawner?.context = self.context
+        pedCarSpawner?.context = context
         pedCarSpawner?.populateAI()
         
         // spawns cop cars
         copCarSpawner = self.childNode(withName: "CopAI") as? CTCopAINode
-        copCarSpawner?.context = self.context
+        copCarSpawner?.context = context
         copCarSpawner?.populateAI()
         
+        
+        // camera node
         let cameraNode = SKCameraNode()
         cameraNode.position = CGPoint(x: size.width / 2.0, y: size.height / 2.0)
         addChild(cameraNode)
         self.cameraNode = cameraNode
         camera = self.cameraNode
         
-        let zoomInAction = SKAction.scale(to: 0.3, duration: 0.2)
+        let zoomInAction = SKAction.scale(to: 0.5, duration: 0.2)
         cameraNode.run(zoomInAction)
         
     }
@@ -135,7 +157,6 @@ class CTGameScene: SKScene {
     }
     
     // only for testing purpose
-    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGameIdleState else {
@@ -153,8 +174,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         let collision = categoryA | categoryB
         
-        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.building) ||
-           collision == (CTPhysicsCategory.car | CTPhysicsCategory.enemy) ||
+        if collision == (CTPhysicsCategory.car  | CTPhysicsCategory.building) ||
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.enemy) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
             
             let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
@@ -164,13 +185,13 @@ extension CTGameScene: SKPhysicsContactDelegate {
             let carVelocityMag:CGFloat = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             
-            print(abs(carVelocityMag - colliderVelocityMag) * 0.001)
          // impact force depends on the relative velocity
                
-            carNode?.health -= abs(carVelocityMag - colliderVelocityMag) * 0.001
+            gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.001
             
-            if(carNode?.health ?? 100 <= 0){
-                carNode?.health = 0
+            if(gameInfo.playerHealth <= 0){
+                gameInfo.playerHealth = 0
+                gameInfo.setGameOver()
             }
         }
         

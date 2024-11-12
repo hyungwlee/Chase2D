@@ -14,7 +14,7 @@ class CTGameIdleState: GKState {
     var isTouchingSingle: Bool = false
     var isTouchingDouble: Bool = false
     var touchLocations: Array<CGPoint> = []
-    var driveDir = CTCarNode.driveDir.forward
+    var driveDir = CTDrivingComponent.driveDir.forward
     
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -33,7 +33,6 @@ class CTGameIdleState: GKState {
         guard let scene else { return }
        
         handleCameraMovement()
-        scene.playerCarNode?.drive(driveDir: self.driveDir)
         
         if(self.touchLocations != []){
             if(isTouchingDouble){
@@ -43,7 +42,15 @@ class CTGameIdleState: GKState {
                 self.moveDirection = self.touchLocations[0].x < scene.frame.midX ? -1.0 : 1.0
             }
         }
-        scene.playerCarNode?.steer(moveDirection: self.moveDirection)
+         // components
+        
+        if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
+            drivingComponent.drive(driveDir: self.driveDir)
+        }
+        
+        if let steerComponent = scene.playerCarEntity?.component(ofType: CTSteeringComponent.self){
+            steerComponent.steer(moveDirection: self.moveDirection)
+        }
         
     }
        
@@ -58,7 +65,7 @@ class CTGameIdleState: GKState {
         // this code is for emulator only
         if(loc?.y ?? 0.0 > (scene.frame.height - 100)){
             isTouchingDouble = true
-            self.driveDir = CTCarNode.driveDir.backward
+            self.driveDir = CTDrivingComponent.driveDir.backward
             self.moveDirection = -1.0
             for touch in touches{
                 self.touchLocations.append(touch.location(in: scene.view))
@@ -66,7 +73,7 @@ class CTGameIdleState: GKState {
             }
         }else if(touches.count == 1){
             isTouchingSingle = true
-            self.driveDir = CTCarNode.driveDir.forward
+            self.driveDir = CTDrivingComponent.driveDir.forward
             self.touchLocations.append((touches.first?.location(in: scene.view))!)
         }
         
@@ -86,11 +93,11 @@ class CTGameIdleState: GKState {
         isTouchingDouble = false
         self.touchLocations = []
         self.moveDirection = 0
-        self.driveDir = CTCarNode.driveDir.forward
+        self.driveDir = CTDrivingComponent.driveDir.forward
     }
     
     func handleCameraMovement() {
-        let targetPosition = CGPoint(x: scene?.playerCarNode?.position.x ?? 0.0, y: scene?.playerCarNode?.position.y ?? 0.0)
+        let targetPosition = CGPoint(x: scene?.playerCarEntity?.carNode.position.x ?? 0.0, y: scene?.playerCarEntity?.carNode.position.y ?? 0.0)
         let moveAction = SKAction.move(to: targetPosition, duration: 0.1)
         scene?.cameraNode?.run(moveAction)
     }

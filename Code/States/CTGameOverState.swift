@@ -23,18 +23,24 @@ class CTGameOverState: GKState {
     }
     
     override func didEnter(from previousState: GKState?) {
-        print("did enter game over state")
         handlePlayerDeath()
     }
     
     func handlePlayerDeath(){
-        print("You died!")
-        scene?.playerCarNode?.drive(driveDir: .none)
+        
         scene!.gameInfo.setGameOver()
+        
+        if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
+            drivingComponent.drive(driveDir: .none)
+        }
         // change cop car speed
-        for cop in scene!.copCars {
-            cop.MOVE_FORCE = 50
-            cop.STEER_IMPULSE = 0.001
+        for copCar in scene!.copCarEntities {
+            if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.MOVE_FORCE = 0.05
+            }
+            if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
+                steeringComponent.STEER_IMPULSE = 0.01
+            }
         }
     }
     
