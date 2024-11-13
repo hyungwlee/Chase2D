@@ -16,7 +16,7 @@ class CTCopCarEntity: GKEntity {
         super.init()
             
         let drivingComponent = CTDrivingComponent(carNode: carNode)
-        drivingComponent.MOVE_FORCE = 1350
+        drivingComponent.MOVE_FORCE = 1250
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.05

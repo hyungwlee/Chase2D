@@ -19,6 +19,7 @@ class CTGameScene: SKScene {
     var gameInfo: CTGameInfo
     
     
+    let GAME_SPEED_INCREASE_RATE = 0.01
 
     
     required init?(coder aDecoder: NSCoder) {
@@ -51,11 +52,6 @@ class CTGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
-        if self.scene?.physicsWorld.speed ?? 0 < 3 {
-            self.scene?.speed += 0.001
-            self.scene?.physicsWorld.speed += 0.001
-        }
        
         if(gameInfo.gameOver){
             context?.stateMachine?.enter(CTGameOverState.self)
@@ -144,7 +140,7 @@ class CTGameScene: SKScene {
         self.cameraNode = cameraNode
         camera = self.cameraNode
         
-        let zoomInAction = SKAction.scale(to: 0.5, duration: 0.2)
+        let zoomInAction = SKAction.scale(to: 0.35, duration: 0.2)
         cameraNode.run(zoomInAction)
         
     }
@@ -187,7 +183,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
          // impact force depends on the relative velocity
                
-            gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.001
+            gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
             
             if(gameInfo.playerHealth <= 0){
                 gameInfo.playerHealth = 0

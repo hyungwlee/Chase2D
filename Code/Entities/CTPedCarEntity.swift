@@ -24,7 +24,7 @@ class CTPedCarEntity: GKEntity {
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.1
-        steeringComponent.DRIFT_FORCE = 1000
+        steeringComponent.DRIFT_FORCE = 100
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
