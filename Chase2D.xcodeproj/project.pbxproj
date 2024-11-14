@@ -31,10 +31,10 @@
 		9E9B77DA2CE3122100F88543 /* CTPedCarEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B77D92CE3122000F88543 /* CTPedCarEntity.swift */; };
 		9E9B77DC2CE3122D00F88543 /* CTCopCarEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B77DB2CE3122D00F88543 /* CTCopCarEntity.swift */; };
 		9E9B77DE2CE3EDE000F88543 /* CTSelfDriveComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B77DD2CE3EDE000F88543 /* CTSelfDriveComponent.swift */; };
-		9E9B77E02CE3EDEE00F88543 /* CTTargetComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B77DF2CE3EDEE00F88543 /* CTTargetComponent.swift */; };
+		9E9B77E82CE45FCC00F88543 /* CTGameIdleState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9B77E72CE45FCC00F88543 /* CTGameIdleState.swift */; };
 		9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18F72CD010C80005DE27 /* CTGameInfo.swift */; };
 		9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */; };
-		9E9F18FC2CD011C50005DE27 /* CTGameIdelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */; };
+		9E9F18FC2CD011C50005DE27 /* CTGamePlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FB2CD011C50005DE27 /* CTGamePlayState.swift */; };
 		9E9F19002CD099930005DE27 /* CTWorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */; };
 		9EEE45712CD56EAF00297666 /* CTObstacleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */; };
 		9EEE45732CD7180200297666 /* CTPhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE45722CD7180200297666 /* CTPhysicsCategory.swift */; };
@@ -89,10 +89,10 @@
 		9E9B77D92CE3122000F88543 /* CTPedCarEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTPedCarEntity.swift; sourceTree = "<group>"; };
 		9E9B77DB2CE3122D00F88543 /* CTCopCarEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCopCarEntity.swift; sourceTree = "<group>"; };
 		9E9B77DD2CE3EDE000F88543 /* CTSelfDriveComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTSelfDriveComponent.swift; sourceTree = "<group>"; };
-		9E9B77DF2CE3EDEE00F88543 /* CTTargetComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTTargetComponent.swift; sourceTree = "<group>"; };
+		9E9B77E72CE45FCC00F88543 /* CTGameIdleState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGameIdleState.swift; sourceTree = "<group>"; };
 		9E9F18F72CD010C80005DE27 /* CTGameInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTGameInfo.swift; path = Code/CTGameInfo.swift; sourceTree = SOURCE_ROOT; };
 		9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTLayoutInfo.swift; path = Code/CTLayoutInfo.swift; sourceTree = SOURCE_ROOT; };
-		9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGameIdelState.swift; sourceTree = "<group>"; };
+		9E9F18FB2CD011C50005DE27 /* CTGamePlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGamePlayState.swift; sourceTree = "<group>"; };
 		9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTWorldNode.swift; sourceTree = "<group>"; };
 		9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTObstacleNode.swift; sourceTree = "<group>"; };
 		9EEE45722CD7180200297666 /* CTPhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTPhysicsCategory.swift; path = Code/Nodes/CTPhysicsCategory.swift; sourceTree = SOURCE_ROOT; };
@@ -186,8 +186,9 @@
 		9E7B905E2CD00F7100137DE8 /* States */ = {
 			isa = PBXGroup;
 			children = (
-				9E9F18FB2CD011C50005DE27 /* CTGameIdelState.swift */,
+				9E9F18FB2CD011C50005DE27 /* CTGamePlayState.swift */,
 				9EEE45742CD7547800297666 /* CTGameOverState.swift */,
+				9E9B77E72CE45FCC00F88543 /* CTGameIdleState.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -268,7 +269,6 @@
 				9E9B77D32CE3070B00F88543 /* CTSteeringComponent.swift */,
 				9E9B77D52CE3072B00F88543 /* CTDrivingComponent.swift */,
 				9E9B77DD2CE3EDE000F88543 /* CTSelfDriveComponent.swift */,
-				9E9B77DF2CE3EDEE00F88543 /* CTTargetComponent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -416,6 +416,7 @@
 				9E9B77D62CE3072B00F88543 /* CTDrivingComponent.swift in Sources */,
 				9E9B77D22CE3066400F88543 /* CTPlayerCarEntity.swift in Sources */,
 				9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */,
+				9E9B77E82CE45FCC00F88543 /* CTGameIdleState.swift in Sources */,
 				9E3A12D72CCC45140003D097 /* Dependencies.swift in Sources */,
 				9E9B77D42CE3070B00F88543 /* CTSteeringComponent.swift in Sources */,
 				9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */,
@@ -426,8 +427,7 @@
 				9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */,
 				9E910F3C2CDDACD40080A801 /* CTCopNode.swift in Sources */,
 				9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */,
-				9E9B77E02CE3EDEE00F88543 /* CTTargetComponent.swift in Sources */,
-				9E9F18FC2CD011C50005DE27 /* CTGameIdelState.swift in Sources */,
+				9E9F18FC2CD011C50005DE27 /* CTGamePlayState.swift in Sources */,
 				9EEE45772CD75F8900297666 /* CTPedCarNode.swift in Sources */,
 				9E910F3E2CDDAE6A0080A801 /* CTCopAINode.swift in Sources */,
 				9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */,

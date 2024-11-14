@@ -16,7 +16,7 @@ struct CTGameInfo {
     // player health and player speed to be implemented later on gameInfo
     // implemented individually now
     var playerHealth:CGFloat = 100
-    var playerSpeed:CGFloat = 1300
+    var playerSpeed:CGFloat = 1350
     
     
     // gameplay speed

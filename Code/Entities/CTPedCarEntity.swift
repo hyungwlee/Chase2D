@@ -18,18 +18,19 @@ class CTPedCarEntity: GKEntity {
     init(carNode: SKSpriteNode) {
         self.carNode = carNode
         super.init()
-            
+    }
+    
+    func prepareComponents(){
         let drivingComponent = CTDrivingComponent(carNode: carNode)
         drivingComponent.MOVE_FORCE = 800
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.1
-        steeringComponent.DRIFT_FORCE = 100
+        steeringComponent.STEER_IMPULSE = 0.04
+        steeringComponent.DRIFT_FORCE = 0.04
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +40,6 @@ class CTPedCarEntity: GKEntity {
     
     // change currentTarget if the pedCar reaches the checkpoint
     func updateCurrentTarget(){
-        print(currentTargetIndex)
         if calculateSquareDistance(pointA: self.carNode.position, pointB: currentTarget) < CHECKPOINT_RADIUS_SQUARED && checkPointsList.count != 0{
             currentTargetIndex += 1
             

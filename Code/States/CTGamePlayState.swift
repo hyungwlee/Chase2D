@@ -7,7 +7,7 @@
 
 import GameplayKit
 
-class CTGameIdleState: GKState {
+class CTGamePlayState: GKState {
     weak var scene: CTGameScene?
     weak var context: CTGameContext?
     var moveDirection: CGFloat = 0.0

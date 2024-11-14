@@ -14,18 +14,22 @@ class CTCopCarEntity: GKEntity {
     init(carNode: CTCopNode) {
         self.carNode = carNode
         super.init()
+       
+    }
+    
+    func prepareComponents(){
             
         let drivingComponent = CTDrivingComponent(carNode: carNode)
         drivingComponent.MOVE_FORCE = 1250
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.05
-        steeringComponent.DRIFT_FORCE = 1000
+        steeringComponent.STEER_IMPULSE = 0.04
+        steeringComponent.DRIFT_FORCE = 0.04
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
-        
+         
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -26,6 +26,7 @@ class CTCopAINode: SKNode{
             copCar.position = child.position
             
             let carEntity = CTCopCarEntity(carNode: copCar)
+            carEntity.prepareComponents()
             
             context?.gameScene?.addChild(copCar)
             context?.gameScene?.copCarEntities.append(carEntity)

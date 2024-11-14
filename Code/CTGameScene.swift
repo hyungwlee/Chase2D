@@ -48,7 +48,7 @@ class CTGameScene: SKScene {
         
         
        
-        context.stateMachine?.enter(CTGameIdleState.self)
+        context.stateMachine?.enter(CTGamePlayState.self)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -119,6 +119,8 @@ class CTGameScene: SKScene {
         // set player car from scene
         let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
         playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
+        playerCarEntity?.gameInfo = gameInfo
+        playerCarEntity?.prepareComponents()
         addChild(playerCarNode)
         
        
@@ -146,7 +148,7 @@ class CTGameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let state = context?.stateMachine?.currentState as? CTGameIdleState else {
+        guard let state = context?.stateMachine?.currentState as? CTGamePlayState else {
             return
         }
         state.handleTouchStart(touches)
@@ -155,7 +157,7 @@ class CTGameScene: SKScene {
     // only for testing purpose
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGameIdleState else {
+        guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGamePlayState else {
             return
         }
         state.handleTouchEnded(touch)

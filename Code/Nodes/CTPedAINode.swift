@@ -26,6 +26,7 @@ class CTPedAINode: SKNode{
             pedCar.position = child.position
             
             let pedCarEntity = CTPedCarEntity(carNode: pedCar)
+            pedCarEntity.prepareComponents()
             pedCarEntity.checkPointsList = checkPointsHolder.children
             pedCarEntity.currentTargetIndex = index + 1
             pedCarEntity.currentTarget = child.position
