@@ -22,7 +22,9 @@ class CTCopAINode: SKNode{
         guard let checkPointsHolder else { fatalError("CopCarCheckpoints not found") }
         
         for child in checkPointsHolder.children{
-            let copCar = CTCopNode(imageNamed: "black", size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
+//            let copCar = CTCopNode(imageNamed: "black", size:
+            let copCar = CTCopNode(imageNamed: "squadCar", size:
+                                    (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
             copCar.position = child.position
             
             let carEntity = CTCopCarEntity(carNode: copCar)

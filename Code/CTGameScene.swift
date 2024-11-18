@@ -117,7 +117,8 @@ class CTGameScene: SKScene {
         }
         
         // set player car from scene
-        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
+//        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
+        let playerCarNode = CTCarNode(imageNamed: "playerCar", size: (context.layoutInfo.playerCarSize) )
         playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
         playerCarEntity?.gameInfo = gameInfo
         playerCarEntity?.prepareComponents()
