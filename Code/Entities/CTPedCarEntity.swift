@@ -11,6 +11,7 @@ class CTPedCarEntity: GKEntity {
     let carNode: SKSpriteNode
     let CHECKPOINT_RADIUS_SQUARED = 500.0
     
+    var gameInfo:CTGameInfo?
     var currentTarget: CGPoint = CGPoint(x: 100, y: 50)
     var checkPointsList: [SKNode] = []
     var currentTargetIndex = 0
@@ -22,11 +23,12 @@ class CTPedCarEntity: GKEntity {
     
     func prepareComponents(){
         let drivingComponent = CTDrivingComponent(carNode: carNode)
-        drivingComponent.MOVE_FORCE = 800
+        drivingComponent.MOVE_FORCE =  gameInfo?.pedSpeed ?? 800
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.04
-        steeringComponent.DRIFT_FORCE = 0.04
+        steeringComponent.DRIFT_FORCE = 0.01
+        steeringComponent.DRIFT_VELOCITY_THRESHOLD = 10
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)

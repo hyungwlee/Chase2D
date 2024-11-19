@@ -25,7 +25,7 @@ class CTPedCarNode: SKSpriteNode {
         physicsBody?.mass = 50 // Adjust for realistic movement
         physicsBody?.friction = 0
         physicsBody?.restitution = 1 // Controls bounciness
-        physicsBody?.angularDamping = 50 // Dampen rotational movement
+        physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
         physicsBody?.categoryBitMask = CTPhysicsCategory.ped
         physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy

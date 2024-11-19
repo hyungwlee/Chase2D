@@ -144,6 +144,8 @@ class CTGameScene: SKScene {
         camera = self.cameraNode
         
         let zoomInAction = SKAction.scale(to: 0.35, duration: 0.2)
+        // debug camera
+//        let zoomInAction = SKAction.scale(to: 1, duration: 0.2)
         cameraNode.run(zoomInAction)
         
     }

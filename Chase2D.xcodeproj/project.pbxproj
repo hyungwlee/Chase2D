@@ -36,6 +36,7 @@
 		9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */; };
 		9E9F18FC2CD011C50005DE27 /* CTGamePlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FB2CD011C50005DE27 /* CTGamePlayState.swift */; };
 		9E9F19002CD099930005DE27 /* CTWorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */; };
+		9ED875162CE7BA8B00FED09C /* CTCopLights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED875152CE7BA8B00FED09C /* CTCopLights.swift */; };
 		9EEE45712CD56EAF00297666 /* CTObstacleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */; };
 		9EEE45732CD7180200297666 /* CTPhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE45722CD7180200297666 /* CTPhysicsCategory.swift */; };
 		9EEE45752CD7547800297666 /* CTGameOverState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEE45742CD7547800297666 /* CTGameOverState.swift */; };
@@ -94,6 +95,7 @@
 		9E9F18F92CD0112B0005DE27 /* CTLayoutInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTLayoutInfo.swift; path = Code/CTLayoutInfo.swift; sourceTree = SOURCE_ROOT; };
 		9E9F18FB2CD011C50005DE27 /* CTGamePlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGamePlayState.swift; sourceTree = "<group>"; };
 		9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTWorldNode.swift; sourceTree = "<group>"; };
+		9ED875152CE7BA8B00FED09C /* CTCopLights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCopLights.swift; sourceTree = "<group>"; };
 		9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTObstacleNode.swift; sourceTree = "<group>"; };
 		9EEE45722CD7180200297666 /* CTPhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CTPhysicsCategory.swift; path = Code/Nodes/CTPhysicsCategory.swift; sourceTree = SOURCE_ROOT; };
 		9EEE45742CD7547800297666 /* CTGameOverState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTGameOverState.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				9E910F392CDAAAAD0080A801 /* CTPedAINode.swift */,
 				9E910F3B2CDDACD40080A801 /* CTCopNode.swift */,
 				9E910F3D2CDDAE6A0080A801 /* CTCopAINode.swift */,
+				9ED875152CE7BA8B00FED09C /* CTCopLights.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ED875162CE7BA8B00FED09C /* CTCopLights.swift in Sources */,
 				9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */,
 				9E9B77D62CE3072B00F88543 /* CTDrivingComponent.swift in Sources */,
 				9E9B77D22CE3066400F88543 /* CTPlayerCarEntity.swift in Sources */,

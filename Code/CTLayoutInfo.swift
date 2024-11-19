@@ -10,4 +10,5 @@ import Foundation
 struct CTLayoutInfo{
     let screenSize: CGSize
     let playerCarSize: CGSize = .init(width: 5.2, height: 12.8)
+    let copCarSize: CGSize = .init(width: 8.5, height: 15)
 }

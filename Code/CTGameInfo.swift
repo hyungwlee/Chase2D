@@ -17,6 +17,15 @@ struct CTGameInfo {
     // implemented individually now
     var playerHealth:CGFloat = 100
     var playerSpeed:CGFloat = 1350
+    var pedSpeed:CGFloat = 800
+    var copSpeed:CGFloat = 1300
+    
+    
+    var numberOfCops = 0
+    var numberOfPeds = 0
+    
+    let MAX_NUMBER_OF_COPS = 10
+    let MAX_NUMBER_OF_PEDS = 20
     
     
     // gameplay speed

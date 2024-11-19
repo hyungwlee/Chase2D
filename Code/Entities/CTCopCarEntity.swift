@@ -10,6 +10,7 @@ import SpriteKit
 
 class CTCopCarEntity: GKEntity {
     let carNode: CTCopNode
+    var gameInfo: CTGameInfo?
     
     init(carNode: CTCopNode) {
         self.carNode = carNode
@@ -20,11 +21,11 @@ class CTCopCarEntity: GKEntity {
     func prepareComponents(){
             
         let drivingComponent = CTDrivingComponent(carNode: carNode)
-        drivingComponent.MOVE_FORCE = 1250
+        drivingComponent.MOVE_FORCE = gameInfo?.copSpeed ?? 1300
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.04
-        steeringComponent.DRIFT_FORCE = 0.04
+        steeringComponent.STEER_IMPULSE = 0.05
+        steeringComponent.DRIFT_FORCE = 0.05
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
