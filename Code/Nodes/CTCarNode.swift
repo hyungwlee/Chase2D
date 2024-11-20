@@ -37,14 +37,14 @@ class CTCarNode: SKSpriteNode{
         physicsBody?.contactTestBitMask = CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy | CTPhysicsCategory.car
     }
     
-    func calculateAngle(pointA: CGPoint, pointB: CGPoint) -> CGFloat{
+    public func calculateAngle(pointA: CGPoint, pointB: CGPoint) -> CGFloat{
         let a1 = atan(pointA.y / pointA.x) < 0 ? .pi + atan(pointA.y / pointA.x) : atan(pointA.y / pointA.x)
         let a2 = atan(pointB.y / pointB.x) < 0 ? .pi + atan(pointB.y / pointB.x) : atan(pointB.y / pointB.x)
         
         return a2 - a1
     }
     
-    func calculateSquareDistance(pointA: CGPoint, pointB: CGPoint) -> CGFloat {
+    public func calculateSquareDistance(pointA: CGPoint, pointB: CGPoint) -> CGFloat {
         return pow(pointA.x - pointB.x, 2) + pow(pointA.y - pointB.y, 2)
     }
 }

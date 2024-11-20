@@ -26,6 +26,10 @@ struct CTGameInfo {
     
     let MAX_NUMBER_OF_COPS = 10
     let MAX_NUMBER_OF_PEDS = 20
+    let ITEM_DESPAWN_DIST = 300.0
+    let MIN_SPAWN_RADIUS = 10000.0
+    let MAX_SPAWN_RADIUS = 80000.0
+    
     
     
     // gameplay speed

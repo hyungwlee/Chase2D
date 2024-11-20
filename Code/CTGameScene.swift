@@ -90,6 +90,18 @@ class CTGameScene: SKScene {
     func updateCopCarComponents(){
         // copCar drive
         for copCarEntity in copCarEntities{
+            
+            let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copCarEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
+            
+            if distanceWithPlayer >= gameInfo.ITEM_DESPAWN_DIST * gameInfo.ITEM_DESPAWN_DIST {
+                copCarEntity.carNode.removeFromParent()
+                if let index =  copCarEntities.firstIndex(of: copCarEntity) {
+                    copCarEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
             if let trackingComponent = copCarEntity.component(ofType: CTSelfDrivingComponent.self) {
                 trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
                 trackingComponent.avoidObstacles()

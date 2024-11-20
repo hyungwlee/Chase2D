@@ -12,9 +12,7 @@ class CTCopAINode: SKNode{
     
     weak var context: CTGameContext?
     
-    let MIN_SPAWN_RADIUS = 10000.0
-    let MAX_SPAWN_RADIUS = 50000.0
-    
+   
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +20,7 @@ class CTCopAINode: SKNode{
     func populateAI (){
         
         // timer
-        let wait = SKAction.wait(forDuration: 1)
+        let wait = SKAction.wait(forDuration: 2)
         let run = SKAction.run {
             self.spawnCops()
         }
@@ -49,13 +47,15 @@ class CTCopAINode: SKNode{
             
             // random number generation
             let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 2).nextInt()
-            print(context?.gameScene?.gameInfo.numberOfCops)
+            
+            let minSpawnDist = context?.gameScene?.gameInfo.MIN_SPAWN_RADIUS ?? 10000
+            let maxSpawnDist = context?.gameScene?.gameInfo.MAX_SPAWN_RADIUS ?? 50000
             
             // 1 in 3 chance of getting a spawn
             if
                 randomNumber != 2
-                || distanceWithPlayer * distanceWithPlayer >= MAX_SPAWN_RADIUS * MAX_SPAWN_RADIUS
-                || distanceWithPlayer * distanceWithPlayer <= MIN_SPAWN_RADIUS * MIN_SPAWN_RADIUS
+                || distanceWithPlayer * distanceWithPlayer >= maxSpawnDist * maxSpawnDist
+                || distanceWithPlayer * distanceWithPlayer <= minSpawnDist * maxSpawnDist
                 || context?.gameScene?.gameInfo.numberOfCops ?? 0 >= context?.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
             { continue };
             

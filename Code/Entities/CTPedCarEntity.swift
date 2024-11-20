@@ -43,7 +43,6 @@ class CTPedCarEntity: GKEntity {
     // change currentTarget if the pedCar reaches the checkpoint
     func updateCurrentTarget(){
         if calculateSquareDistance(pointA: self.carNode.position, pointB: currentTarget) < CHECKPOINT_RADIUS_SQUARED && checkPointsList.count != 0{
-            currentTargetIndex += 1
             
             currentTargetIndex = currentTargetIndex % (checkPointsList.count - 1)
             currentTarget = checkPointsList[currentTargetIndex].position
@@ -52,6 +51,8 @@ class CTPedCarEntity: GKEntity {
             let sq = SKShapeNode(rect: CGRect(x: currentTarget.x, y: currentTarget.y, width: 1, height: 1))
             sq.fillColor = .red
             self.carNode.scene?.addChild(sq)
+            
+            currentTargetIndex += 1
             
         }
         
