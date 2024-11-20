@@ -62,21 +62,23 @@ class CTGameScene: SKScene {
         context?.stateMachine?.update(deltaTime: currentTime)
         
         gameInfo.updateScore(phoneRuntime: currentTime)
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + 15, y: cameraNode!.position.y + 40)
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 15, y: cameraNode!.position.y + 40)
+        
+        // Text UI Components
+        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + 15, y: cameraNode!.position.y + 90)
+        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 15, y: cameraNode!.position.y + 90)
+        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
         
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + 50, y: cameraNode!.position.y - 50 )
-        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
         gameInfo.setHealthLabel(value: gameInfo.playerHealth)
         
+        // Non-text UI components
         gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + 50, y: cameraNode!.position.y - 50)
         gameInfo.healthIndicator.alpha = 0.5
 
-        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 100)
-        
+        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 110)
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity
         let speed = sqrt(velocity!.dx * velocity!.dx + velocity!.dy * velocity!.dy)
-        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 100)
+        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 110)
         
         updateCopCarComponents()
         updatePedCarComponents()
