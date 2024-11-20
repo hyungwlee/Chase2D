@@ -48,6 +48,11 @@ struct CTGameInfo {
     var healthLabel = SKLabelNode(fontNamed: "Arial")
     var gameOverLabel = SKLabelNode(fontNamed: "Arial")
     
+    var healthIndicator = SKSpriteNode(imageNamed: "player100")
+    var speedometer = SKSpriteNode(imageNamed: "speedometer")
+    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
+    let speedoSize = 0.35
+    
     init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")) {
         self.score = score
         
@@ -60,12 +65,22 @@ struct CTGameInfo {
         timeLabel.zPosition = 100
         
         self.healthLabel = healthLabel
-        healthLabel.fontSize = 6
+        healthLabel.fontSize = 8
         healthLabel.zPosition = 100
         
         self.gameOverLabel = gameOverLabel
         gameOverLabel.fontSize = 12
         gameOverLabel.zPosition = 100
+        
+        
+        healthIndicator.size = CGSize(width: healthIndicator.size.width * 0.5, height: healthIndicator.size.height * 0.5)
+        healthIndicator.zPosition = 90
+        
+        speedometer.size = CGSize(width: speedometer.size.width * speedoSize, height: speedometer.size.height * speedoSize)
+        speedometer.zPosition = 100
+        
+        speedometerBG.size = CGSize(width: speedometerBG.size.width * speedoSize, height: speedometerBG.size.height * speedoSize)
+        speedometerBG.zPosition = 95
     }
     
     mutating func setGameOver()
@@ -114,6 +129,42 @@ struct CTGameInfo {
             scoreChangeFrequency -= 0.1
             //increase gamespeed here as well??
         }
+        
+        updateHealthUI()
+    }
+    
+    func updateHealthUI()
+    {
+        if (playerHealth > 75)
+        {
+            healthIndicator.texture = SKTexture(imageNamed: "player100")
+        }
+        else if (playerHealth > 50)
+        {
+            healthIndicator.texture = SKTexture(imageNamed: "player75")
+        }
+        else if (playerHealth > 25)
+        {
+            healthIndicator.texture = SKTexture(imageNamed: "player50")
+        }
+        else if (playerHealth > 0)
+        {
+            healthIndicator.texture = SKTexture(imageNamed: "player25")
+        }
+        else
+        {
+            healthIndicator.isHidden = true
+        }
+    }
+    
+    func updateSpeed(speed: CGFloat) -> CGFloat
+    {
+        let percentage = speed / 200
+        let adjWidth = 400 * speedoSize
+        let output = (adjWidth * percentage)
+//        print("speed: \(speed) percentage: \(percentage)")
+        
+        return (output - adjWidth)
     }
 }
 

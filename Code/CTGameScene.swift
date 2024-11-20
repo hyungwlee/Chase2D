@@ -30,6 +30,9 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.timeLabel)
         self.addChild(gameInfo.healthLabel)
         self.addChild(gameInfo.gameOverLabel)
+        self.addChild(gameInfo.healthIndicator)
+        self.addChild(gameInfo.speedometer)
+        self.addChild(gameInfo.speedometerBG)
     }
         
     override func didMove(to view: SKView) {
@@ -59,16 +62,24 @@ class CTGameScene: SKScene {
         context?.stateMachine?.update(deltaTime: currentTime)
         
         gameInfo.updateScore(phoneRuntime: currentTime)
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 10)
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 20)
-        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x - 25, y: cameraNode!.position.y + 30 )
+        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + 15, y: cameraNode!.position.y + 40)
+        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 15, y: cameraNode!.position.y + 40)
+        
+        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + 50, y: cameraNode!.position.y - 50 )
         gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
         gameInfo.setHealthLabel(value: gameInfo.playerHealth)
         
+        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + 50, y: cameraNode!.position.y - 50)
+        gameInfo.healthIndicator.alpha = 0.5
 
+        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 100)
+        
+        let velocity = playerCarEntity?.carNode.physicsBody?.velocity
+        let speed = sqrt(velocity!.dx * velocity!.dx + velocity!.dy * velocity!.dy)
+        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 100)
+        
         updateCopCarComponents()
         updatePedCarComponents()
-        
     }
     
     func updatePedCarComponents(){
@@ -195,7 +206,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
             
             
-            let carVelocityMag:CGFloat = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
+            let carVelocityMag = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             
          // impact force depends on the relative velocity
