@@ -51,7 +51,7 @@ struct CTGameInfo {
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
-    let speedoSize = 0.35
+    let speedoSize = 0.31
     
     init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")) {
         self.score = score
@@ -73,7 +73,7 @@ struct CTGameInfo {
         gameOverLabel.zPosition = 100
         
         
-        healthIndicator.size = CGSize(width: healthIndicator.size.width * 0.5, height: healthIndicator.size.height * 0.5)
+        healthIndicator.size = CGSize(width: healthIndicator.size.width * 0.25, height: healthIndicator.size.height * 0.25)
         healthIndicator.zPosition = 90
         
         speedometer.size = CGSize(width: speedometer.size.width * speedoSize, height: speedometer.size.height * speedoSize)
