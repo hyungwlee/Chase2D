@@ -29,11 +29,16 @@ struct CTGameInfo {
     let ITEM_DESPAWN_DIST = 300.0
     let MIN_SPAWN_RADIUS = 10000.0
     let MAX_SPAWN_RADIUS = 80000.0
+    let MAX_PLAYABLE_SIZE = 1000.0
     
     
     
     // gameplay speed
     var gameplaySpeed = 0.01
+    var powerUpPeriod:UInt64 = 2
+    var cashCollected = 0
+    var numberOfCashNodesInScene = 0 // leave it 0 to begin with and the update function in gameScene will adjust it properly
+    let initialCashNumber = 200
     
     var score = 0
     let SCORE_INCREMENT_AMOUNT = 1

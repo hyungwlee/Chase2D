@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E16A6E92CF29F490086D22E /* CTPowerUpNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6E82CF29F490086D22E /* CTPowerUpNode.swift */; };
 		9E3A12D72CCC45140003D097 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D32CCC45140003D097 /* Dependencies.swift */; };
 		9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D42CCC45140003D097 /* GameModeType.swift */; };
 		9E3A12D92CCC45140003D097 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D52CCC45140003D097 /* GameContext.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		1AB93CB82CCD7081004123CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9E16A6E82CF29F490086D22E /* CTPowerUpNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTPowerUpNode.swift; sourceTree = "<group>"; };
 		9E3A12D32CCC45140003D097 /* Dependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		9E3A12D42CCC45140003D097 /* GameModeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModeType.swift; sourceTree = "<group>"; };
 		9E3A12D52CCC45140003D097 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				9E910F3B2CDDACD40080A801 /* CTCopNode.swift */,
 				9E910F3D2CDDAE6A0080A801 /* CTCopAINode.swift */,
 				9ED875152CE7BA8B00FED09C /* CTCopLights.swift */,
+				9E16A6E82CF29F490086D22E /* CTPowerUpNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */,
 				9E9B77D62CE3072B00F88543 /* CTDrivingComponent.swift in Sources */,
 				9E9B77D22CE3066400F88543 /* CTPlayerCarEntity.swift in Sources */,
+				9E16A6E92CF29F490086D22E /* CTPowerUpNode.swift in Sources */,
 				9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */,
 				9E9B77E82CE45FCC00F88543 /* CTGameIdleState.swift in Sources */,
 				9E3A12D72CCC45140003D097 /* Dependencies.swift in Sources */,

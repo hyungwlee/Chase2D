@@ -49,8 +49,6 @@ class CTGameScene: SKScene {
         prepareGameContext()
         prepareStartNodes()
         
-        
-       
         context.stateMachine?.enter(CTGamePlayState.self)
     }
     
@@ -77,12 +75,26 @@ class CTGameScene: SKScene {
         
 
         gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 100)
-        let velocity = playerCarEntity?.carNode.physicsBody?.velocity
-        let speed = sqrt(velocity!.dx * velocity!.dx + velocity!.dy * velocity!.dy)
+        
+        // to preserve the aspect ration we are gonna set the height based on the
+        gameInfo.speedometer.size = CGSize(width: self.size.width, height: 100.0)
+        let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
+        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
         gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 100)
         
+        
+        // ai section
         updateCopCarComponents()
         updatePedCarComponents()
+        
+        
+        // spawn powerup section
+        
+        // spawn more cash if cash is low
+        if(gameInfo.numberOfCashNodesInScene < 20){
+            spawnCashNodes(amount:gameInfo.initialCashNumber)
+            gameInfo.numberOfCashNodesInScene = gameInfo.numberOfCashNodesInScene + gameInfo.initialCashNumber
+        }
     }
     
     func updatePedCarComponents(){
@@ -123,6 +135,25 @@ class CTGameScene: SKScene {
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
             }
+        }
+    }
+    
+    func spawnCashNodes(amount: Int){
+        
+        guard let context else { return }
+        
+        let randomSource = GKRandomSource.sharedRandom()
+        
+        for _ in 0...amount {
+            let randomFloatX = Double(randomSource.nextUniform()) * gameInfo.MAX_PLAYABLE_SIZE - gameInfo.MAX_PLAYABLE_SIZE / 2.0
+            let randomFloatY = Double(randomSource.nextUniform()) * gameInfo.MAX_PLAYABLE_SIZE - gameInfo.MAX_PLAYABLE_SIZE / 2.0
+            
+            let cashNode = CTPowerUpNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
+            cashNode.name = "cash"
+            cashNode.position = CGPoint(x: randomFloatX, y: randomFloatY)
+            cashNode.zPosition = -1
+            addChild(cashNode)
+            
         }
     }
     
@@ -201,6 +232,26 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         let collision = categoryA | categoryB
         
+        
+        // non-damage collision
+        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.powerup) {
+             
+            let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
+            // add cash if car hits a powerup and remove cash from total
+            gameInfo.cashCollected = gameInfo.cashCollected + 1
+            gameInfo.numberOfCashNodesInScene = gameInfo.numberOfCashNodesInScene - 1
+            colliderNode?.removeFromParent()
+            
+            // randomly applies one powerup if we collect 5 powerup
+            if(gameInfo.cashCollected == 5) {
+                activatePowerUp()
+                gameInfo.cashCollected = 0
+            }
+            
+        }
+        
+        
+        // damage collision
         if collision == (CTPhysicsCategory.car  | CTPhysicsCategory.building) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.enemy) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
@@ -223,4 +274,54 @@ extension CTGameScene: SKPhysicsContactDelegate {
         }
         
     }
+}
+
+extension CTGameScene{
+    
+    func activatePowerUp() {
+        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 2).nextInt()
+        switch(randomNumber){
+        case 0:
+            boostHealth()
+            break;
+        case 1:
+            destroyCops()
+            break;
+        case 2:
+            Task{
+                await increaseSpeed()
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    
+    func boostHealth() {
+        gameInfo.playerHealth = gameInfo.playerHealth + 50
+        print("boostHealth")
+    }
+    
+    func destroyCops() {
+        for copCarEntity in copCarEntities{
+            let fadeOutAction = SKAction.fadeOut(withDuration: 1.0)
+            copCarEntity.carNode.run(fadeOutAction) {
+                if let index =  self.copCarEntities.firstIndex(of: copCarEntity) {
+                    copCarEntity.carNode.removeFromParent()
+                    self.copCarEntities.remove(at: index)
+                    self.gameInfo.numberOfCops -= 1
+                }
+            }
+            
+        }
+        print("destoryCops")
+    }
+    
+    func increaseSpeed() async {
+        gameInfo.playerSpeed = gameInfo.playerSpeed + 100
+        try? await Task.sleep(nanoseconds: gameInfo.powerUpPeriod * 1_000_000_000)
+        gameInfo.playerSpeed = gameInfo.playerSpeed - 100
+        print("increase Speed")
+    }
+    
 }
