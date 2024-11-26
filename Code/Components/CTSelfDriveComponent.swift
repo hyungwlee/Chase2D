@@ -35,7 +35,7 @@ class CTSelfDrivingComponent: GKComponent {
             "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 60),
             "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 5, angle: 30),
             "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 5, angle: 150),
-            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 20, angle: 90),
+            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 40, angle: 90),
         ]
         super.init()
         
@@ -68,6 +68,7 @@ class CTSelfDrivingComponent: GKComponent {
                  steeringComponent.steer(moveDirection: 0.0) // Go straight if close enough to target angle
              }
         }
+        
     }
    
     func avoidObstacles(){
@@ -82,8 +83,12 @@ class CTSelfDrivingComponent: GKComponent {
             
             
             let body = self.carNode.scene?.physicsWorld.body(alongRayStart: rayStart, end: rayEnd)
+            
+           
+            let drivingComponent = entity?.component(ofType: CTDrivingComponent.self)
+            
             if let steeringComponent = entity?.component(ofType: CTSteeringComponent.self){
-                if(body?.categoryBitMask == CTPhysicsCategory.building){
+                if(body?.categoryBitMask == CTPhysicsCategory.building || body?.categoryBitMask == CTPhysicsCategory.car){
                     isDetectingObstacle = true
                     switch(ray.key){
                     case "Right":
@@ -99,7 +104,15 @@ class CTSelfDrivingComponent: GKComponent {
                         steeringComponent.steer(moveDirection: -0.5)
                         break;
                     case "Up":
-                        steeringComponent.steer(moveDirection: -1.0)
+                        if(self.carNode.name == "cop"){
+                            print(body?.categoryBitMask)
+                            if(body?.categoryBitMask == CTPhysicsCategory.car){
+                                steeringComponent.steer(moveDirection: -5.0)
+                                print("player found")
+                            }
+                        }
+                        
+//                        drivingComponent?.drive(driveDir: .backward)
                         break;
                     default:
                         steeringComponent.steer(moveDirection: 0.0)

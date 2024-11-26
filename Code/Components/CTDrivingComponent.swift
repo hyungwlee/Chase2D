@@ -12,6 +12,7 @@ class CTDrivingComponent: GKComponent {
     
     let carNode: SKSpriteNode
     var MOVE_FORCE:CGFloat = 1300
+    var hasStopped = false
    
     enum driveDir {
         case forward
@@ -30,24 +31,33 @@ class CTDrivingComponent: GKComponent {
     
     func drive(driveDir: driveDir){
         
-        var moveDir = 0.0
+        guard let physicsBody = carNode.physicsBody else {return}
        
-        switch driveDir {
-        case .forward:
-            moveDir = 1.0
-            break
-        case .backward:
-            moveDir = -1.0
-            break
-        case .none:
-            moveDir = 0.0
+        if (driveDir == .backward){
+            
+            if((physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) > 700 &&
+             !hasStopped){
+                self.carNode.physicsBody?.linearDamping = 3.0
+                self.carNode.physicsBody?.angularVelocity = 0.0
+            } else {
+                hasStopped = true
+                self.carNode.physicsBody?.linearDamping = 10.0
+                let directionX = -sin(self.carNode.zRotation) * MOVE_FORCE * 30
+                let directionY = cos(self.carNode.zRotation) * MOVE_FORCE * 30
+                let force = CGVector(dx: -directionX, dy: -directionY)
+                self.carNode.physicsBody?.applyForce(force)
+            }
+            
+        }else if(driveDir == .forward){
+            
+            hasStopped = false
+            self.carNode.physicsBody?.linearDamping = 10.0
+            
+            let directionX = -sin(self.carNode.zRotation) * MOVE_FORCE * 70
+            let directionY = cos(self.carNode.zRotation) * MOVE_FORCE * 70
+            let force = CGVector(dx: directionX, dy: directionY)
+            self.carNode.physicsBody?.applyForce(force)
         }
-       
-        let directionX = -sin(self.carNode.zRotation) * MOVE_FORCE * moveDir
-        let directionY = cos(self.carNode.zRotation) * MOVE_FORCE * moveDir
-        
-        let force = CGVector(dx: directionX, dy: directionY)
-        self.carNode.physicsBody?.applyImpulse(force)
        
     }
     

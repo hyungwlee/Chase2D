@@ -65,6 +65,7 @@ class CTCopAINode: SKNode{
             let copCar = CTCopNode(imageNamed: "squadCar", size:
                                     (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
             copCar.position = child.position
+            copCar.name = "cop"
             
             let carEntity = CTCopCarEntity(carNode: copCar)
             carEntity.prepareComponents()

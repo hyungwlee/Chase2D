@@ -33,7 +33,7 @@ class CTCopNode: SKSpriteNode {
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
         physicsBody?.categoryBitMask = CTPhysicsCategory.enemy
         physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy
-        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped 
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped  | CTPhysicsCategory.enemy
     }
     
     func addLights() {

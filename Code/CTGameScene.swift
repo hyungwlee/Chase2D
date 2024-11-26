@@ -79,6 +79,7 @@ class CTGameScene: SKScene {
         // to preserve the aspect ration we are gonna set the height based on the
         gameInfo.speedometer.size = CGSize(width: self.size.width, height: 100.0)
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
+        // TODO: try not to use sqrt because of performance issues
         let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
         gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 100)
         
@@ -129,8 +130,8 @@ class CTGameScene: SKScene {
             }
             
             if let trackingComponent = copCarEntity.component(ofType: CTSelfDrivingComponent.self) {
-                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
                 trackingComponent.avoidObstacles()
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
             }
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
@@ -279,18 +280,16 @@ extension CTGameScene: SKPhysicsContactDelegate {
 extension CTGameScene{
     
     func activatePowerUp() {
-        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 2).nextInt()
+        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 5).nextInt()
         switch(randomNumber){
-        case 0:
+        case 0,1:
             boostHealth()
             break;
-        case 1:
+        case 2:
             destroyCops()
             break;
-        case 2:
-            Task{
-                await increaseSpeed()
-            }
+        case 3,4,5:
+             increaseSpeed()
             break;
         default:
             break;
@@ -298,7 +297,7 @@ extension CTGameScene{
     }
     
     func boostHealth() {
-        gameInfo.playerHealth = gameInfo.playerHealth + 50
+        gameInfo.playerHealth = gameInfo.playerHealth + 5
         print("boostHealth")
     }
     
@@ -317,10 +316,8 @@ extension CTGameScene{
         print("destoryCops")
     }
     
-    func increaseSpeed() async {
+    func increaseSpeed() {
         gameInfo.playerSpeed = gameInfo.playerSpeed + 100
-        try? await Task.sleep(nanoseconds: gameInfo.powerUpPeriod * 1_000_000_000)
-        gameInfo.playerSpeed = gameInfo.playerSpeed - 100
         print("increase Speed")
     }
     

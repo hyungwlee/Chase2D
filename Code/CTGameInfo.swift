@@ -16,9 +16,9 @@ struct CTGameInfo {
     // player health and player speed to be implemented later on gameInfo
     // implemented individually now
     var playerHealth:CGFloat = 100
-    var playerSpeed:CGFloat = 1350
+    var playerSpeed:CGFloat = 1000
     var pedSpeed:CGFloat = 800
-    var copSpeed:CGFloat = 1300
+    var copSpeed:CGFloat = 5000
     
     
     var numberOfCops = 0
@@ -26,19 +26,21 @@ struct CTGameInfo {
     
     let MAX_NUMBER_OF_COPS = 10
     let MAX_NUMBER_OF_PEDS = 20
-    let ITEM_DESPAWN_DIST = 300.0
+    let ITEM_DESPAWN_DIST = 3000.0
     let MIN_SPAWN_RADIUS = 10000.0
     let MAX_SPAWN_RADIUS = 80000.0
-    let MAX_PLAYABLE_SIZE = 1000.0
+    let MAX_PLAYABLE_SIZE = 80000.0
     
     
     
     // gameplay speed
     var gameplaySpeed = 0.01
+    
+    // cash
     var powerUpPeriod:UInt64 = 2
     var cashCollected = 0
     var numberOfCashNodesInScene = 0 // leave it 0 to begin with and the update function in gameScene will adjust it properly
-    let initialCashNumber = 200
+    let initialCashNumber = 1000
     
     var score = 0
     let SCORE_INCREMENT_AMOUNT = 1
