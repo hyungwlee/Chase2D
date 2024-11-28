@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 struct CTGameInfo {
-    var gameScene: CTGameScene
+//    var gameScene: CTGameScene
     var layoutInfo: CTLayoutInfo
     
     var gameOver = false
@@ -83,38 +83,39 @@ struct CTGameInfo {
         }
     }
     
-    func updateHealthUI()/* -> SKTexture*/
+    func updateHealthUI() -> SKTexture
     {
         if (playerHealth > 75)
         {
-            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player100")
-//            return SKTexture(imageNamed: "player100")
+//            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player100")
+            return SKTexture(imageNamed: "player100")
         }
         else if (playerHealth > 50)
         {
-            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player75")
-//            return SKTexture(imageNamed: "player75")
+//            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player75")
+            return SKTexture(imageNamed: "player75")
         }
         else if (playerHealth > 25)
         {
-            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player50")
-//            return SKTexture(imageNamed: "player50")
+//            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player50")
+            return SKTexture(imageNamed: "player50")
         }
-        else if (playerHealth > 0)
-        {
-            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player25")
-//            return SKTexture(imageNamed: "player25")
-        }
-        else
-        {
-            gameScene.healthIndicator.isHidden = true
-        }
+//        else if (playerHealth > 0)
+//        {
+//            gameScene.healthIndicator.texture = SKTexture(imageNamed: "player25")
+        return SKTexture(imageNamed: "player25")
+//        }
+//        else
+//        {
+//            gameScene.healthIndicator.isHidden = true
+//        }
     }
     
     func updateSpeed(speed: CGFloat) -> CGFloat
     {
         let percentage = speed / 200
-        let adjWidth = layoutInfo.screenSize.width
+//        let adjWidth = layoutInfo.screenSize.width
+        let adjWidth = UIScreen.main.bounds.size.width
         let output = (adjWidth * percentage)
         
         return (output - adjWidth)

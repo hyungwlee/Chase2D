@@ -30,11 +30,11 @@ class CTGameScene: SKScene {
     
     
     let GAME_SPEED_INCREASE_RATE = 0.01
-
     
-    required init?(coder aDecoder: NSCoder, gameInfo: CTGameInfo, layoutInfo: CTLayoutInfo) {
-        self.gameInfo = gameInfo
-        self.layoutInfo = layoutInfo
+    
+    required init?(coder aDecoder: NSCoder) {
+//        self.gameInfo = gameInfo
+//        self.layoutInfo = layoutInfo
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
         
@@ -54,20 +54,20 @@ class CTGameScene: SKScene {
         gameOverLabel.zPosition = 100
         
 //        Non-Text UI Elements
-        healthIndicator.size = layoutInfo.healthIndicatorSize
+        healthIndicator.size = context!.layoutInfo.healthIndicatorSize
         healthIndicator.alpha = 0.5
         healthIndicator.zPosition = 90
         
-        speedometer.size = layoutInfo.speedometerSize
+        speedometer.size = context!.layoutInfo.speedometerSize
         speedometer.zPosition = 100
         
-        speedometerBG.size = layoutInfo.speedometerBackgroundSize
+        speedometerBG.size = context!.layoutInfo.speedometerBackgroundSize
         speedometerBG.zPosition = 95
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func didMove(to view: SKView) {
         guard let context else {
@@ -87,11 +87,13 @@ class CTGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-       
+        
+        
         if(gameInfo.gameOver)
         {
             context?.stateMachine?.enter(CTGameOverState.self)
             gameOverLabel.isHidden = false
+            healthIndicator.isHidden = true
         }
         context?.stateMachine?.update(deltaTime: currentTime)
         
@@ -122,8 +124,7 @@ class CTGameScene: SKScene {
         speedometer.position = CGPoint(x: camX, y: camY - 100)
         speedometerBG.position = CGPoint(x: camX + gameInfo.updateSpeed(speed: speed), y: camY - 100)
         
-        gameInfo.updateHealthUI()
-        
+        healthIndicator.texture = gameInfo.updateHealthUI()
         
         // ai section
         updateCopCarComponents()
@@ -181,7 +182,6 @@ class CTGameScene: SKScene {
     }
     
     func spawnCashNodes(amount: Int){
-        
         guard let context else { return }
         
         let randomSource = GKRandomSource.sharedRandom()
@@ -200,7 +200,6 @@ class CTGameScene: SKScene {
     }
     
     func prepareGameContext(){
-    
         guard let context else {
             return
         }

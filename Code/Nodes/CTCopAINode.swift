@@ -48,18 +48,18 @@ class CTCopAINode: SKNode{
             // random number generation
             let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 2).nextInt()
             
-            let minSpawnDist = context?.gameScene?.gameInfo.MIN_SPAWN_RADIUS ?? 10000
-            let maxSpawnDist = context?.gameScene?.gameInfo.MAX_SPAWN_RADIUS ?? 50000
+            let minSpawnDist = context?.gameScene?.gameInfo?.MIN_SPAWN_RADIUS ?? 10000
+            let maxSpawnDist = context?.gameScene?.gameInfo?.MAX_SPAWN_RADIUS ?? 50000
             
             // 1 in 3 chance of getting a spawn
             if
                 randomNumber != 2
                 || distanceWithPlayer * distanceWithPlayer >= maxSpawnDist * maxSpawnDist
                 || distanceWithPlayer * distanceWithPlayer <= minSpawnDist * maxSpawnDist
-                || context?.gameScene?.gameInfo.numberOfCops ?? 0 >= context?.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
+                    || context?.gameScene?.gameInfo?.numberOfCops ?? 0 >= context?.gameScene?.gameInfo?.MAX_NUMBER_OF_COPS ?? 10
             { continue };
             
-            context?.gameScene?.gameInfo.numberOfCops += 1
+            context?.gameScene?.gameInfo?.numberOfCops += 1
             
 //            let copCar = CTCopNode(imageNamed: "black", size:
             let copCar = CTCopNode(imageNamed: "squadCar", size:
