@@ -17,24 +17,58 @@ class CTGameScene: SKScene {
     var copCarEntities: [CTCopCarEntity] = []
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
+    var layoutInfo: CTLayoutInfo
+    
+    var scoreLabel = SKLabelNode(fontNamed: "Arial")
+    var timeLabel = SKLabelNode(fontNamed: "Arial")
+    var healthLabel = SKLabelNode(fontNamed: "Arial")
+    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
+    
+    var healthIndicator = SKSpriteNode(imageNamed: "player100")
+    var speedometer = SKSpriteNode(imageNamed: "speedometer")
+    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     
     
     let GAME_SPEED_INCREASE_RATE = 0.01
 
     
-    required init?(coder aDecoder: NSCoder) {
-        self.gameInfo = CTGameInfo()
+    required init?(coder aDecoder: NSCoder, gameInfo: CTGameInfo, layoutInfo: CTLayoutInfo) {
+        self.gameInfo = gameInfo
+        self.layoutInfo = layoutInfo
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
-        self.addChild(gameInfo.scoreLabel)
-        self.addChild(gameInfo.timeLabel)
-        self.addChild(gameInfo.healthLabel)
-        self.addChild(gameInfo.gameOverLabel)
-        self.addChild(gameInfo.healthIndicator)
-        self.addChild(gameInfo.speedometer)
-        self.addChild(gameInfo.speedometerBG)
-    }
         
+//        Text UI Elements
+        scoreLabel.fontSize = 6
+        scoreLabel.zPosition = 100
+        
+        timeLabel.fontSize = 6
+        timeLabel.zPosition = 100
+        
+        healthLabel.fontSize = 8
+        healthLabel.zPosition = 100
+        
+        gameOverLabel.text = "GAME OVER"
+        gameOverLabel.isHidden = true
+        gameOverLabel.fontSize = 12
+        gameOverLabel.zPosition = 100
+        
+//        Non-Text UI Elements
+        healthIndicator.size = layoutInfo.healthIndicatorSize
+        healthIndicator.alpha = 0.5
+        healthIndicator.zPosition = 90
+        
+        speedometer.size = layoutInfo.speedometerSize
+        speedometer.zPosition = 100
+        
+        speedometerBG.size = layoutInfo.speedometerBackgroundSize
+        speedometerBG.zPosition = 95
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
         guard let context else {
             return
@@ -54,34 +88,41 @@ class CTGameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
        
-        if(gameInfo.gameOver){
+        if(gameInfo.gameOver)
+        {
             context?.stateMachine?.enter(CTGameOverState.self)
+            gameOverLabel.isHidden = false
         }
         context?.stateMachine?.update(deltaTime: currentTime)
         
-        gameInfo.updateScore(phoneRuntime: currentTime)
+        let camX = cameraNode!.position.x
+        let camY = cameraNode!.position.y
+        
+        //REVISED SCORE AND TIME FUNCTION CALLS
+        gameInfo.updateTime(phoneRuntime: currentTime)
+        gameInfo.updateScore()
         
         // Text UI Components
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + 15, y: cameraNode!.position.y + 90)
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 15, y: cameraNode!.position.y + 90)
-        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
+        scoreLabel.text = "Score: " + String(gameInfo.score)
+        timeLabel.text = "Time: " + String(Int(gameInfo.seconds))
+        healthLabel.text = "Health: " + String(Int(gameInfo.playerHealth))
         
-        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + 40, y: cameraNode!.position.y - 80 )
-        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
+        //SHIFTS IN POSITION NEED TO BE RELATIVE TO SCREENSIZE
+        scoreLabel.position = CGPoint(x: camX + 15, y: camY + 90)
+        timeLabel.position = CGPoint(x: camX - 15, y: camY + 90)
+        gameOverLabel.position = CGPoint(x: camX, y: camY + 50)
+        healthLabel.position = CGPoint(x: camX + 40, y: camY - 80 )
         
         // Non-text UI components
-        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + 45, y: cameraNode!.position.y - 50)
-        gameInfo.healthIndicator.alpha = 0.5
-        
-
-        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 100)
-        
-        // to preserve the aspect ration we are gonna set the height based on the
-        gameInfo.speedometer.size = CGSize(width: self.size.width, height: 100.0)
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
         // TODO: try not to use sqrt because of performance issues
         let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
-        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 100)
+        
+        healthIndicator.position = CGPoint(x: camX + 45, y: camY - 50)
+        speedometer.position = CGPoint(x: camX, y: camY - 100)
+        speedometerBG.position = CGPoint(x: camX + gameInfo.updateSpeed(speed: speed), y: camY - 100)
+        
+        gameInfo.updateHealthUI()
         
         
         // ai section
@@ -165,7 +206,7 @@ class CTGameScene: SKScene {
         }
 
         context.scene = scene
-        context.updateLayoutInfo(withScreenSize: size)
+        context.configureLayoutInfo(withScreenSize: size)
         context.configureStates()
     }
     
@@ -270,7 +311,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
             if(gameInfo.playerHealth <= 0){
                 gameInfo.playerHealth = 0
-                gameInfo.setGameOver()
+//                gameInfo.setGameOver()
             }
         }
         

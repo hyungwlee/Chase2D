@@ -12,17 +12,25 @@ class CTGameContext: GameContext{
         scene as? CTGameScene
     }
     let gameMode: GameModeType
-    var layoutInfo: CTLayoutInfo = .init(screenSize: .zero)
+    var layoutInfo: CTLayoutInfo
     
     private(set) var stateMachine: GKStateMachine?
     
     init(dependencies: Dependencies, gameMode: GameModeType) {
         self.gameMode = gameMode
+        self.layoutInfo = CTLayoutInfo()
         super.init(dependencies: dependencies)
     }
         
-    func updateLayoutInfo(withScreenSize size: CGSize){
-        layoutInfo = CTLayoutInfo(screenSize: size)
+    func configureLayoutInfo(withScreenSize size: CGSize){
+        let screenSize = UIScreen.main.bounds.size
+        let ssW = screenSize.width
+        let ssH = screenSize.height
+        layoutInfo = CTLayoutInfo()
+        
+        layoutInfo.playerCarSize = CGSize(width: ssW * 0.013, height: ssH * 0.015)
+        layoutInfo.copCarSize = CGSize(width: ssW * 0.021, height: ssH * 0.017)
+        layoutInfo.powerUpSize = CGSize(width: ssW * 0.012, height: ssW * 0.012)
     }
     
     func configureStates() {

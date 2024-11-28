@@ -28,7 +28,7 @@ class CTGameOverState: GKState {
     
     func handlePlayerDeath(){
         
-        scene!.gameInfo.setGameOver()
+//        scene!.gameInfo.setGameOver()
         
         if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .none)
