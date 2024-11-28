@@ -61,5 +61,21 @@ class CTDrivingComponent: GKComponent {
        
     }
     
+    func ram(){
+        
+        print("ramming")
+        // timer
+        let wait = SKAction.wait(forDuration: 0.5)
+        let run = SKAction.run {
+            self.MOVE_FORCE = self.MOVE_FORCE * 5
+        }
+        let end = SKAction.run{
+            self.MOVE_FORCE = self.MOVE_FORCE / 5
+        }
+        
+        let sequence = SKAction.sequence([wait, run, end])
+        self.carNode.run(sequence)
+    }
+    
     
 }

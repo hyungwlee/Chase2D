@@ -20,7 +20,7 @@ class CTCopAINode: SKNode{
     func populateAI (){
         
         // timer
-        let wait = SKAction.wait(forDuration: 2)
+        let wait = SKAction.wait(forDuration: 0.5)
         let run = SKAction.run {
             self.spawnCops()
         }
@@ -68,6 +68,7 @@ class CTCopAINode: SKNode{
             copCar.name = "cop"
             
             let carEntity = CTCopCarEntity(carNode: copCar)
+            carEntity.gameInfo = context?.gameScene?.gameInfo
             carEntity.prepareComponents()
             
             context?.gameScene?.addChild(copCar)

@@ -21,15 +21,19 @@ class CTCopCarEntity: GKEntity {
     func prepareComponents(){
             
         let drivingComponent = CTDrivingComponent(carNode: carNode)
-        drivingComponent.MOVE_FORCE = gameInfo?.copSpeed ?? 1300
+        drivingComponent.MOVE_FORCE = gameInfo?.copSpeed ?? 100
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.05
-        steeringComponent.DRIFT_FORCE = 0.05
+        steeringComponent.STEER_IMPULSE = 0.04
+        steeringComponent.DRIFT_FORCE = 0.04
+        steeringComponent.DRIFT_VELOCITY_THRESHOLD = 6
+        
+        let shootingComponent = CTShootingComponent(carNode: carNode)
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
+//        addComponent(shootingComponent)
          
     }
     

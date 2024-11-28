@@ -7,7 +7,7 @@
 
 import SpriteKit
 class CTPedCarNode: SKSpriteNode {
-        
+    
     init(imageNamed: String, size: CGSize){
         let texture = SKTexture(imageNamed: imageNamed )
         texture.filteringMode = .nearest
@@ -18,6 +18,7 @@ class CTPedCarNode: SKSpriteNode {
     
     func enablePhysics(){
         if(physicsBody == nil){
+//            physicsBody = SKPhysicsBody(texture: self.texture ?? SKTexture(imageNamed: "black"), size: self.size)
             physicsBody = SKPhysicsBody(rectangleOf: self.size)
         }
         physicsBody?.isDynamic = true
@@ -34,6 +35,7 @@ class CTPedCarNode: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
+        
     }
-    
 }

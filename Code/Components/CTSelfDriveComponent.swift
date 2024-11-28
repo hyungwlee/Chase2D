@@ -19,6 +19,7 @@ class CTSelfDrivingComponent: GKComponent {
    
     var rays: Dictionary<String, PointPairs>
     var isDetectingObstacle: Bool = false
+    let ramDecider = GKRandomDistribution(lowestValue: 0, highestValue: 1).nextInt()
     
     let carNode: SKSpriteNode
    
@@ -31,11 +32,11 @@ class CTSelfDrivingComponent: GKComponent {
     init(carNode: SKSpriteNode) {
         self.carNode = carNode
         self.rays  = [
-            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 120),
-            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 60),
-            "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 5, angle: 30),
-            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 5, angle: 150),
-            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 40, angle: 90),
+            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 120),
+            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 60),
+            "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 30),
+            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 150),
+            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 90),
         ]
         super.init()
         
@@ -104,15 +105,12 @@ class CTSelfDrivingComponent: GKComponent {
                         steeringComponent.steer(moveDirection: -0.5)
                         break;
                     case "Up":
-                        if(self.carNode.name == "cop"){
-                            print(body?.categoryBitMask)
-                            if(body?.categoryBitMask == CTPhysicsCategory.car){
-                                steeringComponent.steer(moveDirection: -5.0)
-                                print("player found")
+                        if(body?.categoryBitMask == CTPhysicsCategory.car){
+                            steeringComponent.steer(moveDirection: ramDecider == 0 ? -1.0 : 1.0)
+                            if(self.carNode.name == "cop"){
+                                drivingComponent?.ram()
                             }
                         }
-                        
-//                        drivingComponent?.drive(driveDir: .backward)
                         break;
                     default:
                         steeringComponent.steer(moveDirection: 0.0)
@@ -125,5 +123,14 @@ class CTSelfDrivingComponent: GKComponent {
 
         }
         
+        func squareMagnitude(velocity:CGVector?) -> CGFloat {
+            guard let velocity else {return 0}
+            return velocity.dx * velocity.dx + velocity.dy * velocity.dy
+        }
+        
     }
 }
+
+
+
+

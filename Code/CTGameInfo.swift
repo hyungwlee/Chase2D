@@ -16,9 +16,9 @@ struct CTGameInfo {
     // player health and player speed to be implemented later on gameInfo
     // implemented individually now
     var playerHealth:CGFloat = 100
-    var playerSpeed:CGFloat = 1000
-    var pedSpeed:CGFloat = 800
-    var copSpeed:CGFloat = 5000
+    var playerSpeed:CGFloat = 800
+    var pedSpeed:CGFloat = 500
+    var copSpeed:CGFloat = 1200
     
     
     var numberOfCops = 0
@@ -30,7 +30,6 @@ struct CTGameInfo {
     let MIN_SPAWN_RADIUS = 10000.0
     let MAX_SPAWN_RADIUS = 80000.0
     let MAX_PLAYABLE_SIZE = 80000.0
-    
     
     
     // gameplay speed
@@ -46,6 +45,9 @@ struct CTGameInfo {
     let SCORE_INCREMENT_AMOUNT = 1
     let FREQUENCY_CHANGE_THRESHHOLD = 5 //seconds
     var scoreChangeFrequency = 1.0
+    
+    // bullet
+    var bulletShootInterval = 1
     
     var seconds = 0.0
     var pastValue = ProcessInfo.processInfo.systemUptime

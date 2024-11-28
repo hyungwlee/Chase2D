@@ -26,6 +26,7 @@ class CTPedAINode: SKNode{
             let sprite = spriteArray[Int.random(in: 0...4)]
             let pedCar = CTPedCarNode(imageNamed: sprite, size: (self.context?.layoutInfo.playerCarSize) ?? CGSize(width: 5.2, height: 12.8))
             pedCar.position = child.position
+            pedCar.name = "ped"
             
             let pedCarEntity = CTPedCarEntity(carNode: pedCar)
             pedCarEntity.prepareComponents()

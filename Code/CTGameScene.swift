@@ -33,6 +33,8 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.healthIndicator)
         self.addChild(gameInfo.speedometer)
         self.addChild(gameInfo.speedometerBG)
+        
+        
     }
         
     override func didMove(to view: SKView) {
@@ -43,9 +45,6 @@ class CTGameScene: SKScene {
         // for collision
         physicsWorld.contactDelegate = self
         
-        view.showsFPS = true
-        view.showsPhysics = true
-        
         prepareGameContext()
         prepareStartNodes()
         
@@ -53,6 +52,8 @@ class CTGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
+        
        
         if(gameInfo.gameOver){
             context?.stateMachine?.enter(CTGameOverState.self)
@@ -136,6 +137,11 @@ class CTGameScene: SKScene {
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
             }
+            
+            if let shootingComponent = copCarEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            
         }
     }
     
@@ -251,6 +257,14 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
         }
         
+        // bullet collision
+        if collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.car) {
+            
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.bullet) ? contact.bodyA.node as? CTBulletNode : contact.bodyB.node as? CTBulletNode
+            bullet?.removeFromParent()
+            gameInfo.playerHealth -= 10
+        }
+        
         
         // damage collision
         if collision == (CTPhysicsCategory.car  | CTPhysicsCategory.building) ||
@@ -267,11 +281,12 @@ extension CTGameScene: SKPhysicsContactDelegate {
          // impact force depends on the relative velocity
                
             gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
-            
-            if(gameInfo.playerHealth <= 0){
-                gameInfo.playerHealth = 0
-                gameInfo.setGameOver()
-            }
+
+        }
+        
+        if(gameInfo.playerHealth <= 0){
+            gameInfo.playerHealth = 0
+            gameInfo.setGameOver()
         }
         
     }

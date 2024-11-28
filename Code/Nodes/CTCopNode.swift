@@ -22,8 +22,10 @@ class CTCopNode: SKSpriteNode {
     func enablePhysics(){
        
         if physicsBody == nil {
-            physicsBody = SKPhysicsBody(texture: self.texture ?? SKTexture(imageNamed: "black"), size: self.size)
+//            physicsBody = SKPhysicsBody(texture: self.texture ?? SKTexture(imageNamed: "black"), size: self.size)
+            physicsBody = SKPhysicsBody(rectangleOf: self.size)
         }
+        
         physicsBody?.isDynamic = true
         physicsBody?.affectedByGravity = false
         physicsBody?.mass = 50 // Adjust for realistic movement
@@ -38,7 +40,6 @@ class CTCopNode: SKSpriteNode {
     
     func addLights() {
         let lights = CTCopLights(offset: CGPoint(x: 0.0, y: -1.0), size: CGSize(width: 4.5, height: 1.5))
-        print(lights)
         self.addChild(lights)
     }
     

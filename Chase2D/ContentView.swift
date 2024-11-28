@@ -26,10 +26,11 @@ struct ContentView: View {
         }else{
             self.scene = SKScene(size: screenSize)
         }
+
     }
     var body: some View {
         VStack{
-            SpriteView(scene: self.scene)
+            CTSpriteKitView(scene: self.scene)
         }
         
     }
