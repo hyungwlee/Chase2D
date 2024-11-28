@@ -311,7 +311,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
             if(gameInfo.playerHealth <= 0){
                 gameInfo.playerHealth = 0
-//                gameInfo.setGameOver()
+                gameInfo.setGameOver(val: true)
             }
         }
         

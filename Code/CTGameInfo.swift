@@ -58,6 +58,11 @@ struct CTGameInfo {
 //        self.score = score
 //    }
         
+    mutating func setGameOver(val: Bool)
+    {
+        gameOver = val
+    }
+    
     mutating func updateTime(phoneRuntime: TimeInterval)
     {
         seconds += (phoneRuntime - pastValue)
