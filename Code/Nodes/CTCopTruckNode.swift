@@ -1,14 +1,14 @@
 //
-//  CTCopAINode.swift
+//  CTCopTruck.swift
 //  Chase2D
 //
-//  Created by Roshan Thapa Magar on 11/7/24.
+//  Created by Roshan Thapa Magar on 11/28/24.
 //
 
 import SpriteKit
 
-class CTCopNode: SKSpriteNode, EnemyNode {
-    var health: CGFloat = 100.0
+class CTCopTruckNode: SKSpriteNode, EnemyNode {
+    var health: CGFloat = 150.0
     
     init(imageNamed: String, size: CGSize){
         let texture = SKTexture(imageNamed: imageNamed )
@@ -29,12 +29,12 @@ class CTCopNode: SKSpriteNode, EnemyNode {
         
         physicsBody?.isDynamic = true
         physicsBody?.affectedByGravity = false
-        physicsBody?.mass = 50 // Adjust for realistic movement
+        physicsBody?.mass = 100 // Adjust for realistic movement
         physicsBody?.friction = 0
         physicsBody?.restitution = 1 // Controls bounciness
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
-        physicsBody?.categoryBitMask = CTPhysicsCategory.copCar
+        physicsBody?.categoryBitMask = CTPhysicsCategory.copTruck
         physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
         physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped  | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
     }
@@ -48,3 +48,4 @@ class CTCopNode: SKSpriteNode, EnemyNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

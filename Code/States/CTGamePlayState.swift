@@ -16,6 +16,14 @@ class CTGamePlayState: GKState {
     var touchLocations: Array<CGPoint> = []
     var driveDir = CTDrivingComponent.driveDir.forward
     
+    var startTime = 0.0
+    var initialTimeSet = false
+    
+    var firstWaveSet = false
+    var secondWaveSet = false
+    var thirdWaveSet = false
+    var fourthWaveSet = false
+    
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
         self.context = context
@@ -30,7 +38,21 @@ class CTGamePlayState: GKState {
    }
     
     override func update(deltaTime seconds: TimeInterval) {
+        
         guard let scene else { return }
+        
+        if !initialTimeSet {
+            startTime = seconds
+            initialTimeSet = true
+        }
+        
+        let elapsedTime = seconds - startTime
+        setGameWaveModeParams(elapsedTime: elapsedTime)
+//        print(scene.gameInfo.playerSpeed)
+//        print(scene.gameInfo.copSpeed)
+//        print(scene.gameInfo.MAX_NUMBER_OF_COPS)
+//        print(scene.gameInfo.canSpawnPoliceTrucks)
+//        print(scene.gameInfo.canSpawnTanks)
        
         handleCameraMovement()
         
@@ -52,6 +74,46 @@ class CTGamePlayState: GKState {
             steerComponent.steer(moveDirection: self.moveDirection)
         }
         
+    }
+    
+    
+    func setGameWaveModeParams(elapsedTime: CGFloat){
+        guard let scene else { return }
+        
+        if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
+            scene.gameInfo.playerSpeed += 40
+            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.currentWave += 1
+            firstWaveSet = true
+            print("firstWaveOver")
+        }
+        if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
+            scene.gameInfo.playerSpeed += 40
+            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.canSpawnPoliceTrucks = true
+            scene.gameInfo.currentWave += 1
+            secondWaveSet = true
+            print("secondWaveOver")
+        }
+        if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
+            scene.gameInfo.playerSpeed += 40
+            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.canSpawnTanks = true
+            scene.gameInfo.currentWave += 1
+            thirdWaveSet = true
+            print("thirdwaveover")
+        }
+        if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
+            scene.gameInfo.playerSpeed += 40
+            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.currentWave += 1
+            fourthWaveSet = true
+            print("fourthWaveOver")
+        }
     }
        
     func handleTouchStart(_ touches: Set<UITouch>) {

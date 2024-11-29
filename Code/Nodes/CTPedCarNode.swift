@@ -29,8 +29,8 @@ class CTPedCarNode: SKSpriteNode {
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
         physicsBody?.categoryBitMask = CTPhysicsCategory.ped
-        physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy
-        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building
+        physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
     }
     
     required init?(coder aDecoder: NSCoder) {

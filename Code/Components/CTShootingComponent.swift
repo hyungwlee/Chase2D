@@ -39,18 +39,30 @@ class CTShootingComponent: GKComponent {
         car.scene?.addChild(bullet)
        
         if let physicsBody = bullet.physicsBody {
-         physicsBody.applyImpulse(CGVector(
-            dx: direction.dx * 40 + physicsBody.velocity.dx,
-            dy: direction.dy * 40 + physicsBody.velocity.dy
-        ))
+         physicsBody.velocity = CGVector(
+            dx: direction.dx * 300 + physicsBody.velocity.dx,
+            dy: direction.dy * 300 + physicsBody.velocity.dy
+        )
         }
        
+        // incase the bullet doesn't hit anything we remove it from the scene after 5 seconds
         
-        bullet.run(SKAction.sequence([
-            SKAction.wait(forDuration: 5),
-            SKAction.removeFromParent()
-        ]))
-            
+        let initialContactTestBitMask = bullet.physicsBody?.contactTestBitMask ?? CTPhysicsCategory.none
+       
+        let wait = SKAction.wait(forDuration: 0.05)
+        let run = SKAction.run {
+            bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.none
+        }
+        let reset = SKAction.run{
+            bullet.physicsBody?.contactTestBitMask = initialContactTestBitMask
+        }
+        let wait2 = SKAction.wait(forDuration: 5)
+        let remove = SKAction.removeFromParent()
+        
+        let sequence = SKAction.sequence([run, wait, reset, wait2, remove])
+        
+        bullet.run(sequence)
+        
         reloading = true
         Task {
             try? await Task.sleep(nanoseconds: 1_000_000_000 * 1)

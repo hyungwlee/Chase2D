@@ -33,6 +33,7 @@ class CTPedCarEntity: GKEntity {
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
+        addComponent(CTHealthComponent(carNode: carNode))
     }
     
     required init?(coder aDecoder: NSCoder) {

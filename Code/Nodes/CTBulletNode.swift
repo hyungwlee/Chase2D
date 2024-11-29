@@ -25,7 +25,7 @@ class CTBulletNode: SKSpriteNode {
             physicsBody?.mass = 0.05
             physicsBody?.friction = 0
             physicsBody?.categoryBitMask = CTPhysicsCategory.bullet
-            physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.enemy
+            physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck | CTPhysicsCategory.ped | CTPhysicsCategory.building
         }
     }
         

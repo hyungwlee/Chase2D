@@ -105,11 +105,13 @@ class CTSelfDrivingComponent: GKComponent {
                         steeringComponent.steer(moveDirection: -0.5)
                         break;
                     case "Up":
+                        steeringComponent.steer(moveDirection: ramDecider == 0 ? -1.0 : 1.0)
                         if(body?.categoryBitMask == CTPhysicsCategory.car){
-                            steeringComponent.steer(moveDirection: ramDecider == 0 ? -1.0 : 1.0)
                             if(self.carNode.name == "cop"){
                                 drivingComponent?.ram()
                             }
+                        }else if (body?.categoryBitMask != CTPhysicsCategory.car) {
+                            drivingComponent?.drive(driveDir: .backward)
                         }
                         break;
                     default:
