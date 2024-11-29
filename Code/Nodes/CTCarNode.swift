@@ -23,6 +23,7 @@ class CTCarNode: SKSpriteNode{
     
     func enablePhysics(){
         if(physicsBody == nil){
+//            physicsBody = SKPhysicsBody(texture: self.texture ?? SKTexture(imageNamed: "black"), size: self.size)
             physicsBody = SKPhysicsBody(rectangleOf: self.size)
         }
         physicsBody?.isDynamic = true
@@ -33,8 +34,8 @@ class CTCarNode: SKSpriteNode{
         physicsBody?.angularDamping = 24 // Dampen rotational movement
         physicsBody?.linearDamping = 10 // Dampen forward movement slightly
         physicsBody?.categoryBitMask = CTPhysicsCategory.car
-        physicsBody?.collisionBitMask = CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy | CTPhysicsCategory.car
-        physicsBody?.contactTestBitMask = CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.enemy | CTPhysicsCategory.car
+        physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
     }
     
     public func calculateAngle(pointA: CGPoint, pointB: CGPoint) -> CGFloat{

@@ -15,10 +15,11 @@ class CTGameScene: SKScene {
     var copCarSpawner: CTCopAINode?
     var pedCarEntities: [CTPedCarEntity] = []
     var copCarEntities: [CTCopCarEntity] = []
+    var copTruckEntities: [CTCopTruckEntity] = []
+    var copTankEntities: [CTCopTankEntity] = []
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
     var layoutInfo: CTLayoutInfo
-    
     var scoreLabel = SKLabelNode(fontNamed: "Arial")
     var timeLabel = SKLabelNode(fontNamed: "Arial")
     var healthLabel = SKLabelNode(fontNamed: "Arial")
@@ -27,16 +28,29 @@ class CTGameScene: SKScene {
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
+
     
     
     let GAME_SPEED_INCREASE_RATE = 0.01
     
     
     required init?(coder aDecoder: NSCoder) {
-//        self.gameInfo = gameInfo
-//        self.layoutInfo = layoutInfo
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
+        self.gameInfo = CTGameInfo()
+        self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
+        super.init(coder: aDecoder)
+        self.view?.isMultipleTouchEnabled = true
+        self.addChild(gameInfo.scoreLabel)
+        self.addChild(gameInfo.timeLabel)
+        self.addChild(gameInfo.healthLabel)
+        self.addChild(gameInfo.gameOverLabel)
+        self.addChild(gameInfo.healthIndicator)
+        self.addChild(gameInfo.speedometer)
+        self.addChild(gameInfo.speedometerBG)
+        
+        
+    }
         
 //        Text UI Elements
         scoreLabel.fontSize = 6
@@ -77,20 +91,15 @@ class CTGameScene: SKScene {
         // for collision
         physicsWorld.contactDelegate = self
         
-        view.showsFPS = true
-        view.showsPhysics = true
-        
         prepareGameContext()
         prepareStartNodes()
         
         context.stateMachine?.enter(CTGamePlayState.self)
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        
-        
-        if(gameInfo.gameOver)
-        {
+    override func update(_ currentTime: TimeInterval)
+    {
+        if(gameInfo.gameOver){
             context?.stateMachine?.enter(CTGameOverState.self)
             gameOverLabel.isHidden = false
             healthIndicator.isHidden = true
@@ -104,6 +113,20 @@ class CTGameScene: SKScene {
         gameInfo.updateTime(phoneRuntime: currentTime)
         gameInfo.updateScore()
         
+        let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
+        // TODO: try not to use sqrt because of performance issues
+        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+        
+        // The UI components are moved by adding/subtracting a fraction of the screen width/height.
+        // Increase the modifier value to move closer to center of screen.
+        let scoreAndTimeXModifier: CGFloat = 30.0
+        let scoreAndTimeYModifier: CGFloat = 8.0
+        
+        let healthXModifier: CGFloat = 10
+        let healthYModifier: CGFloat = 14
+        
+        let speedometerYModifier: CGFloat = 9
+        
         // Text UI Components
         scoreLabel.text = "Score: " + String(gameInfo.score)
         timeLabel.text = "Time: " + String(Int(gameInfo.seconds))
@@ -114,11 +137,15 @@ class CTGameScene: SKScene {
         timeLabel.position = CGPoint(x: camX - 15, y: camY + 90)
         gameOverLabel.position = CGPoint(x: camX, y: camY + 50)
         healthLabel.position = CGPoint(x: camX + 40, y: camY - 80 )
+
         
+        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
+        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
         // Non-text UI components
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
         // TODO: try not to use sqrt because of performance issues
         let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+
         
         healthIndicator.position = CGPoint(x: camX + 45, y: camY - 50)
         speedometer.position = CGPoint(x: camX, y: camY - 100)
@@ -127,7 +154,7 @@ class CTGameScene: SKScene {
         healthIndicator.texture = gameInfo.updateHealthUI()
         
         // ai section
-        updateCopCarComponents()
+        updateCopComponents()
         updatePedCarComponents()
         
         
@@ -156,7 +183,7 @@ class CTGameScene: SKScene {
         }
     }
     
-    func updateCopCarComponents(){
+    func updateCopComponents(){
         // copCar drive
         for copCarEntity in copCarEntities{
             
@@ -171,6 +198,19 @@ class CTGameScene: SKScene {
                 continue;
             }
             
+             // if the health of enemy is very less
+            if copCarEntity.carNode.health <= 0.0 {
+                 if let healthComponent = copCarEntity.component(ofType: CTHealthComponent.self) {
+                     healthComponent.applyDeath()
+                 }
+                if let index =  copCarEntities.firstIndex(of: copCarEntity) {
+                    copCarEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            
             if let trackingComponent = copCarEntity.component(ofType: CTSelfDrivingComponent.self) {
                 trackingComponent.avoidObstacles()
                 trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
@@ -178,6 +218,86 @@ class CTGameScene: SKScene {
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
             }
+            
+            if let shootingComponent = copCarEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            
+        }
+        for copTruckEntity in copTruckEntities{
+            let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copTruckEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
+            
+            if distanceWithPlayer >= gameInfo.ITEM_DESPAWN_DIST * gameInfo.ITEM_DESPAWN_DIST {
+                copTruckEntity.carNode.removeFromParent()
+                if let index =  copTruckEntities.firstIndex(of: copTruckEntity) {
+                    copTruckEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            // if the health of enemy is very less
+            if copTruckEntity.carNode.health <= 0.0 {
+                 if let healthComponent = copTruckEntity.component(ofType: CTHealthComponent.self) {
+                     healthComponent.applyDeath()
+                 }
+                if let index =  copTruckEntities.firstIndex(of: copTruckEntity) {
+                    copTruckEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            if let trackingComponent = copTruckEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.avoidObstacles()
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+            
+            if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            
+        }
+        
+        for copTruckEntity in copTankEntities{
+            let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copTruckEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
+            
+            if distanceWithPlayer >= gameInfo.ITEM_DESPAWN_DIST * gameInfo.ITEM_DESPAWN_DIST {
+                copTruckEntity.carNode.removeFromParent()
+                if let index =  copTankEntities.firstIndex(of: copTruckEntity) {
+                    copTruckEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            // if the health of enemy is very less
+            if copTruckEntity.carNode.health <= 0.0 {
+                 if let healthComponent = copTruckEntity.component(ofType: CTHealthComponent.self) {
+                     healthComponent.applyDeath()
+                 }
+                if let index =  copTankEntities.firstIndex(of: copTruckEntity) {
+                    copTruckEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            if let trackingComponent = copTruckEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.avoidObstacles()
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+            
+            if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            
         }
     }
     
@@ -273,10 +393,10 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         let collision = categoryA | categoryB
         
-        
+        // player collision
         // non-damage collision
         if collision == (CTPhysicsCategory.car | CTPhysicsCategory.powerup) {
-             
+            
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
             // add cash if car hits a powerup and remove cash from total
             gameInfo.cashCollected = gameInfo.cashCollected + 1
@@ -284,7 +404,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             colliderNode?.removeFromParent()
             
             // randomly applies one powerup if we collect 5 powerup
-            if(gameInfo.cashCollected == 5) {
+            if(gameInfo.cashCollected == 1) {
                 activatePowerUp()
                 gameInfo.cashCollected = 0
             }
@@ -292,9 +412,24 @@ extension CTGameScene: SKPhysicsContactDelegate {
         }
         
         
+        // if bullet hits anything remove it from the scene
+        if categoryB == CTPhysicsCategory.bullet || categoryA == CTPhysicsCategory.bullet {
+            print("bullet hit something")
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.bullet) ? contact.bodyA.node as? CTBulletNode : contact.bodyB.node as? CTBulletNode
+            bullet?.removeFromParent()
+        }
+        
+        // bullet collision
+        if collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.car) {
+            gameInfo.playerHealth -= 10
+        }
+        
+        
         // damage collision
         if collision == (CTPhysicsCategory.car  | CTPhysicsCategory.building) ||
-            collision == (CTPhysicsCategory.car | CTPhysicsCategory.enemy) ||
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.copCar) ||
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTruck) ||
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTank) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
             
             let carNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyA.node as? CTCarNode : contact.bodyB.node as? CTCarNode
@@ -304,16 +439,93 @@ extension CTGameScene: SKPhysicsContactDelegate {
             let carVelocityMag = pow(carNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(carNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
             
-         // impact force depends on the relative velocity
-               
-            gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
+            // impact force depends on the relative velocity
             
-            if(gameInfo.playerHealth <= 0){
-                gameInfo.playerHealth = 0
-                gameInfo.setGameOver(val: true)
-            }
+            gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000099
+            
         }
         
+        if(gameInfo.playerHealth <= 0){
+            gameInfo.playerHealth = 0
+            gameInfo.setGameOver()
+        }
+        
+        
+        // enemy damages
+        
+        // bullet collision
+        if  collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.copCar)  ||
+                collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.copTank) ||
+                collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.copTruck) {
+            print("enemy hit by bullet")
+            
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.bullet) ? contact.bodyA.node as? CTBulletNode : contact.bodyB.node as? CTBulletNode
+            
+            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
+            
+            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
+               let truck = contact.bodyA.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
+                      let truck = contact.bodyB.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyA.node as? CTCopNode {
+                enemy = car
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyB.node as? CTCopNode {
+                enemy = car
+            }
+            
+            // Apply health reduction if an enemy was found
+            if var enemy = enemy {
+                enemy.health -= 10.0
+                print(enemy.health)
+            }
+            
+            
+        }
+        
+        
+        // damage collision
+        if  (categoryA == CTPhysicsCategory.copCar || categoryB == CTPhysicsCategory.copCar) ||
+                (categoryA == CTPhysicsCategory.copTank || categoryB == CTPhysicsCategory.copTank) ||
+                (categoryA == CTPhysicsCategory.copTruck || categoryB == CTPhysicsCategory.copTruck)
+                
+        {
+            
+            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
+            
+            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
+               let truck = contact.bodyA.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
+                      let truck = contact.bodyB.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyA.node as? CTCopNode {
+                enemy = car
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyB.node as? CTCopNode {
+                enemy = car
+            }
+            
+            
+            let colliderNode = (
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar   ||
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTank  ||
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck
+            ) ? contact.bodyB.node : contact.bodyA.node
+            
+            let carVelocityMag = pow(enemy?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(enemy?.physicsBody?.velocity.dy ?? 0.0, 2)
+            let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
+            
+            // Apply health reduction if an enemy was found
+            if var enemy = enemy {
+                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.00008
+                print(enemy.health)
+            }
+        }
     }
 }
 

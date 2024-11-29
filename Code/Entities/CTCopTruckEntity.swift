@@ -1,18 +1,17 @@
 //
-//  CTCopCarEntity.swift
+//  CTCopTruckEntity.swift
 //  Chase2D
 //
-//  Created by Roshan Thapa Magar on 11/11/24.
+//  Created by Roshan Thapa Magar on 11/28/24.
 //
-
 import GameplayKit
 import SpriteKit
 
-class CTCopCarEntity: GKEntity {
-    let carNode: CTCopNode
+class CTCopTruckEntity: GKEntity {
+    let carNode: CTCopTruckNode
     var gameInfo: CTGameInfo?
     
-    init(carNode: CTCopNode) {
+    init(carNode: CTCopTruckNode) {
         self.carNode = carNode
         super.init()
        
@@ -21,13 +20,13 @@ class CTCopCarEntity: GKEntity {
     func prepareComponents(){
             
         let drivingComponent = CTDrivingComponent(carNode: carNode)
-        drivingComponent.MOVE_FORCE = gameInfo?.copSpeed ?? 100
+        drivingComponent.MOVE_FORCE = (gameInfo?.copSpeed ?? 100) * 2
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.04
-        steeringComponent.DRIFT_FORCE = 0.04
-        steeringComponent.DRIFT_VELOCITY_THRESHOLD = 6
-            
+        steeringComponent.STEER_IMPULSE = 0.1
+        steeringComponent.DRIFT_FORCE = 0.1
+        steeringComponent.DRIFT_VELOCITY_THRESHOLD = 8
+        
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))

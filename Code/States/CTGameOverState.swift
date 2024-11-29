@@ -36,10 +36,26 @@ class CTGameOverState: GKState {
         // change cop car speed
         for copCar in scene!.copCarEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = 0.05
+                drivingComponent.MOVE_FORCE = 0.00001
             }
             if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = 0.01
+                steeringComponent.STEER_IMPULSE = 0.00001
+            }
+        }
+        for copCar in scene!.copTruckEntities {
+            if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.MOVE_FORCE = 0.0001
+            }
+            if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
+                steeringComponent.STEER_IMPULSE = 0.00001
+            }
+        }
+        for copCar in scene!.copTankEntities {
+            if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.MOVE_FORCE = 0.0001
+            }
+            if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
+                steeringComponent.STEER_IMPULSE = 0.00001
             }
         }
     }

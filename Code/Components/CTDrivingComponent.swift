@@ -13,6 +13,7 @@ class CTDrivingComponent: GKComponent {
     let carNode: SKSpriteNode
     var MOVE_FORCE:CGFloat = 1300
     var hasStopped = false
+    var isRamming = false
    
     enum driveDir {
         case forward
@@ -61,5 +62,24 @@ class CTDrivingComponent: GKComponent {
        
     }
     
+    func ram(){
+        if isRamming {return}
+        // timer
+        let wait = SKAction.wait(forDuration: 0.1)
+        let run = SKAction.run {
+            self.isRamming = true
+            self.MOVE_FORCE = self.MOVE_FORCE * 2
+        }
+        let end = SKAction.run{
+            self.MOVE_FORCE = self.MOVE_FORCE / 2
+        }
+        let wait2 = SKAction.wait(forDuration: 4)
+        let reset = SKAction.run{
+            self.isRamming = false
+        }
+        
+        let sequence = SKAction.sequence([run, wait, end, wait2, reset])
+        self.carNode.run(sequence)
+    }
     
 }
