@@ -11,10 +11,7 @@ import GameplayKit
 
 struct CTGameInfo {
     var gameOver = false
-//    var stateMachine: GKStateMachine?
     
-    // player health and player speed to be implemented later on gameInfo
-    // implemented individually now
     var playerHealth:CGFloat = 100
     var playerSpeed:CGFloat = 800
     var pedSpeed:CGFloat = 500
@@ -72,9 +69,13 @@ struct CTGameInfo {
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     let speedoSize = 0.31
     
+    let layoutInfo: CTLayoutInfo
+    
     init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")) {
         self.score = score
+        self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         
+        //TODO: Font size needs to scale with screen size
         self.scoreLabel = scoreLabel
         scoreLabel.fontSize = 6
         scoreLabel.zPosition = 100
@@ -91,14 +92,15 @@ struct CTGameInfo {
         gameOverLabel.fontSize = 12
         gameOverLabel.zPosition = 100
         
+        let zoomValue = 0.3 //this is the camera zoom level
         
-        healthIndicator.size = CGSize(width: healthIndicator.size.width * 0.25, height: healthIndicator.size.height * 0.25)
+        healthIndicator.size = CGSize(width: (layoutInfo.screenSize.width / 8) * zoomValue, height: (layoutInfo.screenSize.height / 7) * zoomValue)
         healthIndicator.zPosition = 90
         
-        speedometer.size = CGSize(width: speedometer.size.width * speedoSize, height: speedometer.size.height * speedoSize)
+        speedometer.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
         speedometer.zPosition = 100
         
-        speedometerBG.size = CGSize(width: speedometerBG.size.width * speedoSize, height: speedometerBG.size.height * speedoSize)
+        speedometerBG.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
         speedometerBG.zPosition = 95
     }
     
@@ -109,16 +111,11 @@ struct CTGameInfo {
     
     func setHealthLabel(value : Double)
     {
-//        print(String(Int(value)))
         healthLabel.text = "Health: " + String(Int(value))
     }
     
     mutating func updateScore(phoneRuntime: TimeInterval)
     {
-//        guard stateMachine?.currentState is CTGameIdleState else
-//        {
-//            return
-//        }
         if gameOver
         {
             gameOverLabel.text = "GAME OVER"
@@ -139,14 +136,12 @@ struct CTGameInfo {
         let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
         if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
         {
-//            print("REALLY Increasing Score")
             score += SCORE_INCREMENT_AMOUNT
         }
         
         if (((Int(seconds) % FREQUENCY_CHANGE_THRESHHOLD) == 0) && scoreChangeFrequency >= 0.2)
         {
             scoreChangeFrequency -= 0.1
-            //increase gamespeed here as well??
         }
         
         updateHealthUI()
@@ -178,12 +173,9 @@ struct CTGameInfo {
     
     func updateSpeed(speed: CGFloat) -> CGFloat
     {
-        let percentage = speed / 200
-        let adjWidth = 400 * speedoSize
-        let output = (adjWidth * percentage)
-//        print("speed: \(speed) percentage: \(percentage)")
-        
-        return (output - adjWidth)
+        let percentage = speed / 150
+        let offset = layoutInfo.screenSize.width * 0.85
+        return (layoutInfo.screenSize.width * percentage - offset)
     }
 }
 

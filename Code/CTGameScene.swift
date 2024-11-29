@@ -19,6 +19,7 @@ class CTGameScene: SKScene {
     var copTankEntities: [CTCopTankEntity] = []
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
+    var layoutInfo: CTLayoutInfo
     
     
     let GAME_SPEED_INCREASE_RATE = 0.01
@@ -26,6 +27,7 @@ class CTGameScene: SKScene {
     
     required init?(coder aDecoder: NSCoder) {
         self.gameInfo = CTGameInfo()
+        self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
         self.addChild(gameInfo.scoreLabel)
@@ -53,10 +55,8 @@ class CTGameScene: SKScene {
         context.stateMachine?.enter(CTGamePlayState.self)
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        
-        
-       
+    override func update(_ currentTime: TimeInterval)
+    {
         if(gameInfo.gameOver){
             context?.stateMachine?.enter(CTGameOverState.self)
         }
@@ -64,27 +64,35 @@ class CTGameScene: SKScene {
         
         gameInfo.updateScore(phoneRuntime: currentTime)
         
-        // Text UI Components
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + 15, y: cameraNode!.position.y + 90)
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - 15, y: cameraNode!.position.y + 90)
-        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + 50)
-        
-        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + 40, y: cameraNode!.position.y - 80 )
-        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
-        
-        // Non-text UI components
-        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + 45, y: cameraNode!.position.y - 50)
-        gameInfo.healthIndicator.alpha = 0.5
-        
-
-        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - 100)
-        
-        // to preserve the aspect ration we are gonna set the height based on the
-        gameInfo.speedometer.size = CGSize(width: self.size.width, height: 100.0)
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
         // TODO: try not to use sqrt because of performance issues
         let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
-        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - 100)
+        
+        // The UI components are moved by adding/subtracting a fraction of the screen width/height.
+        // Increase the modifier value to move closer to center of screen.
+        let scoreAndTimeXModifier: CGFloat = 30.0
+        let scoreAndTimeYModifier: CGFloat = 8.0
+        
+        let healthXModifier: CGFloat = 10
+        let healthYModifier: CGFloat = 14
+        
+        let speedometerYModifier: CGFloat = 9
+        
+        // Text UI Components
+        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
+        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
+        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
+        
+        
+        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
+        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
+        // Non-text UI components
+        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
+        gameInfo.healthIndicator.alpha = 0.5
+        
+
+        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
+        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
         
         
         // ai section
