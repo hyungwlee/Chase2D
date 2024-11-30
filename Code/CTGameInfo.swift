@@ -15,7 +15,7 @@ struct CTGameInfo {
     var playerHealth:CGFloat = 100
     var playerSpeed:CGFloat = 800
     var pedSpeed:CGFloat = 500
-    var copSpeed:CGFloat = 790
+    var copSpeed:CGFloat = 950
     
     
     var numberOfCops = 0
@@ -23,20 +23,21 @@ struct CTGameInfo {
     
     var MAX_NUMBER_OF_COPS = 3
     var MAX_NUMBER_OF_PEDS = 20
-    let ITEM_DESPAWN_DIST = 3000.0
-    let MIN_SPAWN_RADIUS = 10000.0
+    let ITEM_DESPAWN_DIST = 30000.0
+    let MIN_SPAWN_RADIUS = 5000.0
     let MAX_SPAWN_RADIUS = 80000.0
     let MAX_PLAYABLE_SIZE = 30000.0
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0
-    let THIRD_WAVE_TIME     = 60.0
-    let FOURTH_WAVE_TIME    = 120.0
+    let THIRD_WAVE_TIME     = 90.0
+    let FOURTH_WAVE_TIME    = 300.0
     
     var currentWave = 0
     
     var canSpawnPoliceTrucks = false
     var canSpawnTanks = false
+    var gunShootInterval = 7_000_000
     
     
     // gameplay speed

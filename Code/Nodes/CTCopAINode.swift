@@ -20,7 +20,7 @@ class CTCopAINode: SKNode{
     func populateAI (){
         
         // timer
-        let wait = SKAction.wait(forDuration: 0.5)
+        let wait = SKAction.wait(forDuration: 2)
         let run = SKAction.run {
             self.spawnCops()
         }

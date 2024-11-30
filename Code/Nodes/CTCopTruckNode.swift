@@ -8,7 +8,7 @@
 import SpriteKit
 
 class CTCopTruckNode: SKSpriteNode, EnemyNode {
-    var health: CGFloat = 150.0
+    var health: CGFloat = 80.0
     
     init(imageNamed: String, size: CGSize){
         let texture = SKTexture(imageNamed: imageNamed )

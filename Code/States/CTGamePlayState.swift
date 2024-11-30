@@ -82,7 +82,7 @@ class CTGamePlayState: GKState {
         
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 5
-            scene.gameInfo.playerSpeed += 40
+            scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copSpeed += 50
             scene.gameInfo.currentWave += 1
             firstWaveSet = true
@@ -90,26 +90,26 @@ class CTGamePlayState: GKState {
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 5
-            scene.gameInfo.playerSpeed += 40
-            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.playerSpeed += 150
+            scene.gameInfo.copSpeed += 150
             scene.gameInfo.canSpawnPoliceTrucks = true
             scene.gameInfo.currentWave += 1
             secondWaveSet = true
             print("secondWaveOver")
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
-            scene.gameInfo.playerSpeed += 40
-            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 3
+            scene.gameInfo.playerSpeed += 100
+            scene.gameInfo.copSpeed += 100
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
             thirdWaveSet = true
             print("thirdwaveover")
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
-            scene.gameInfo.playerSpeed += 40
-            scene.gameInfo.copSpeed += 50
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 2
+            scene.gameInfo.playerSpeed += 100
+            scene.gameInfo.copSpeed += 100
             scene.gameInfo.currentWave += 1
             fourthWaveSet = true
             print("fourthWaveOver")

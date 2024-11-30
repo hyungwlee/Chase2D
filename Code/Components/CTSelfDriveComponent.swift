@@ -110,8 +110,6 @@ class CTSelfDrivingComponent: GKComponent {
                             if(self.carNode.name == "cop"){
                                 drivingComponent?.ram()
                             }
-                        }else if (body?.categoryBitMask != CTPhysicsCategory.car) {
-                            drivingComponent?.drive(driveDir: .backward)
                         }
                         break;
                     default:

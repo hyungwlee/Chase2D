@@ -26,7 +26,7 @@ class CTPedCarEntity: GKEntity {
         drivingComponent.MOVE_FORCE =  gameInfo?.pedSpeed ?? 700
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.04
+        steeringComponent.STEER_IMPULSE = 0.1
         steeringComponent.DRIFT_FORCE = 0.01
         steeringComponent.DRIFT_VELOCITY_THRESHOLD = 10
             

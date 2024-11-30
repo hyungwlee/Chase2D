@@ -11,6 +11,7 @@ import SpriteKit
 class CTShootingComponent: GKComponent {
     let car: SKSpriteNode
     var reloading = false
+    var interval = 1_000_000_000
     
     init(carNode: SKSpriteNode) {
         self.car = carNode
@@ -40,8 +41,8 @@ class CTShootingComponent: GKComponent {
        
         if let physicsBody = bullet.physicsBody {
          physicsBody.velocity = CGVector(
-            dx: direction.dx * 300 + physicsBody.velocity.dx,
-            dy: direction.dy * 300 + physicsBody.velocity.dy
+            dx: direction.dx * 300,
+            dy: direction.dy * 300
         )
         }
        
@@ -49,7 +50,7 @@ class CTShootingComponent: GKComponent {
         
         let initialContactTestBitMask = bullet.physicsBody?.contactTestBitMask ?? CTPhysicsCategory.none
        
-        let wait = SKAction.wait(forDuration: 0.05)
+        let wait = SKAction.wait(forDuration: 0.01)
         let run = SKAction.run {
             bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.none
         }
@@ -65,7 +66,7 @@ class CTShootingComponent: GKComponent {
         
         reloading = true
         Task {
-            try? await Task.sleep(nanoseconds: 1_000_000_000 * 1)
+            try? await Task.sleep(nanoseconds: UInt64(interval))
             reloading = false
         }
         
