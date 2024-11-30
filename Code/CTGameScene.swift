@@ -20,6 +20,7 @@ class CTGameScene: SKScene {
     var cameraNode: SKCameraNode?
     var gameInfo: CTGameInfo
     var layoutInfo: CTLayoutInfo
+    var playerSpeed: CGFloat = 0.0
     
     
     let GAME_SPEED_INCREASE_RATE = 0.01
@@ -66,7 +67,7 @@ class CTGameScene: SKScene {
         
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
         // TODO: try not to use sqrt because of performance issues
-        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+        self.playerSpeed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
         
         // The UI components are moved by adding/subtracting a fraction of the screen width/height.
         // Increase the modifier value to move closer to center of screen.
@@ -357,8 +358,14 @@ class CTGameScene: SKScene {
 //        let zoomInAction = SKAction.scale(to: 1, duration: 0.2)
         cameraNode.run(zoomInAction)
         
+        
+        
     }
     
+    func lerp(start: CGFloat, end: CGFloat, t: CGFloat) -> CGFloat {
+        return start + (end - start) * t
+    }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let state = context?.stateMachine?.currentState as? CTGamePlayState else {
             return
