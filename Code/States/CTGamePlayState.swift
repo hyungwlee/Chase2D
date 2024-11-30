@@ -167,7 +167,6 @@ class CTGamePlayState: GKState {
         let randomOffsetX = sin(time * 2) * (10 + randomNumber)
         let randomOffsetY = cos(time * 2) * (10 + randomNumber)
         
-        print(randomOffsetX, randomOffsetY)
         let targetPosition = CGPoint(x: (scene?.playerCarEntity?.carNode.position.x ?? 0.0) + randomOffsetX,  y: (scene?.playerCarEntity?.carNode.position.y ?? 0.0) + randomOffsetY)
         let moveAction = SKAction.move(to: targetPosition, duration: 0.25)
         

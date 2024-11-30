@@ -27,14 +27,15 @@ class CTGameOverState: GKState {
     }
     
     func handlePlayerDeath(){
+        guard let scene else {return}
         
-        scene!.gameInfo.setGameOver()
+        scene.gameInfo.setGameOver()
         
-        if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
+        if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .none)
         }
         // change cop car speed
-        for copCar in scene!.copCarEntities {
+        for copCar in scene.copCarEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.MOVE_FORCE = 0.00001
             }
@@ -42,7 +43,7 @@ class CTGameOverState: GKState {
                 steeringComponent.STEER_IMPULSE = 0.00001
             }
         }
-        for copCar in scene!.copTruckEntities {
+        for copCar in scene.copTruckEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.MOVE_FORCE = 0.0001
             }
@@ -50,7 +51,7 @@ class CTGameOverState: GKState {
                 steeringComponent.STEER_IMPULSE = 0.00001
             }
         }
-        for copCar in scene!.copTankEntities {
+        for copCar in scene.copTankEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.MOVE_FORCE = 0.0001
             }

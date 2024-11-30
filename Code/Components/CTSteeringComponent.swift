@@ -26,21 +26,34 @@ class CTSteeringComponent: GKComponent {
     
     func steer(moveDirection: CGFloat){
         
-        // rotate
-        let angularVelocity = self.carNode.physicsBody?.angularVelocity ?? 0.0
-        let driftFactor = tanh(abs(angularVelocity) / (DRIFT_VELOCITY_THRESHOLD))
-        self.carNode.physicsBody?.applyAngularImpulse(moveDirection * STEER_IMPULSE * -1.0 + DRIFT_FORCE * driftFactor * moveDirection * -1.0);
-        
         // drift
-        let directionX1 = cos(self.carNode.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor * 20000 // -1 to flip direction from moveDirection
-        let directionY1 = sin(self.carNode.zRotation) * DRIFT_FORCE * moveDirection * -1 * driftFactor * 20000;
+        let velocity = self.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
+        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy + velocity.dy)
+
+        let forwardVector = CGVector(dx: -sin(self.carNode.zRotation), dy: cos(self.carNode.zRotation))
         
-        // the speed decreases while drifting
-        let directionX2 = -sin(self.carNode.zRotation) * (carNode.entity?.component(ofType: CTDrivingComponent.self)?.MOVE_FORCE ?? 1300) * -0.4 * driftFactor
-        let directionY2 = cos(self.carNode.zRotation) * (carNode.entity?.component(ofType: CTDrivingComponent.self)?.MOVE_FORCE ?? 1300) * -0.4 * driftFactor
+        let lateralVelocity = CGVector(
+            dx: -forwardVector.dy * (forwardVector.dy * velocity.dx + forwardVector.dx * velocity.dy),
+            dy: forwardVector.dx * (forwardVector.dy * velocity.dx + forwardVector.dx * velocity.dy)
+        )
         
-        let force = CGVector(dx: directionX1 + directionX2, dy: directionY1 + directionY2)
-        self.carNode.physicsBody?.applyImpulse(force)
+        // Drift angle: Angle between velocity and forward direction
+        let driftAngle = atan2(velocity.dy, velocity.dx) - self.carNode.zRotation
+
+        // Normalize drift angle to the range [-π, π]
+        let normalizedDriftAngle = atan2(sin(driftAngle), cos(driftAngle))
+
+        // Calculate grip multiplier based on the drift angle
+        let maxDriftAngle: CGFloat = .pi / 2 // 90° is the max drift angle for full sliding
+        let gripMultiplier = max(0.1, 1.0 - abs(normalizedDriftAngle) / maxDriftAngle)
+        
+        self.carNode.physicsBody?.applyImpulse(
+            CGVector(dx: -lateralVelocity.dx * 1/gripMultiplier * 0.01, dy: -lateralVelocity.dy * 1/gripMultiplier * 0.01))
+        
+        // turn
+        let torque = moveDirection * STEER_IMPULSE * -1.0 * 10 * 1/gripMultiplier * min(max(speed, 0),1)
+        print(gripMultiplier)
+        self.carNode.physicsBody?.applyTorque(torque);
        
     }
     

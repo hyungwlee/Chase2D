@@ -18,6 +18,8 @@
 		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
 		9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTCarNode.swift */; };
 		9E8A88A52CD41CE300FC9ED1 /* CTGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */; };
+		9E8AB2C52CFB97AE00FE7180 /* CTDynamicObstacleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8AB2C42CFB97AE00FE7180 /* CTDynamicObstacleNode.swift */; };
+		9E8AB2C92CFBA51100FE7180 /* CTDynamicObstacleChildNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8AB2C82CFBA51100FE7180 /* CTDynamicObstacleChildNode.swift */; };
 		9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */; };
 		9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8F39A42CCC358200F418E3 /* ContentView.swift */; };
 		9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8F39A62CCC358600F418E3 /* Assets.xcassets */; };
@@ -83,6 +85,8 @@
 		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
 		9E7B90542CD00F4800137DE8 /* CTCarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCarNode.swift; sourceTree = "<group>"; };
 		9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CTGameScene.sks; sourceTree = "<group>"; };
+		9E8AB2C42CFB97AE00FE7180 /* CTDynamicObstacleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTDynamicObstacleNode.swift; sourceTree = "<group>"; };
+		9E8AB2C82CFBA51100FE7180 /* CTDynamicObstacleChildNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTDynamicObstacleChildNode.swift; sourceTree = "<group>"; };
 		9E8F399F2CCC358200F418E3 /* Chase2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chase2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chase2DApp.swift; sourceTree = "<group>"; };
 		9E8F39A42CCC358200F418E3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				9E7B90542CD00F4800137DE8 /* CTCarNode.swift */,
 				9E9F18FF2CD099930005DE27 /* CTWorldNode.swift */,
 				9EEE45702CD56EAF00297666 /* CTObstacleNode.swift */,
+				9E8AB2C82CFBA51100FE7180 /* CTDynamicObstacleChildNode.swift */,
 				9EEE45762CD75F8900297666 /* CTPedCarNode.swift */,
 				9E910F392CDAAAAD0080A801 /* CTPedAINode.swift */,
 				9E910F3B2CDDACD40080A801 /* CTCopNode.swift */,
@@ -207,6 +212,7 @@
 				9ED875152CE7BA8B00FED09C /* CTCopLights.swift */,
 				9E16A6E82CF29F490086D22E /* CTPowerUpNode.swift */,
 				9E16A6EA2CF6C3F80086D22E /* CTBulletNode.swift */,
+				9E8AB2C42CFB97AE00FE7180 /* CTDynamicObstacleNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -465,12 +471,14 @@
 				9E910F3A2CDAAAAD0080A801 /* CTPedAINode.swift in Sources */,
 				9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */,
 				9EAB11942CF9252F003C0784 /* CTCopTruckEntity.swift in Sources */,
+				9E8AB2C92CFBA51100FE7180 /* CTDynamicObstacleChildNode.swift in Sources */,
 				9EAB11962CF934AC003C0784 /* CTHealthComponent.swift in Sources */,
 				9E16A6ED2CF6C6C60086D22E /* CTShootingComponent.swift in Sources */,
 				9E910F3C2CDDACD40080A801 /* CTCopNode.swift in Sources */,
 				9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */,
 				9E9F18FC2CD011C50005DE27 /* CTGamePlayState.swift in Sources */,
 				9EEE45772CD75F8900297666 /* CTPedCarNode.swift in Sources */,
+				9E8AB2C52CFB97AE00FE7180 /* CTDynamicObstacleNode.swift in Sources */,
 				9E910F3E2CDDAE6A0080A801 /* CTCopAINode.swift in Sources */,
 				9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */,
 				9E8F39A32CCC358200F418E3 /* Chase2DApp.swift in Sources */,

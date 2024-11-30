@@ -1,3 +1,4 @@
+
 //
 //  CTObstacleNode.swift
 //  Chase2D
@@ -12,7 +13,7 @@ class CTObstacleNode: SKSpriteNode {
         super.init(coder: aDecoder)
         texture?.filteringMode = .nearest
         physicsBody?.categoryBitMask = CTPhysicsCategory.building
-        physicsBody?.contactTestBitMask = CTPhysicsCategory.car
-        physicsBody?.collisionBitMask = CTPhysicsCategory.car
+        physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
+        physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck
     }
 }

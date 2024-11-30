@@ -21,7 +21,6 @@ class CTPlayerCarEntity: GKEntity {
         
         let drivingComponent = CTDrivingComponent(carNode: carNode)
         drivingComponent.MOVE_FORCE = gameInfo?.playerSpeed ?? 1300
-        print(gameInfo?.playerSpeed)
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.04
