@@ -11,6 +11,7 @@ import GameplayKit
 
 struct CTGameInfo {
     var gameOver = false
+    var isPaused = false
     
     var playerHealth:CGFloat = 100
     var playerSpeed:CGFloat = 800
@@ -64,6 +65,7 @@ struct CTGameInfo {
     var timeLabel = SKLabelNode(fontNamed: "Arial")
     var healthLabel = SKLabelNode(fontNamed: "Arial")
     var gameOverLabel = SKLabelNode(fontNamed: "Arial")
+    var cashLabel = SKLabelNode(fontNamed: "Arial")
     
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
@@ -72,7 +74,8 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial")) {
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    {
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         
@@ -93,7 +96,12 @@ struct CTGameInfo {
         gameOverLabel.fontSize = 12
         gameOverLabel.zPosition = 100
         
-        let zoomValue = 0.3 //this is the camera zoom level
+        self.cashLabel = cashLabel
+        cashLabel.fontSize = 8
+        cashLabel.zPosition = 100
+        
+        // This is the camera zoom value
+        let zoomValue = 0.35
         
         healthIndicator.size = CGSize(width: (layoutInfo.screenSize.width / 8) * zoomValue, height: (layoutInfo.screenSize.height / 7) * zoomValue)
         healthIndicator.zPosition = 90
@@ -123,6 +131,11 @@ struct CTGameInfo {
             return
         }
         
+        if isPaused
+        {
+            return
+        }
+        
         if (gameplaySpeed < 1)
         {
             gameplaySpeed += 0.01
@@ -133,6 +146,7 @@ struct CTGameInfo {
         
         timeLabel.text = "Time: " + String(Int(seconds))
         scoreLabel.text = "Score: " + String(score)
+        cashLabel.text = "Cash: " + String(cashCollected)
         
         let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
         if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
@@ -177,6 +191,11 @@ struct CTGameInfo {
         let percentage = speed / 150
         let offset = layoutInfo.screenSize.width * 0.85
         return (layoutInfo.screenSize.width * percentage - offset)
+    }
+    
+    mutating func setIsPaused(val: Bool)
+    {
+        isPaused = val
     }
 }
 

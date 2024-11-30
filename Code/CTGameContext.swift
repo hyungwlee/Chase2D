@@ -29,8 +29,10 @@ class CTGameContext: GameContext{
         guard let gameScene else { return }
         print("did configure states")
         stateMachine = GKStateMachine(states: [
+            CTStartMenuState(scene: gameScene, context: self),
             CTGamePlayState(scene: gameScene, context: self),
-            CTGameOverState(scene: gameScene, context: self),
+            CTGameIdleState(scene: gameScene, context: self),
+            CTGameOverState(scene: gameScene, context: self)
         ])
     }
 }

@@ -1,13 +1,13 @@
 //
-//  CTGameIdleState.swift
+//  CTStartMenuState.swift
 //  Chase2D
 //
-//  Created by Roshan Thapa Magar on 11/12/24.
+//  Created by James Calder on 11/30/24.
 //
 
 import GameplayKit
 
-class CTGameIdleState: GKState {
+class CTStartMenuState: GKState {
     
     weak var context: CTGameContext?
     weak var scene: CTGameScene?
@@ -24,7 +24,7 @@ class CTGameIdleState: GKState {
     
     override func didEnter(from previousState: GKState?)
     {
-        print("game entered pause state")
+        print("entered start menu state")
         
         scene?.gameInfo.setIsPaused(val: true)
         

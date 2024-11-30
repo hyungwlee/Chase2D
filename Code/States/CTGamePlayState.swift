@@ -38,6 +38,8 @@ class CTGamePlayState: GKState {
     
     override func didEnter(from previousState: GKState?) {
         print("did enter idle state")
+        
+        scene?.gameInfo.setIsPaused(val: false)
    }
     
     override func update(deltaTime seconds: TimeInterval) {

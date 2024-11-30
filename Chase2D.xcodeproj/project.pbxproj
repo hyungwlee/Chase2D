@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A68BF522CFBCB7F00219AD8 /* CTStartMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A68BF512CFBCB7500219AD8 /* CTStartMenuState.swift */; };
 		9E16A6E92CF29F490086D22E /* CTPowerUpNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6E82CF29F490086D22E /* CTPowerUpNode.swift */; };
 		9E16A6EB2CF6C3F80086D22E /* CTBulletNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EA2CF6C3F80086D22E /* CTBulletNode.swift */; };
 		9E16A6ED2CF6C6C60086D22E /* CTShootingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */; };
@@ -74,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A68BF512CFBCB7500219AD8 /* CTStartMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTStartMenuState.swift; sourceTree = "<group>"; };
 		1AB93CB82CCD7081004123CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E16A6E82CF29F490086D22E /* CTPowerUpNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTPowerUpNode.swift; sourceTree = "<group>"; };
 		9E16A6EA2CF6C3F80086D22E /* CTBulletNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTBulletNode.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 		9E7B905E2CD00F7100137DE8 /* States */ = {
 			isa = PBXGroup;
 			children = (
+				1A68BF512CFBCB7500219AD8 /* CTStartMenuState.swift */,
 				9E9F18FB2CD011C50005DE27 /* CTGamePlayState.swift */,
 				9EEE45742CD7547800297666 /* CTGameOverState.swift */,
 				9E9B77E72CE45FCC00F88543 /* CTGameIdleState.swift */,
@@ -455,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ED875162CE7BA8B00FED09C /* CTCopLights.swift in Sources */,
+				1A68BF522CFBCB7F00219AD8 /* CTStartMenuState.swift in Sources */,
 				9EAB118E2CF7CF9B003C0784 /* CTSpriteKitView.swift in Sources */,
 				9EAB119C2CF9525C003C0784 /* CTCopTankEntity.swift in Sources */,
 				9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */,

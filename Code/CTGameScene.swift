@@ -35,11 +35,12 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.timeLabel)
         self.addChild(gameInfo.healthLabel)
         self.addChild(gameInfo.gameOverLabel)
+        self.addChild(gameInfo.cashLabel)
         self.addChild(gameInfo.healthIndicator)
         self.addChild(gameInfo.speedometer)
         self.addChild(gameInfo.speedometerBG)
         
-        
+        context?.stateMachine?.enter(CTStartMenuState.self)
     }
         
     override func didMove(to view: SKView) {
@@ -83,6 +84,7 @@ class CTGameScene: SKScene {
         gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
         gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
+        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
@@ -304,7 +306,7 @@ class CTGameScene: SKScene {
             let cashNode = CTPowerUpNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
             cashNode.name = "cash"
             cashNode.position = CGPoint(x: randomFloatX, y: randomFloatY)
-            cashNode.zPosition = -1
+            cashNode.zPosition = +1
             addChild(cashNode)
             
         }
