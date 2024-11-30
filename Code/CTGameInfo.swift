@@ -15,7 +15,7 @@ struct CTGameInfo {
     var playerHealth:CGFloat = 100
     var playerSpeed:CGFloat = 800
     var pedSpeed:CGFloat = 500
-    var copSpeed:CGFloat = 1000
+    var copSpeed:CGFloat = 790
     
     
     var numberOfCops = 0
