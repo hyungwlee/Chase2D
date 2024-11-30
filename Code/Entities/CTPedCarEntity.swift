@@ -8,7 +8,7 @@ import GameplayKit
 import SpriteKit
 
 class CTPedCarEntity: GKEntity {
-    let carNode: SKSpriteNode
+    let carNode: DriveableNode
     let CHECKPOINT_RADIUS_SQUARED = 500.0
     
     var gameInfo:CTGameInfo?
@@ -16,7 +16,7 @@ class CTPedCarEntity: GKEntity {
     var checkPointsList: [SKNode] = []
     var currentTargetIndex = 0
     
-    init(carNode: SKSpriteNode) {
+    init(carNode: DriveableNode) {
         self.carNode = carNode
         super.init()
     }

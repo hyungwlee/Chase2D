@@ -1,6 +1,6 @@
 import SpriteKit
 
-class CTCarNode: SKSpriteNode{
+class CTCarNode: SKSpriteNode, DriveableNode{
     
     var STEER_IMPULSE = 0.05
     var MOVE_FORCE:CGFloat = 1300
@@ -9,11 +9,27 @@ class CTCarNode: SKSpriteNode{
     
     var health = 100.0
     
+    var frontLeftWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    var frontRightWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    var rearLeftWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    var rearRightWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    
     init(imageNamed: String, size: CGSize){
         let texture = SKTexture(imageNamed: imageNamed )
         texture.filteringMode = .nearest
-        
+       
         super.init(texture: texture, color: .clear, size: size)
+         
+        frontLeftWheel.position = CGPoint(x: self.position.x - 2.5, y: self.position.y + 6)
+        frontRightWheel.position = CGPoint(x: self.position.x + 2.5, y: self.position.y + 6)
+        rearLeftWheel.position = CGPoint(x: self.position.x - 2.5, y: self.position.y - 6)
+        rearRightWheel.position = CGPoint(x: self.position.x + 2.5, y: self.position.y - 6)
+        
+        addChild(frontLeftWheel)
+        addChild(frontRightWheel)
+        addChild(rearLeftWheel)
+        addChild(rearRightWheel)
+        
         enablePhysics()
     }
     

@@ -7,15 +7,22 @@
 
 import SpriteKit
 
-class CTCopTruckNode: SKSpriteNode, EnemyNode {
+class CTCopTruckNode: SKSpriteNode, EnemyNode, DriveableNode {
     var health: CGFloat = 80.0
+    var frontLeftWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    var frontRightWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    var rearLeftWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
+    var rearRightWheel = SKSpriteNode(color: .clear, size: CGSize(width: 1.0, height: 1.0))
     
     init(imageNamed: String, size: CGSize){
         let texture = SKTexture(imageNamed: imageNamed )
         texture.filteringMode = .nearest
         
         super.init(texture: texture, color: .clear, size: size)
-        
+        frontLeftWheel.position = CGPoint(x: self.position.x - 2.5, y: self.position.y + 6)
+        frontRightWheel.position = CGPoint(x: self.position.x + 2.5, y: self.position.y + 6)
+        rearLeftWheel.position = CGPoint(x: self.position.x - 2.5, y: self.position.y - 6)
+        rearRightWheel.position = CGPoint(x: self.position.x + 2.5, y: self.position.y - 6)
         enablePhysics()
         addLights()
     }

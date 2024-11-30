@@ -10,12 +10,12 @@ import SpriteKit
 
 class CTSteeringComponent: GKComponent {
     
-    let carNode: SKSpriteNode
+    let carNode: DriveableNode
     var STEER_IMPULSE = 0.04
     var DRIFT_FORCE:CGFloat = 0.04
     var DRIFT_VELOCITY_THRESHOLD: CGFloat = 6
     
-    init(carNode: SKSpriteNode) {
+    init(carNode: DriveableNode) {
         self.carNode = carNode
         super.init()
     }
@@ -24,37 +24,44 @@ class CTSteeringComponent: GKComponent {
         fatalError("init(coder: ) has not been implemented")
     }
     
-    func steer(moveDirection: CGFloat){
-        
-        // drift
-        let velocity = self.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
-        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy + velocity.dy)
+    func steer(moveDirection: CGFloat) {
+        guard let physicsBody = self.carNode.physicsBody else { return }
 
-        let forwardVector = CGVector(dx: -sin(self.carNode.zRotation), dy: cos(self.carNode.zRotation))
-        
-        let lateralVelocity = CGVector(
-            dx: -forwardVector.dy * (forwardVector.dy * velocity.dx + forwardVector.dx * velocity.dy),
-            dy: forwardVector.dx * (forwardVector.dy * velocity.dx + forwardVector.dx * velocity.dy)
-        )
-        
-        // Drift angle: Angle between velocity and forward direction
-        let driftAngle = atan2(velocity.dy, velocity.dx) - self.carNode.zRotation
+        // Get current velocity and speed
+        let velocity = physicsBody.velocity
+        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
 
-        // Normalize drift angle to the range [-π, π]
-        let normalizedDriftAngle = atan2(sin(driftAngle), cos(driftAngle))
+        // Calculate forward and lateral vectors
+        let forwardVector = CGVector(dx: cos(carNode.zRotation), dy: sin(carNode.zRotation))
+        let forwardVelocity = dotProduct(velocity, forwardVector)
+        let lateralVelocity = CGVector(dx: velocity.dx - forwardVector.dx * forwardVelocity,
+                                       dy: velocity.dy - forwardVector.dy * forwardVelocity)
 
-        // Calculate grip multiplier based on the drift angle
-        let maxDriftAngle: CGFloat = .pi / 2 // 90° is the max drift angle for full sliding
-        let gripMultiplier = max(0.1, 1.0 - abs(normalizedDriftAngle) / maxDriftAngle)
+        // Reduce lateral velocity to simulate tire grip
+        let reducedLateralVelocity = CGVector(dx: lateralVelocity.dx * 1, dy: lateralVelocity.dy * 1)
+        physicsBody.velocity = CGVector(dx: forwardVector.dx * forwardVelocity + reducedLateralVelocity.dx,
+                                         dy: forwardVector.dy * forwardVelocity + reducedLateralVelocity.dy)
+
+        // Apply torque to simulate steering and drifting
+        let torque = moveDirection * STEER_IMPULSE * -1.0 * 100 * min(max(speed, 0), 1)
+        physicsBody.applyTorque(torque)
+
+        // Apply additional force to simulate drift
+        let driftForce = CGVector(dx: lateralVelocity.dx * -5, dy: lateralVelocity.dy * -5)
+        physicsBody.applyForce(driftForce)
+    }
+    
+    func steerWheels(direction: CGFloat) {
+        let maxSteerAngle: CGFloat = .pi / 6 // 30 degrees max angle
+        let steeringAngle = direction * maxSteerAngle
         
-        self.carNode.physicsBody?.applyImpulse(
-            CGVector(dx: -lateralVelocity.dx * 1/gripMultiplier * 0.01, dy: -lateralVelocity.dy * 1/gripMultiplier * 0.01))
+        carNode.frontLeftWheel.zRotation = steeringAngle
         
-        // turn
-        let torque = moveDirection * STEER_IMPULSE * -1.0 * 10 * 1/gripMultiplier * min(max(speed, 0),1)
-        print(gripMultiplier)
-        self.carNode.physicsBody?.applyTorque(torque);
-       
+    }
+
+    // Helper: Dot product for velocity calculation
+    func dotProduct(_ vector1: CGVector, _ vector2: CGVector) -> CGFloat {
+        return vector1.dx * vector2.dx + vector1.dy * vector2.dy
     }
     
 }
