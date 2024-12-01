@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class CTBulletNode: SKSpriteNode {
+class CTCopBulletNode: SKSpriteNode {
     
     init(imageNamed: String, size: CGSize){
         let texture = SKTexture(imageNamed: imageNamed )
@@ -24,7 +24,7 @@ class CTBulletNode: SKSpriteNode {
             physicsBody?.affectedByGravity = false
             physicsBody?.mass = 0.05
             physicsBody?.friction = 0
-            physicsBody?.categoryBitMask = CTPhysicsCategory.bullet
+            physicsBody?.categoryBitMask = CTPhysicsCategory.copBullet
             physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck | CTPhysicsCategory.ped | CTPhysicsCategory.building
         }
     }

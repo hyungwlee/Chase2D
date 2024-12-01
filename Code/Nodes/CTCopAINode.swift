@@ -53,14 +53,16 @@ class CTCopAINode: SKNode{
             
             let minSpawnDist = context.gameScene?.gameInfo.MIN_SPAWN_RADIUS ?? 10000
             let maxSpawnDist = context.gameScene?.gameInfo.MAX_SPAWN_RADIUS ?? 50000
+            print(distanceWithPlayer <= minSpawnDist
+                  || distanceWithPlayer >= maxSpawnDist)
             
             
             // 1 in 3 chance of getting a spawn
             if
-                randomNumber != 2
-//                || distanceWithPlayer >= minSpawnDist
-//                || distanceWithPlayer <= maxSpawnDist
-                  || context.gameScene?.gameInfo.numberOfCops ?? 0 >= context.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
+//                randomNumber != 2
+                    distanceWithPlayer <= minSpawnDist
+                    || distanceWithPlayer >= maxSpawnDist
+                    || context.gameScene?.gameInfo.numberOfCops ?? 0 >= context.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
             { continue };
             
             gameScene.gameInfo.numberOfCops += 1

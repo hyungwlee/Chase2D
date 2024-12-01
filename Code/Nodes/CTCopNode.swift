@@ -8,7 +8,7 @@
 import SpriteKit
 
 class CTCopNode: SKSpriteNode, EnemyNode, DriveableNode {
-    var health: CGFloat = 50.0
+    var health: CGFloat = 25.0
     
     
     init(imageNamed: String, size: CGSize){

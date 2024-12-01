@@ -61,9 +61,9 @@ class CTSelfDrivingComponent: GKComponent {
         }
         
         if let steeringComponent = entity?.component(ofType: CTSteeringComponent.self){
-            if angleDifference > 0.1 {
+            if angleDifference > 0.25 {
                 steeringComponent.steer(moveDirection: 1.0) // Steer right
-             } else if angleDifference < -0.1 {
+             } else if angleDifference < -0.25 {
                  steeringComponent.steer(moveDirection: -1.0) // Steer left
              } else {
                  steeringComponent.steer(moveDirection: 0.0) // Go straight if close enough to target angle

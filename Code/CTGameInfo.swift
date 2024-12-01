@@ -26,11 +26,11 @@ struct CTGameInfo {
     var MAX_NUMBER_OF_PEDS = 10
     let ITEM_DESPAWN_DIST = 30000.0
     let MIN_SPAWN_RADIUS = 500.0
-    let MAX_SPAWN_RADIUS = 80000.0
+    let MAX_SPAWN_RADIUS = 10000.0
     let MAX_PLAYABLE_SIZE = 30000.0
     
-    let FIRST_WAVE_TIME     = 15.0
-    let SECOND_WAVE_TIME    = 20.0
+    let FIRST_WAVE_TIME     = 20.0
+    let SECOND_WAVE_TIME    = 40.0
     let THIRD_WAVE_TIME     = 90.0
     let FOURTH_WAVE_TIME    = 300.0
     
@@ -38,7 +38,7 @@ struct CTGameInfo {
     
     var canSpawnPoliceTrucks = false
     var canSpawnTanks = false
-    var gunShootInterval = 7_000_000
+    var gunShootInterval = 700_000_000
     
     
     // gameplay speed

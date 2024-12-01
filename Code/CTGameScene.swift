@@ -193,7 +193,7 @@ class CTGameScene: SKScene {
             }
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 if let physicsBody = copCarEntity.carNode.physicsBody {
-                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 500 {
+                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 200 {
                         drivingComponent.drive(driveDir: .backward)
                     } else {
                         drivingComponent.drive(driveDir: .forward)
@@ -236,7 +236,7 @@ class CTGameScene: SKScene {
             }
             if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
                 if let physicsBody = copTruckEntity.carNode.physicsBody {
-                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 500 {
+                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 200 {
                         drivingComponent.drive(driveDir: .backward)
                     } else {
                         drivingComponent.drive(driveDir: .forward)
@@ -280,7 +280,7 @@ class CTGameScene: SKScene {
             }
             if let drivingComponent = copTankEntity.component(ofType: CTDrivingComponent.self) {
                 if let physicsBody = copTankEntity.carNode.physicsBody {
-                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 500 {
+                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 200 {
                         drivingComponent.drive(driveDir: .backward)
                         drivingComponent.ram()
                     } else {
@@ -414,6 +414,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             // randomly applies one powerup if we collect 3 powerup
             if(gameInfo.cashCollected == 3) {
                 activatePowerUp()
+//                giveShootingAbility()
                 gameInfo.cashCollected = 0
             }
             
@@ -421,14 +422,19 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         
         // if bullet hits anything remove it from the scene
-        if categoryB == CTPhysicsCategory.bullet || categoryA == CTPhysicsCategory.bullet {
+        if categoryB == CTPhysicsCategory.copBullet || categoryA == CTPhysicsCategory.copBullet {
             print("bullet hit something")
-            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.bullet) ? contact.bodyA.node as? CTBulletNode : contact.bodyB.node as? CTBulletNode
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.copBullet) ? contact.bodyA.node as? CTCopBulletNode : contact.bodyB.node as? CTCopBulletNode
+            bullet?.removeFromParent()
+        }
+        if categoryB == CTPhysicsCategory.playerBullet || categoryA == CTPhysicsCategory.playerBullet {
+            print("bullet hit something")
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
             bullet?.removeFromParent()
         }
         
         // bullet collision
-        if collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.car) {
+        if collision == (CTPhysicsCategory.copBullet | CTPhysicsCategory.car) {
             gameInfo.playerHealth -= 25
         }
         
@@ -467,12 +473,12 @@ extension CTGameScene: SKPhysicsContactDelegate {
         // enemy damages
         
         // bullet collision
-        if  collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.copCar)  ||
-                collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.copTank) ||
-                collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.copTruck) {
+        if  collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copCar)  ||
+                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTank) ||
+                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTruck) {
             print("enemy hit by bullet")
             
-            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.bullet) ? contact.bodyA.node as? CTBulletNode : contact.bodyB.node as? CTBulletNode
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
             
             var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
             

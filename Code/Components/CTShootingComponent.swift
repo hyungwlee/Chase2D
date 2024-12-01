@@ -25,8 +25,12 @@ class CTShootingComponent: GKComponent {
     func shoot(target: CGPoint) {
         
         if reloading { return }
-        
-        let bullet = CTBulletNode(imageNamed: "damageBoost", size: CGSize(width: 2.0, height: 2.0))
+        var bullet: SKSpriteNode
+        if car.name == "player" {
+            bullet = CTPlayerBulletNode(imageNamed: "damageBoost", size: CGSize(width: 2.0, height: 2.0))
+        } else {
+            bullet = CTCopBulletNode(imageNamed: "damageBoost", size: CGSize(width: 2.0, height: 2.0))
+        }
         bullet.position = car.position
         
         let dVector = CGVector(
@@ -52,7 +56,11 @@ class CTShootingComponent: GKComponent {
        
         let wait = SKAction.wait(forDuration: 0.01)
         let run = SKAction.run {
-            bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.none
+            if self.car.name == "player"{
+                bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.playerBullet
+            } else {
+                bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.copBullet
+            }
         }
         let reset = SKAction.run{
             bullet.physicsBody?.contactTestBitMask = initialContactTestBitMask
