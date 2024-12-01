@@ -73,11 +73,11 @@ class CTGameScene: SKScene {
         
         // The UI components are moved by adding/subtracting a fraction of the screen width/height.
         // Increase the modifier value to move closer to center of screen.
-        let scoreAndTimeXModifier: CGFloat = 30.0
+        let scoreAndTimeXModifier: CGFloat = 25.0
         let scoreAndTimeYModifier: CGFloat = 8.0
         
         let healthXModifier: CGFloat = 10
-        let healthYModifier: CGFloat = 14
+        let healthYModifier: CGFloat = 10
         
         let speedometerYModifier: CGFloat = 9
         
@@ -406,8 +406,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
             gameInfo.numberOfCashNodesInScene = gameInfo.numberOfCashNodesInScene - 1
             colliderNode?.removeFromParent()
             
-            // randomly applies one powerup if we collect 5 powerup
-            if(gameInfo.cashCollected == 5) {
+            // randomly applies one powerup if we collect 3 powerup
+            if(gameInfo.cashCollected == 3) {
                 activatePowerUp()
                 gameInfo.cashCollected = 0
             }

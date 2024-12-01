@@ -110,9 +110,11 @@ struct CTGameInfo {
         
         speedometer.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
         speedometer.zPosition = 100
+        speedometer.isHidden = true
         
         speedometerBG.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
         speedometerBG.zPosition = 95
+        speedometerBG.isHidden = true
         
         powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
         powerUp.zPosition = 101
@@ -151,7 +153,7 @@ struct CTGameInfo {
         
         timeLabel.text = "Time: " + String(Int(seconds))
         scoreLabel.text = "Score: " + String(score)
-        cashLabel.text = "Cash: " + String(cashCollected) + "/5"
+        cashLabel.text = "Cash: " + String(cashCollected) + "/3"
         
         let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
         if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
