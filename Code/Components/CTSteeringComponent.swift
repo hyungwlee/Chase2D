@@ -38,25 +38,17 @@ class CTSteeringComponent: GKComponent {
                                        dy: velocity.dy - forwardVector.dy * forwardVelocity)
 
         // Reduce lateral velocity to simulate tire grip
-        let reducedLateralVelocity = CGVector(dx: lateralVelocity.dx * 1, dy: lateralVelocity.dy * 1)
-        physicsBody.velocity = CGVector(dx: forwardVector.dx * forwardVelocity + reducedLateralVelocity.dx,
-                                         dy: forwardVector.dy * forwardVelocity + reducedLateralVelocity.dy)
+//        let reducedLateralVelocity = CGVector(dx: lateralVelocity.dx * 1, dy: lateralVelocity.dy * 1)
+//        physicsBody.velocity = CGVector(dx: forwardVector.dx * forwardVelocity + reducedLateralVelocity.dx,
+//                                         dy: forwardVector.dy * forwardVelocity + reducedLateralVelocity.dy)
 
         // Apply torque to simulate steering and drifting
         let torque = moveDirection * STEER_IMPULSE * -1.0 * 100 * min(max(speed, 0), 1)
         physicsBody.applyTorque(torque)
-
-        // Apply additional force to simulate drift
-        let driftForce = CGVector(dx: lateralVelocity.dx * -5, dy: lateralVelocity.dy * -5)
-        physicsBody.applyForce(driftForce)
-    }
-    
-    func steerWheels(direction: CGFloat) {
-        let maxSteerAngle: CGFloat = .pi / 6 // 30 degrees max angle
-        let steeringAngle = direction * maxSteerAngle
-        
-        carNode.frontLeftWheel.zRotation = steeringAngle
-        
+//
+//        // Apply additional force to simulate drift
+//        let driftForce = CGVector(dx: lateralVelocity.dx * -5, dy: lateralVelocity.dy * -5)
+//        physicsBody.applyForce(driftForce)
     }
 
     // Helper: Dot product for velocity calculation

@@ -334,6 +334,7 @@ class CTGameScene: SKScene {
         // set player car from scene
 //        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
         let playerCarNode = CTCarNode(imageNamed: "playerCar", size: (context.layoutInfo.playerCarSize) )
+        playerCarNode.name = "player"
         playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
         playerCarEntity?.gameInfo = gameInfo
         playerCarEntity?.prepareComponents()
@@ -350,6 +351,10 @@ class CTGameScene: SKScene {
         copCarSpawner?.context = context
         copCarSpawner?.populateAI()
         
+        // obstacle spawner
+        let obstacleSpawner = self.childNode(withName: "dynamicObstacle") as? CTDynamicObstacleNode
+        obstacleSpawner?.context = context
+        obstacleSpawner?.assignNode(offset: CGPoint(x: 0.0, y: 0.0))
         
         // camera node
         let cameraNode = SKCameraNode()
@@ -429,7 +434,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         
         // damage collision
-        if collision == (CTPhysicsCategory.car  | CTPhysicsCategory.building) ||
+        
+        if  collision == (CTPhysicsCategory.car | CTPhysicsCategory.building) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.copCar) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTruck) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTank) ||
@@ -444,7 +450,11 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
             // impact force depends on the relative velocity
             
-            gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000099
+            if(collision == (CTPhysicsCategory.car | CTPhysicsCategory.building)){
+                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000099
+            } else {
+                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.00015
+            }
             
         }
         

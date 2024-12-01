@@ -6,17 +6,42 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 class CTDynamicObstacleNode: SKNode {
+        
+    var context: CTGameContext?
     
     required init?(coder aDecoder: NSCoder) {
         super.init()
+    }
+    func assignNode(offset: CGPoint){
+        print("context not set")
+        guard let context else {return}
+        print("context set")
+        var copCar:EnemyNode = CTCopNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
         
-        for i in 0...3 {
-            let car = CTDynamicObstacleChildNode()
-//            car.offsetPoint = CGPoint(x: 0, y: (-1 + i) * 20)
-            print(car)
-            scene?.addChild(car)
+        let random = GKRandomDistribution(lowestValue: 0, highestValue: 1).nextInt()
+        
+        switch random {
+        case 0:
+            copCar = CTCopNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
+            copCar.position = position
+            copCar.name = "cop"
+           print("added")
+            context.gameScene?.addChild(copCar)
+            
+            break;
+        case 1:
+            copCar = CTCopTruckNode(imageNamed: "copTruck2", size: context.layoutInfo.copTruckSize)
+            copCar.position = position
+            copCar.name = "cop"
+            
+           print("added")
+            context.gameScene?.addChild(copCar)
+            break;
+        default:
+            break;
         }
     }
 }

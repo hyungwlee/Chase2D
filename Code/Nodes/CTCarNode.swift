@@ -19,17 +19,17 @@ class CTCarNode: SKSpriteNode, DriveableNode{
         texture.filteringMode = .nearest
        
         super.init(texture: texture, color: .clear, size: size)
-         
-        frontLeftWheel.position = CGPoint(x: self.position.x - 2.5, y: self.position.y + 6)
-        frontRightWheel.position = CGPoint(x: self.position.x + 2.5, y: self.position.y + 6)
-        rearLeftWheel.position = CGPoint(x: self.position.x - 2.5, y: self.position.y - 6)
-        rearRightWheel.position = CGPoint(x: self.position.x + 2.5, y: self.position.y - 6)
-        
+       
         addChild(frontLeftWheel)
         addChild(frontRightWheel)
         addChild(rearLeftWheel)
         addChild(rearRightWheel)
-        
+         
+        frontLeftWheel.position = CGPoint(x: -2.5, y: 6)
+        frontRightWheel.position = CGPoint(x: 2.5, y: 6)
+        rearLeftWheel.position = CGPoint(x: 2.5, y: -6)
+        rearRightWheel.position = CGPoint(x: 2.5, y: -6)
+         
         enablePhysics()
     }
     

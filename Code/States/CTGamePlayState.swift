@@ -86,7 +86,7 @@ class CTGamePlayState: GKState {
         guard let scene else { return }
         
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 10
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copSpeed += 50
             scene.gameInfo.currentWave += 1
@@ -94,7 +94,7 @@ class CTGamePlayState: GKState {
             print("firstWaveOver")
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 5
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 10
             scene.gameInfo.playerSpeed += 150
             scene.gameInfo.copSpeed += 150
             scene.gameInfo.canSpawnPoliceTrucks = true
@@ -103,7 +103,7 @@ class CTGamePlayState: GKState {
             print("secondWaveOver")
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 3
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 10
             scene.gameInfo.playerSpeed += 100
             scene.gameInfo.copSpeed += 100
             scene.gameInfo.canSpawnTanks = true
@@ -112,7 +112,7 @@ class CTGamePlayState: GKState {
             print("thirdwaveover")
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 2
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 10
             scene.gameInfo.playerSpeed += 100
             scene.gameInfo.copSpeed += 100
             scene.gameInfo.currentWave += 1

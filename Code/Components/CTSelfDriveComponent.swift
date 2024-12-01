@@ -32,11 +32,11 @@ class CTSelfDrivingComponent: GKComponent {
     init(carNode: SKSpriteNode) {
         self.carNode = carNode
         self.rays  = [
-            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 120),
-            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 60),
-            "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 30),
-            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 150),
-            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 50, angle: 90),
+            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 20, angle: 120),
+            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 20, angle: 60),
+            "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 20, angle: 30),
+            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 20, angle: 150),
+            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 20, angle: 90),
         ]
         super.init()
         

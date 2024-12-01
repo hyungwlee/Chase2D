@@ -20,7 +20,7 @@ class CTCopAINode: SKNode{
     func populateAI (){
         
         // timer
-        let wait = SKAction.wait(forDuration: 2)
+        let wait = SKAction.wait(forDuration: 0.5)
         let run = SKAction.run {
             self.spawnCops()
         }
@@ -46,7 +46,7 @@ class CTCopAINode: SKNode{
         
         for child in checkPointsHolder.children{
             
-            let distanceWithPlayer = calculateSquareDistance(pointA: child.position, pointB: gameScene.playerCarEntity?.carNode.position ?? CGPoint(x: 0,y: 0))
+            let distanceWithPlayer = sqrt(calculateSquareDistance(pointA: child.position, pointB: gameScene.playerCarEntity?.carNode.position ?? CGPoint(x: 0,y: 0)))
             
             // random number generation
             let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 2).nextInt()
@@ -54,12 +54,13 @@ class CTCopAINode: SKNode{
             let minSpawnDist = context.gameScene?.gameInfo.MIN_SPAWN_RADIUS ?? 10000
             let maxSpawnDist = context.gameScene?.gameInfo.MAX_SPAWN_RADIUS ?? 50000
             
+            
             // 1 in 3 chance of getting a spawn
             if
                 randomNumber != 2
-                || distanceWithPlayer * distanceWithPlayer >= maxSpawnDist * maxSpawnDist
-                || distanceWithPlayer * distanceWithPlayer <= minSpawnDist * maxSpawnDist
-                || context.gameScene?.gameInfo.numberOfCops ?? 0 >= context.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
+//                || distanceWithPlayer >= minSpawnDist
+//                || distanceWithPlayer <= maxSpawnDist
+                  || context.gameScene?.gameInfo.numberOfCops ?? 0 >= context.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
             { continue };
             
             gameScene.gameInfo.numberOfCops += 1
