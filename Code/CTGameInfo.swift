@@ -22,11 +22,11 @@ struct CTGameInfo {
     var numberOfCops = 0
     var numberOfPeds = 0
     
-    var MAX_NUMBER_OF_COPS = 5
-    var MAX_NUMBER_OF_PEDS = 20
+    var MAX_NUMBER_OF_COPS = 25
+    var MAX_NUMBER_OF_PEDS = 10
     let ITEM_DESPAWN_DIST = 30000.0
-    let MIN_SPAWN_RADIUS = 100.0
-    let MAX_SPAWN_RADIUS = 10000.0
+    let MIN_SPAWN_RADIUS = 500.0
+    let MAX_SPAWN_RADIUS = 80000.0
     let MAX_PLAYABLE_SIZE = 30000.0
     
     let FIRST_WAVE_TIME     = 15.0

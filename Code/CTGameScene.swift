@@ -429,7 +429,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         // bullet collision
         if collision == (CTPhysicsCategory.bullet | CTPhysicsCategory.car) {
-            gameInfo.playerHealth -= 10
+            gameInfo.playerHealth -= 25
         }
         
         
@@ -545,27 +545,27 @@ extension CTGameScene{
     func activatePowerUp() {
         let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 10).nextInt()
         switch(randomNumber){
-        case 0,1,2:
+        case 0,1,2,3:
             boostHealth()
             break;
-        case 3:
+        case 7,8,9,10:
             destroyCops()
             break;
         case 4,5,6:
              increaseSpeed()
             break;
-        case 7,8,9:
-            giveShootingAbility()
-            break;
-        case 10:
-            giveMachineGun()
+//        case 7,8,9:
+//            giveShootingAbility()
+//            break;
+//        case 10:
+//            giveMachineGun()
         default:
             break;
         }
     }
     
     func boostHealth() {
-        gameInfo.playerHealth = gameInfo.playerHealth + 5
+        gameInfo.playerHealth = gameInfo.playerHealth + 25
         gameInfo.powerUp.texture = SKTexture(imageNamed: "healthBoost")
         print("boostHealth")
     }
@@ -609,7 +609,7 @@ extension CTGameScene{
     }
     
     func increaseSpeed() {
-        gameInfo.playerSpeed = gameInfo.playerSpeed + 100
+        gameInfo.playerSpeed = gameInfo.playerSpeed + 200
         gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
         print("increase Speed")
     }
@@ -625,7 +625,7 @@ extension CTGameScene{
     func giveMachineGun() {
         gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
         if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
-            gameInfo.gunShootInterval = 1_000_000
+            gameInfo.gunShootInterval = 4_000_000
             print("machine gun given")
         }else {
             // if the player doesnt't have a gun then give another powerup

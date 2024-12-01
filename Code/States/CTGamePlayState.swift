@@ -166,19 +166,22 @@ class CTGamePlayState: GKState {
     func handleCameraMovement() {
             
         let randomNumber = CGFloat(GKRandomDistribution(lowestValue: 0, highestValue: 5).nextInt())
-        let randomOffsetX = sin(time * 2) * (10 + randomNumber)
-        let randomOffsetY = cos(time * 2) * (10 + randomNumber)
+//        let randomOffsetX = sin(time * 2) * (10 + randomNumber)
+//        let randomOffsetY = cos(time * 2) * (10 + randomNumber)
+        let randomOffsetX = 0.0
+        let randomOffsetY = 0.0
         
         let targetPosition = CGPoint(x: (scene?.playerCarEntity?.carNode.position.x ?? 0.0) + randomOffsetX,  y: (scene?.playerCarEntity?.carNode.position.y ?? 0.0) + randomOffsetY)
         let moveAction = SKAction.move(to: targetPosition, duration: 0.25)
         
-        if self.scene?.playerSpeed ?? 101 < 70 {
-            let scaleAction = SKAction.scale(to: 0.2, duration: 0.2)
-            scene?.cameraNode?.run(scaleAction)
-        } else {
-            let scaleAction = SKAction.scale(to: 0.35, duration: 0.2)
-            scene?.cameraNode?.run(scaleAction)
-        }
+//        if self.scene?.playerSpeed ?? 101 < 70 {
+//            let scaleAction = SKAction.scale(to: 0.2, duration: 0.2)
+//            scene?.cameraNode?.run(scaleAction)
+//        } else {
+//            let scaleAction = SKAction.scale(to: 0.35, duration: 0.2)
+//            scene?.cameraNode?.run(scaleAction)
+//        }
+        
         scene?.cameraNode?.run(moveAction)
     }
     
