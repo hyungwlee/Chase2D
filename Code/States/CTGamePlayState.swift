@@ -37,7 +37,7 @@ class CTGamePlayState: GKState {
     }
     
     override func didEnter(from previousState: GKState?) {
-        print("did enter idle state")
+        print("did enter play state")
         
         scene?.gameInfo.setIsPaused(val: false)
    }

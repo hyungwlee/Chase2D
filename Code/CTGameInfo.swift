@@ -29,8 +29,8 @@ struct CTGameInfo {
     let MAX_SPAWN_RADIUS = 80000.0
     let MAX_PLAYABLE_SIZE = 30000.0
     
-    let FIRST_WAVE_TIME     = 20.0
-    let SECOND_WAVE_TIME    = 40.0
+    let FIRST_WAVE_TIME     = 30.0
+    let SECOND_WAVE_TIME    = 60.0
     let THIRD_WAVE_TIME     = 90.0
     let FOURTH_WAVE_TIME    = 300.0
     
@@ -70,6 +70,8 @@ struct CTGameInfo {
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
+    var powerUp = SKSpriteNode()
+    
     let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
@@ -111,6 +113,9 @@ struct CTGameInfo {
         
         speedometerBG.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
         speedometerBG.zPosition = 95
+        
+        powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
+        powerUp.zPosition = 101
     }
     
     mutating func setGameOver()
@@ -146,7 +151,7 @@ struct CTGameInfo {
         
         timeLabel.text = "Time: " + String(Int(seconds))
         scoreLabel.text = "Score: " + String(score)
-        cashLabel.text = "Cash: " + String(cashCollected)
+        cashLabel.text = "Cash: " + String(cashCollected) + "/5"
         
         let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
         if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)

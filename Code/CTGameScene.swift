@@ -39,6 +39,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.healthIndicator)
         self.addChild(gameInfo.speedometer)
         self.addChild(gameInfo.speedometerBG)
+        self.addChild(gameInfo.powerUp)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -96,6 +97,8 @@ class CTGameScene: SKScene {
 
         gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
         gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
+        
+        gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         
         // ai section
@@ -553,10 +556,12 @@ extension CTGameScene{
     
     func boostHealth() {
         gameInfo.playerHealth = gameInfo.playerHealth + 5
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "healthBoost")
         print("boostHealth")
     }
     
     func destroyCops() {
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
         for copCarEntity in copCarEntities{
             let fadeOutAction = SKAction.fadeOut(withDuration: 1.0)
             copCarEntity.carNode.run(fadeOutAction) {
@@ -590,15 +595,17 @@ extension CTGameScene{
             }
             
         }
-        print("destoryCops")
+        print("destroyCops")
     }
     
     func increaseSpeed() {
         gameInfo.playerSpeed = gameInfo.playerSpeed + 100
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
         print("increase Speed")
     }
     
     func giveShootingAbility() {
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
         if let playerCarEntity {
             playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
         }
@@ -606,6 +613,7 @@ extension CTGameScene{
     }
     
     func giveMachineGun() {
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
         if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
             gameInfo.gunShootInterval = 1_000_000
             print("machine gun given")
