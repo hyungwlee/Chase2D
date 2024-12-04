@@ -19,13 +19,13 @@ class CTDynamicObstacleNode: SKNode {
         print("context not set")
         guard let context else {return}
         print("context set")
-        var copCar:EnemyNode = CTCopNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
+        var copCar:EnemyNode = CTCopCarNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
         
         let random = GKRandomDistribution(lowestValue: 0, highestValue: 1).nextInt()
         
         switch random {
         case 0:
-            copCar = CTCopNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
+            copCar = CTCopCarNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
             copCar.position = position
             copCar.name = "cop"
            print("added")

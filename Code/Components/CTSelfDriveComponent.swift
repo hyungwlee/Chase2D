@@ -109,6 +109,7 @@ class CTSelfDrivingComponent: GKComponent {
                         if(body?.categoryBitMask == CTPhysicsCategory.car){
                             if(self.carNode.name == "cop"){
                                 drivingComponent?.ram()
+                                drivingComponent?.drive(driveDir: .forward)
                             }
                         }
                         break;

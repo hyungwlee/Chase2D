@@ -9,10 +9,10 @@ import GameplayKit
 import SpriteKit
 
 class CTCopCarEntity: GKEntity {
-    let carNode: CTCopNode
+    let carNode: CTCopCarNode
     var gameInfo: CTGameInfo?
     
-    init(carNode: CTCopNode) {
+    init(carNode: CTCopCarNode) {
         self.carNode = carNode
         super.init()
        

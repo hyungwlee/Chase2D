@@ -16,6 +16,7 @@ struct CTPhysicsCategory {
     static let copTank: UInt32              = 0b1 << 4
     static let ped: UInt32                  = 0b1 << 5
     static let powerup: UInt32              = 0b1 << 6
-    static let copBullet: UInt32               = 0b1 << 7
-    static let playerBullet: UInt32               = 0b1 << 7
+    static let copBullet: UInt32            = 0b1 << 7
+    static let playerBullet: UInt32         = 0b1 << 7
+    static let cop: UInt32                  = 0b1 << 8
 }

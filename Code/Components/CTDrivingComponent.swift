@@ -38,7 +38,7 @@ class CTDrivingComponent: GKComponent {
             
             if((physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) > 700 &&
              !hasStopped){
-                self.carNode.physicsBody?.linearDamping = 3.0
+                self.carNode.physicsBody?.linearDamping = 1.0
                 self.carNode.physicsBody?.angularVelocity = 0.0
             } else {
                 hasStopped = true
@@ -68,10 +68,10 @@ class CTDrivingComponent: GKComponent {
         let wait = SKAction.wait(forDuration: 0.1)
         let run = SKAction.run {
             self.isRamming = true
-            self.MOVE_FORCE = self.MOVE_FORCE * 2
+            self.MOVE_FORCE = self.MOVE_FORCE * 1.5
         }
         let end = SKAction.run{
-            self.MOVE_FORCE = self.MOVE_FORCE / 2
+            self.MOVE_FORCE = self.MOVE_FORCE / 1.5
         }
         let wait2 = SKAction.wait(forDuration: 4)
         let reset = SKAction.run{

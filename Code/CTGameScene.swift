@@ -192,13 +192,7 @@ class CTGameScene: SKScene {
                 trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
             }
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
-                if let physicsBody = copCarEntity.carNode.physicsBody {
-                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 200 {
-                        drivingComponent.drive(driveDir: .backward)
-                    } else {
-                        drivingComponent.drive(driveDir: .forward)
-                    }
-                }
+                    drivingComponent.drive(driveDir: .forward)
             }
             
             if let shootingComponent = copCarEntity.component(ofType: CTShootingComponent.self) {
@@ -235,13 +229,7 @@ class CTGameScene: SKScene {
                 trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
             }
             if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
-                if let physicsBody = copTruckEntity.carNode.physicsBody {
-                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 200 {
-                        drivingComponent.drive(driveDir: .backward)
-                    } else {
-                        drivingComponent.drive(driveDir: .forward)
-                    }
-                }
+                    drivingComponent.drive(driveDir: .forward)
             }
             
             if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
@@ -279,14 +267,7 @@ class CTGameScene: SKScene {
                 trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
             }
             if let drivingComponent = copTankEntity.component(ofType: CTDrivingComponent.self) {
-                if let physicsBody = copTankEntity.carNode.physicsBody {
-                    if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) < 200 {
-                        drivingComponent.drive(driveDir: .backward)
-                        drivingComponent.ram()
-                    } else {
-                        drivingComponent.drive(driveDir: .forward)
-                    }
-                }
+                    drivingComponent.drive(driveDir: .forward)
             }
             
             if let shootingComponent = copTankEntity.component(ofType: CTShootingComponent.self) {
@@ -459,7 +440,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             if(collision == (CTPhysicsCategory.car | CTPhysicsCategory.building)){
                 gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000099
             } else {
-                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.00015
+                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0005
             }
             
         }
@@ -489,10 +470,10 @@ extension CTGameScene: SKPhysicsContactDelegate {
                       let truck = contact.bodyB.node as? CTCopTruckNode {
                 enemy = truck
             } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
-                      let car = contact.bodyA.node as? CTCopNode {
+                      let car = contact.bodyA.node as? CTCopCarNode {
                 enemy = car
             } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
-                      let car = contact.bodyB.node as? CTCopNode {
+                      let car = contact.bodyB.node as? CTCopCarNode {
                 enemy = car
             }
             
@@ -521,10 +502,10 @@ extension CTGameScene: SKPhysicsContactDelegate {
                       let truck = contact.bodyB.node as? CTCopTruckNode {
                 enemy = truck
             } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
-                      let car = contact.bodyA.node as? CTCopNode {
+                      let car = contact.bodyA.node as? CTCopCarNode {
                 enemy = car
             } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
-                      let car = contact.bodyB.node as? CTCopNode {
+                      let car = contact.bodyB.node as? CTCopCarNode {
                 enemy = car
             }
             

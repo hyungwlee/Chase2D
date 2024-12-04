@@ -14,9 +14,9 @@ struct CTGameInfo {
     var isPaused = false
     
     var playerHealth:CGFloat = 100
-    var playerSpeed:CGFloat = 800
+    var playerSpeed:CGFloat = 810
     var pedSpeed:CGFloat = 500
-    var copSpeed:CGFloat = 950
+    var copSpeed:CGFloat = 810
     
     
     var numberOfCops = 0
@@ -27,7 +27,8 @@ struct CTGameInfo {
     let ITEM_DESPAWN_DIST = 30000.0
     let MIN_SPAWN_RADIUS = 500.0
     let MAX_SPAWN_RADIUS = 10000.0
-    let MAX_PLAYABLE_SIZE = 30000.0
+    let MAX_PLAYABLE_SIZE = 1500.0
+    let COP_SPAWN_RADIUS = 100.0
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0
@@ -48,7 +49,7 @@ struct CTGameInfo {
     var powerUpPeriod:UInt64 = 2
     var cashCollected = 0
     var numberOfCashNodesInScene = 0 // leave it 0 to begin with and the update function in gameScene will adjust it properly
-    let initialCashNumber = 5000
+    let initialCashNumber = 50
     
     var score = 0
     let SCORE_INCREMENT_AMOUNT = 1

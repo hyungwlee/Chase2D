@@ -20,9 +20,16 @@ class CTCopAINode: SKNode{
     func populateAI (){
         
         // timer
-        let wait = SKAction.wait(forDuration: 0.5)
+        let wait = SKAction.wait(forDuration: 3)
         let run = SKAction.run {
-            self.spawnCops()
+            guard let context = self.context else { return }
+            guard let gameScene = context.gameScene else { return }
+           
+            // calculates how many more cops we need for the wave
+            let inSceneCopDifference = gameScene.gameInfo.MAX_NUMBER_OF_COPS - gameScene.gameInfo.numberOfCops
+            if inSceneCopDifference != 0 {
+                self.spawnCop()
+            }
         }
         
         let sequence = SKAction.sequence([wait, run])
@@ -31,91 +38,108 @@ class CTCopAINode: SKNode{
         
     }
     
-    // conditions
-    // player is inside a certain radius of the node
-    // randomized spawn each 2 sec
+    // uses an effecient way of capturing the nodes around the player outside a certain rectangle
+    func getNodesAround() -> [SKNode] {
+        guard let context else { return []}
+        guard let gameScene = context.gameScene else { return []}
+        
+        let playerNode = gameScene.playerCarEntity?.carNode
+        let playerPosition = playerNode?.position ?? CGPoint(x: 0.0, y: 0.0)
+        let radius = gameScene.gameInfo.COP_SPAWN_RADIUS
+        var nearbyNodes: [SKNode] = []
+        
+        let queryRect = CGRect(x: playerPosition.x - radius, y: playerPosition.y - radius, width: radius * 2, height: radius * 2)
+        
+        gameScene.physicsWorld.enumerateBodies(in: queryRect) {  body, _ in
+            if let node = body.node, node != playerNode {
+                nearbyNodes.append(node)
+            }
+        }
+        return nearbyNodes
+    }
     
-    func spawnCops(){
+    // returns a random spawn point around a radius
+    // makes sure the point doesn't overlap with any existing object in the scene
+    func getRandomSpawnPoint() -> CGPoint {
+        
+        guard let gameScene = context?.gameScene else { return CGPoint(x: 0.0, y: 0.0)}
+        let playerPosition = gameScene.playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0)
+        var spawnPoint: CGPoint
+        var isOverlapping = false
+        
+        repeat {
+            // we calculate this because getNodesAround returns nodes outside a certain rectangle.
+            // we can find the hypot using the sides of that rect to calculate the spawn radius of our spawn circle
+            let spawnRadius = hypot(gameScene.gameInfo.COP_SPAWN_RADIUS, gameScene.gameInfo.COP_SPAWN_RADIUS)
+            
+            // use polar coordinate to generate a spawn point based on
+            let randomAngle = Double(GKRandomDistribution(lowestValue: 0, highestValue: 359).nextInt()) / 180 * .pi
+            let spawnPointX = spawnRadius * cos(randomAngle)
+            let spawnPointY = spawnRadius * sin(randomAngle)
+            
+            spawnPoint = CGPoint(x: spawnPointX + playerPosition.x, y: spawnPointY + playerPosition.y)
+            
+            for nodeAround in getNodesAround() {
+                isOverlapping = nodeAround.frame.contains(spawnPoint)
+            }
+            
+        } while isOverlapping
+        
+        return spawnPoint
+    }
+    
+    func spawnCop(){
         
         guard let context else { return }
         guard let gameScene = context.gameScene else { return }
+       
+        // calculates how many more cops we need for the wave
+        let inSceneCopDifference = gameScene.gameInfo.MAX_NUMBER_OF_COPS - gameScene.gameInfo.numberOfCops
+        if inSceneCopDifference == 0 { return }
         
-        let checkPointsHolder = childNode(withName: "CopCarSpawners")
+        let spawnPoint = getRandomSpawnPoint()
+        gameScene.gameInfo.numberOfCops += 1
         
-        guard let checkPointsHolder else { fatalError("CopCarCheckpoints not found") }
-        
-        for child in checkPointsHolder.children{
+        if(gameScene.gameInfo.currentWave == 0) {
+             //            let copCar = CTCopNode(imageNamed: "black", size:
+            let copCar = CTCopCarNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
+            copCar.position = spawnPoint
+            copCar.name = "cop"
             
-            let distanceWithPlayer = sqrt(calculateSquareDistance(pointA: child.position, pointB: gameScene.playerCarEntity?.carNode.position ?? CGPoint(x: 0,y: 0)))
+            let carEntity = CTCopCarEntity(carNode: copCar)
+            carEntity.gameInfo = gameScene.gameInfo
+            carEntity.prepareComponents()
             
-            // random number generation
-            let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 2).nextInt()
+            gameScene.addChild(copCar)
+            gameScene.copCarEntities.append(carEntity)
             
-            let minSpawnDist = context.gameScene?.gameInfo.MIN_SPAWN_RADIUS ?? 10000
-            let maxSpawnDist = context.gameScene?.gameInfo.MAX_SPAWN_RADIUS ?? 50000
-            print(distanceWithPlayer <= minSpawnDist
-                  || distanceWithPlayer >= maxSpawnDist)
+        } else if gameScene.gameInfo.canSpawnPoliceTrucks && gameScene.gameInfo.currentWave >= 1 {
+            //            let copCar = CTCopNode(imageNamed: "black", size:
+            let copCar = CTCopTruckNode(imageNamed: "copTruck2", size: context.layoutInfo.copTruckSize)
+            copCar.position = spawnPoint
+            copCar.name = "cop"
             
+            let carEntity = CTCopTruckEntity(carNode: copCar)
+            carEntity.gameInfo = context.gameScene?.gameInfo
+            carEntity.prepareComponents()
             
-            // 1 in 3 chance of getting a spawn
-            if
-//                randomNumber != 2
-                    distanceWithPlayer <= minSpawnDist
-                    || distanceWithPlayer >= maxSpawnDist
-                    || context.gameScene?.gameInfo.numberOfCops ?? 0 >= context.gameScene?.gameInfo.MAX_NUMBER_OF_COPS ?? 10
-            { continue };
-            
-            gameScene.gameInfo.numberOfCops += 1
-            
-            if(gameScene.gameInfo.currentWave == 0) {
-                 //            let copCar = CTCopNode(imageNamed: "black", size:
-                let copCar = CTCopNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
-                copCar.position = child.position
-                copCar.name = "cop"
-                
-                let carEntity = CTCopCarEntity(carNode: copCar)
-                carEntity.gameInfo = gameScene.gameInfo
-                carEntity.prepareComponents()
-                
-                gameScene.addChild(copCar)
-                gameScene.copCarEntities.append(carEntity)
-                
-            } else if(gameScene.gameInfo.canSpawnPoliceTrucks &&
-               (gameScene.gameInfo.currentWave == 1 ||
-                gameScene.gameInfo.currentWave >= 2)) {
-                //            let copCar = CTCopNode(imageNamed: "black", size:
-                let copCar = CTCopTruckNode(imageNamed: "copTruck2", size: context.layoutInfo.copTruckSize)
-                copCar.position = child.position
-                copCar.name = "cop"
-                
-                let carEntity = CTCopTruckEntity(carNode: copCar)
-                carEntity.gameInfo = context.gameScene?.gameInfo
-                carEntity.prepareComponents()
-                
-                gameScene.addChild(copCar)
-                gameScene.copTruckEntities.append(carEntity)
-            }
-            // spawn trucks and tanks
-            if(gameScene.gameInfo.canSpawnTanks &&
-               (gameScene.gameInfo.currentWave >= 3)) {
-                //            let copCar = CTCopNode(imageNamed: "black", size:
-                let copCar = CTCopTankNode(imageNamed: "tank1", size: context.layoutInfo.copTankSize)
-                copCar.position = child.position
-                copCar.name = "cop"
-                
-                let carEntity = CTCopTankEntity(carNode: copCar)
-                carEntity.gameInfo = context.gameScene?.gameInfo
-                carEntity.prepareComponents()
-                
-                gameScene.addChild(copCar)
-                gameScene.copTankEntities.append(carEntity)
-            }
-            
-
+            gameScene.addChild(copCar)
+            gameScene.copTruckEntities.append(carEntity)
         }
-    }
-    
-    func calculateSquareDistance(pointA: CGPoint, pointB: CGPoint) -> CGFloat {
-        return pow(pointA.x - pointB.x, 2) + pow(pointA.y - pointB.y, 2)
+        // spawn trucks and tanks
+        if(gameScene.gameInfo.canSpawnTanks &&
+           (gameScene.gameInfo.currentWave >= 3)) {
+            //            let copCar = CTCopNode(imageNamed: "black", size:
+            let copCar = CTCopTankNode(imageNamed: "tank1", size: context.layoutInfo.copTankSize)
+            copCar.position = spawnPoint
+            copCar.name = "cop"
+            
+            let carEntity = CTCopTankEntity(carNode: copCar)
+            carEntity.gameInfo = context.gameScene?.gameInfo
+            carEntity.prepareComponents()
+            
+            gameScene.addChild(copCar)
+            gameScene.copTankEntities.append(carEntity)
+        }
     }
 }
