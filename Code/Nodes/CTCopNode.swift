@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class CTCopNode: SKSpriteNode {
+class CTCopNode: SKSpriteNode, EnemyNode {
     
     init(imageName: String, size: CGSize) {
         let texture = SKTexture(imageNamed: imageName)
