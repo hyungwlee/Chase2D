@@ -13,8 +13,10 @@ struct CTGameInfo {
     var gameOver = false
     var isPaused = false
     
-    var playerHealth:CGFloat = 100
+    var playerHealth:CGFloat = 300
     var playerSpeed:CGFloat = 810
+    let fuelConsumptionRate = 0.05
+    
     var pedSpeed:CGFloat = 500
     var copCarSpeed:CGFloat = 810
     var copSpeed:CGFloat = 10
@@ -72,20 +74,18 @@ struct CTGameInfo {
     var cashLabel = SKLabelNode(fontNamed: "Arial")
     var reverseLabel = SKLabelNode(fontNamed: "Arial")
     var fuelLabel = SKLabelNode(fontNamed: "Arial")
+    var wantedLevelLabel = SKLabelNode(fontNamed: "MarkerFelt-Thin")
     
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
-    let tintNode = SKSpriteNode(color: .red, size: CGSize(width: 2000, height: 2000))
-
-    
     let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"))
     {
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
@@ -121,6 +121,11 @@ struct CTGameInfo {
         fuelLabel.fontSize = 8
         fuelLabel.zPosition = 102
         
+        self.wantedLevelLabel = wantedLevelLabel
+        wantedLevelLabel.fontSize = 10
+        wantedLevelLabel.zPosition = 90
+        wantedLevelLabel.text = "*"
+        
         // This is the camera zoom value
         let zoomValue = 0.35
         
@@ -137,10 +142,6 @@ struct CTGameInfo {
         
         powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
         powerUp.zPosition = 101
-        
-        tintNode.position = CGPoint(x: 1000, y: 1000)
-        tintNode.zPosition = 80 // Ensure it overlays the entire scene
-        tintNode.alpha = 0.0 // Adjust transparency for desired effect
     }
     
     mutating func setGameOver()
@@ -231,18 +232,11 @@ struct CTGameInfo {
     mutating func increasePlayerHealth(amount: CGFloat)
     {
         playerHealth += amount
-        
-        tintNode.alpha -= 0.25
     }
     
     mutating func decreasePlayerHealth(amount: CGFloat)
     {
         playerHealth -= amount
-        
-        if (tintNode.alpha < 0.6)
-        {
-            tintNode.alpha += 0.01
-        }
     }
     
     mutating func setReverseIsHiddenVisibility(val: Bool)
@@ -252,7 +246,7 @@ struct CTGameInfo {
     
     mutating func consumeFuel()
     {
-        fuelLevel -= 0.1
+        fuelLevel -= fuelConsumptionRate
     }
     
     mutating func refillFuel(amount: CGFloat)
@@ -281,5 +275,7 @@ struct CTGameInfo {
             gameOver = true
         }
     }
+    
+    
 }
 

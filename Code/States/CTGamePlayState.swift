@@ -90,6 +90,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 150
             scene.gameInfo.currentWave += 1
+            scene.gameInfo.wantedLevelLabel.text = "**"
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
             print("firstWaveOver")
@@ -99,6 +100,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 150
             scene.gameInfo.copCarSpeed += 150
             scene.gameInfo.currentWave += 1
+            scene.gameInfo.wantedLevelLabel.text = "***"
             secondWaveSet = true
             print("secondWaveOver")
         }
@@ -108,6 +110,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.copCarSpeed += 100
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
+            scene.gameInfo.wantedLevelLabel.text = "****"
             thirdWaveSet = true
             print("thirdwaveover")
         }
@@ -116,6 +119,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 100
             scene.gameInfo.copCarSpeed += 100
             scene.gameInfo.currentWave += 1
+            scene.gameInfo.wantedLevelLabel.text = "*****"
             fourthWaveSet = true
             print("fourthWaveOver")
         }

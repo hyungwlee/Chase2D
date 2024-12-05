@@ -40,9 +40,9 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.speedometer)
         self.addChild(gameInfo.speedometerBG)
         self.addChild(gameInfo.powerUp)
-        self.addChild(gameInfo.tintNode)
         self.addChild(gameInfo.reverseLabel)
         self.addChild(gameInfo.fuelLabel)
+        self.addChild(gameInfo.wantedLevelLabel)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -105,7 +105,7 @@ class CTGameScene: SKScene {
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
         gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 18))
-        
+        gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x + healthXModifier, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 10))
         
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
         gameInfo.setHealthLabel(value: gameInfo.playerHealth)
@@ -118,8 +118,6 @@ class CTGameScene: SKScene {
         gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
         
         gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
-        
-        gameInfo.tintNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
         // ai section
         updateCopComponents()
@@ -456,6 +454,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         if collision == (CTPhysicsCategory.copBullet | CTPhysicsCategory.car) {
 //            gameInfo.playerHealth -= 25
             gameInfo.decreasePlayerHealth(amount: 25.0)
+            showDamageFlashEffect()
         }
         
         
@@ -479,9 +478,11 @@ extension CTGameScene: SKPhysicsContactDelegate {
             if(collision == (CTPhysicsCategory.car | CTPhysicsCategory.building)){
 //                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000025
                 gameInfo.decreasePlayerHealth(amount: abs(carVelocityMag - colliderVelocityMag) * 0.000025)
+//                showDamageFlashEffect()
             } else {
 //                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0005
                 gameInfo.decreasePlayerHealth(amount: abs(carVelocityMag - colliderVelocityMag) * 0.0005)
+                showDamageFlashEffect()
             }
             
         }
@@ -638,7 +639,7 @@ extension CTGameScene{
     }
     
     func increaseSpeed() {
-        gameInfo.playerSpeed = gameInfo.playerSpeed + 200
+        gameInfo.playerSpeed = gameInfo.playerSpeed + 400
         gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
         print("increase Speed")
     }
@@ -662,5 +663,23 @@ extension CTGameScene{
         }
     }
     
+    func showDamageFlashEffect() {
+        // Create a full-screen red overlay
+        let flashNode = SKSpriteNode(color: .red, size: self.size)
+//        flashNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        flashNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+        flashNode.zPosition = 1000 // Ensure it covers everything
+        flashNode.alpha = 0.3 // Start with semi-transparency
+        addChild(flashNode)
+        
+        // Create actions for the fade-out effect
+        let fadeOut = SKAction.fadeOut(withDuration: 0.3)
+        let remove = SKAction.removeFromParent()
+        let sequence = SKAction.sequence([fadeOut, remove])
+        
+        // Run the sequence
+        flashNode.run(sequence)
+    }
+
     
 }
