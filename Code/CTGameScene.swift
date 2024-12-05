@@ -40,6 +40,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.speedometer)
         self.addChild(gameInfo.speedometerBG)
         self.addChild(gameInfo.powerUp)
+        self.addChild(gameInfo.tintNode)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -100,6 +101,7 @@ class CTGameScene: SKScene {
         
         gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
+        gameInfo.tintNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
         // ai section
         updateCopComponents()
@@ -416,7 +418,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         // bullet collision
         if collision == (CTPhysicsCategory.copBullet | CTPhysicsCategory.car) {
-            gameInfo.playerHealth -= 25
+//            gameInfo.playerHealth -= 25
+            gameInfo.decreasePlayerHealth(amount: 25.0)
         }
         
         
@@ -438,14 +441,16 @@ extension CTGameScene: SKPhysicsContactDelegate {
             // impact force depends on the relative velocity
             
             if(collision == (CTPhysicsCategory.car | CTPhysicsCategory.building)){
-                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000099
+//                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.000025
+                gameInfo.decreasePlayerHealth(amount: abs(carVelocityMag - colliderVelocityMag) * 0.000025)
             } else {
-                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0005
+//                gameInfo.playerHealth -= abs(carVelocityMag - colliderVelocityMag) * 0.0005
+                gameInfo.decreasePlayerHealth(amount: abs(carVelocityMag - colliderVelocityMag) * 0.0005)
             }
             
         }
         
-        if(gameInfo.playerHealth <= 0){
+        if(gameInfo.playerHealth < 0){
             gameInfo.playerHealth = 0
             gameInfo.setGameOver()
         }
@@ -552,7 +557,8 @@ extension CTGameScene{
     }
     
     func boostHealth() {
-        gameInfo.playerHealth = gameInfo.playerHealth + 25
+//        gameInfo.playerHealth = gameInfo.playerHealth + 25
+        gameInfo.increasePlayerHealth(amount: 25)
         gameInfo.powerUp.texture = SKTexture(imageNamed: "healthBoost")
         print("boostHealth")
     }

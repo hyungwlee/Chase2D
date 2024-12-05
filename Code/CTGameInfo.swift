@@ -74,6 +74,9 @@ struct CTGameInfo {
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
+    let tintNode = SKSpriteNode(color: .red, size: CGSize(width: 2000, height: 2000))
+
+    
     let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
@@ -120,6 +123,10 @@ struct CTGameInfo {
         
         powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
         powerUp.zPosition = 101
+        
+        tintNode.position = CGPoint(x: 1000, y: 1000)
+        tintNode.zPosition = 80 // Ensure it overlays the entire scene
+        tintNode.alpha = 0.0 // Adjust transparency for desired effect
     }
     
     mutating func setGameOver()
@@ -205,6 +212,23 @@ struct CTGameInfo {
     mutating func setIsPaused(val: Bool)
     {
         isPaused = val
+    }
+    
+    mutating func increasePlayerHealth(amount: CGFloat)
+    {
+        playerHealth += amount
+        
+        tintNode.alpha -= 0.25
+    }
+    
+    mutating func decreasePlayerHealth(amount: CGFloat)
+    {
+        playerHealth -= amount
+        
+        if (tintNode.alpha < 0.6)
+        {
+            tintNode.alpha += 0.01
+        }
     }
 }
 
