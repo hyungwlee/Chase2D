@@ -41,6 +41,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.speedometerBG)
         self.addChild(gameInfo.powerUp)
         self.addChild(gameInfo.tintNode)
+        self.addChild(gameInfo.reverseLabel)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -69,8 +70,17 @@ class CTGameScene: SKScene {
         gameInfo.updateScore(phoneRuntime: currentTime)
         
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
-        // TODO: try not to use sqrt because of performance issues
         self.playerSpeed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+        
+//        print(self.playerSpeed)
+        if (self.playerSpeed < 60.0 && !gameInfo.gameOver)
+        {
+            gameInfo.setReverseIsHiddenVisibility(val: false)
+        }
+        else
+        {
+            gameInfo.setReverseIsHiddenVisibility(val: true)
+        }
         
         // The UI components are moved by adding/subtracting a fraction of the screen width/height.
         // Increase the modifier value to move closer to center of screen.
@@ -87,6 +97,8 @@ class CTGameScene: SKScene {
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
         gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
         gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
+        
+        gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
         
         
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
@@ -186,6 +198,22 @@ class CTGameScene: SKScene {
                 }
                 gameInfo.numberOfCops -= 1
                 continue;
+            }
+            
+            func checkCopSpeed() -> CGFloat
+            {
+                let copSpeed = sqrt(pow((copCarEntity.carNode.physicsBody?.velocity.dx)!, 2) + pow((copCarEntity.carNode.physicsBody?.velocity.dy)!, 2))
+                return copSpeed
+            }
+
+            // Giving cops chance to catch up to player
+            if (copCarEntity.carNode.physicsBody!.mass >= 50 && distanceWithPlayer < 1000.0 && checkCopSpeed() > 110)
+            {
+                copCarEntity.carNode.physicsBody?.mass -= 10
+            }
+            else if (copCarEntity.carNode.physicsBody!.mass < 50)
+            {
+                copCarEntity.carNode.physicsBody?.mass = 50.0
             }
             
             

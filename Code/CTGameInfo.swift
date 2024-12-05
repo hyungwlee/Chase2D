@@ -68,6 +68,7 @@ struct CTGameInfo {
     var healthLabel = SKLabelNode(fontNamed: "Arial")
     var gameOverLabel = SKLabelNode(fontNamed: "Arial")
     var cashLabel = SKLabelNode(fontNamed: "Arial")
+    var reverseLabel = SKLabelNode(fontNamed: "Arial")
     
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
@@ -81,7 +82,7 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
@@ -106,6 +107,12 @@ struct CTGameInfo {
         self.cashLabel = cashLabel
         cashLabel.fontSize = 8
         cashLabel.zPosition = 100
+        
+        self.reverseLabel = reverseLabel
+        reverseLabel.fontSize = 6
+        reverseLabel.zPosition = 90
+        reverseLabel.isHidden = true
+        reverseLabel.text = "Throw it in Reverse!"
         
         // This is the camera zoom value
         let zoomValue = 0.35
@@ -229,6 +236,11 @@ struct CTGameInfo {
         {
             tintNode.alpha += 0.01
         }
+    }
+    
+    mutating func setReverseIsHiddenVisibility(val: Bool)
+    {
+        reverseLabel.isHidden = val
     }
 }
 
