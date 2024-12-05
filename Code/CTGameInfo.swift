@@ -52,6 +52,8 @@ struct CTGameInfo {
     var numberOfCashNodesInScene = 0 // leave it 0 to begin with and the update function in gameScene will adjust it properly
     let initialCashNumber = 50
     
+    var fuelLevel: CGFloat = 100.0
+    
     var score = 0
     let SCORE_INCREMENT_AMOUNT = 1
     let FREQUENCY_CHANGE_THRESHHOLD = 5 //seconds
@@ -69,6 +71,7 @@ struct CTGameInfo {
     var gameOverLabel = SKLabelNode(fontNamed: "Arial")
     var cashLabel = SKLabelNode(fontNamed: "Arial")
     var reverseLabel = SKLabelNode(fontNamed: "Arial")
+    var fuelLabel = SKLabelNode(fontNamed: "Arial")
     
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
@@ -82,7 +85,7 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
@@ -113,6 +116,10 @@ struct CTGameInfo {
         reverseLabel.zPosition = 90
         reverseLabel.isHidden = true
         reverseLabel.text = "Throw it in Reverse!"
+        
+        self.fuelLabel = fuelLabel
+        fuelLabel.fontSize = 8
+        fuelLabel.zPosition = 102
         
         // This is the camera zoom value
         let zoomValue = 0.35
@@ -241,6 +248,38 @@ struct CTGameInfo {
     mutating func setReverseIsHiddenVisibility(val: Bool)
     {
         reverseLabel.isHidden = val
+    }
+    
+    mutating func consumeFuel()
+    {
+        fuelLevel -= 0.1
+    }
+    
+    mutating func refillFuel(amount: CGFloat)
+    {
+        if ((fuelLevel + amount) < 100.0)
+        {
+            fuelLevel += amount
+        }
+        else
+        {
+            fuelLevel = 100.0
+        }
+    }
+    
+    mutating func updateFuelUI()
+    {
+        if (fuelLevel > 0 && !gameOver && !isPaused)
+        {
+            fuelLabel.text = "Fuel: " + String(Int(fuelLevel)) + "%"
+        }
+        else if (fuelLevel <= 0)
+        {
+            fuelLabel.text = "Out of Fuel"
+            
+            //TODO: update this to call the arrest function instead once that is implemented
+            gameOver = true
+        }
     }
 }
 

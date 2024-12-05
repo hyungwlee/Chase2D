@@ -42,6 +42,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.powerUp)
         self.addChild(gameInfo.tintNode)
         self.addChild(gameInfo.reverseLabel)
+        self.addChild(gameInfo.fuelLabel)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -68,6 +69,7 @@ class CTGameScene: SKScene {
         context?.stateMachine?.update(deltaTime: currentTime)
         
         gameInfo.updateScore(phoneRuntime: currentTime)
+        gameInfo.updateFuelUI()
         
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
         self.playerSpeed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
@@ -80,6 +82,9 @@ class CTGameScene: SKScene {
         else
         {
             gameInfo.setReverseIsHiddenVisibility(val: true)
+            
+            //if player is not considered too slow, burn fuel
+            gameInfo.consumeFuel()
         }
         
         // The UI components are moved by adding/subtracting a fraction of the screen width/height.
@@ -99,6 +104,7 @@ class CTGameScene: SKScene {
         gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
+        gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 18))
         
         
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
@@ -429,6 +435,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
                 gameInfo.cashCollected = 0
             }
             
+            //temporary fuel functionality... currently tied to coins, but will be changed soon
+            gameInfo.refillFuel(amount: 50.0)
         }
         
         
