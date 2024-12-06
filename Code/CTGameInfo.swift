@@ -19,7 +19,7 @@ struct CTGameInfo {
     
     var pedSpeed:CGFloat = 500
     var copCarSpeed:CGFloat = 810
-    var copSpeed:CGFloat = 10
+    var copSpeed:CGFloat = 20
     
     
     var numberOfCops = 0
@@ -31,7 +31,7 @@ struct CTGameInfo {
     let MIN_SPAWN_RADIUS = 500.0
     let MAX_SPAWN_RADIUS = 10000.0
     let MAX_PLAYABLE_SIZE = 1500.0
-    let COP_SPAWN_RADIUS = 100.0
+    let COP_SPAWN_RADIUS = 150.0
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0

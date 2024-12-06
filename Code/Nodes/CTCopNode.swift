@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class CTCopNode: SKSpriteNode, EnemyNode {
+class CTCopNode: SKSpriteNode, EnemyNode, DriveableNode {
     var health: CGFloat = 10
     
     init(imageName: String, size: CGSize) {
@@ -29,8 +29,8 @@ class CTCopNode: SKSpriteNode, EnemyNode {
         physicsBody?.mass = 5 // Adjust for realistic movement
         physicsBody?.friction = 0
         physicsBody?.restitution = 1 // Controls bounciness
-        physicsBody?.angularDamping = 1 // Dampen rotational movement
-        physicsBody?.linearDamping = 1 // Dampen forward movement slightly
+        physicsBody?.angularDamping = 5 // Dampen rotational movement
+        physicsBody?.linearDamping = 5 // Dampen forward movement slightly
         physicsBody?.categoryBitMask = CTPhysicsCategory.cop
         physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck | CTPhysicsCategory.cop
         physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck | CTPhysicsCategory.cop

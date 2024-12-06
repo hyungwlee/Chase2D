@@ -15,6 +15,7 @@ class CTGameScene: SKScene {
     var copCarSpawner: CTCopAINode?
     var pedCarEntities: [CTPedCarEntity] = []
     var copCarEntities: [CTCopCarEntity] = []
+    var copEntities: [CTCopEntity] = []
     var copTruckEntities: [CTCopTruckEntity] = []
     var copTankEntities: [CTCopTankEntity] = []
     var cameraNode: SKCameraNode?
@@ -121,6 +122,7 @@ class CTGameScene: SKScene {
         
         // ai section
         updateCopComponents()
+        updateCopCarComponents()
         updatePedCarComponents()
         updatePlayerCarComponents()
         
@@ -178,6 +180,18 @@ class CTGameScene: SKScene {
     }
     
     func updateCopComponents(){
+        for copEntity in copEntities{
+            if let trackingComponent = copEntity.component(ofType: CTCopWalkingComponent.self) {
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+                trackingComponent.avoidObstacles()
+            }
+           if let drivingComponent = copEntity.component(ofType: CTDrivingComponent.self) {
+               drivingComponent.drive(driveDir: .forward)
+           }
+        }
+    }
+    
+    func updateCopCarComponents(){
         // copCar drive
         for copCarEntity in copCarEntities{
             
@@ -233,6 +247,10 @@ class CTGameScene: SKScene {
                 shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
             }
             
+            if let arrestngComponent = copCarEntity.component(ofType: CTArrestingCopComponent.self){
+                arrestngComponent.update()
+            }
+            
         }
         for copTruckEntity in copTruckEntities{
             let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copTruckEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
@@ -268,6 +286,9 @@ class CTGameScene: SKScene {
             
             if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
                 shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let arrestngComponent = copTruckEntity.component(ofType: CTArrestingCopComponent.self){
+                arrestngComponent.update()
             }
             
         }

@@ -31,6 +31,7 @@ class CTCopTruckEntity: GKEntity {
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
         addComponent(CTHealthComponent(carNode: carNode))
+        addComponent(CTArrestingCopComponent(carNode: carNode))
          
     }
     

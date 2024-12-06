@@ -15,4 +15,5 @@ struct CTLayoutInfo{
     let copTankSize: CGSize = .init(width: 15, height: 35)
     let powerUpSize: CGSize = .init(width: 10.0, height: 10.0)
     let bulletSize: CGSize = .init(width: 2.0, height: 4.0)
+    let copSize: CGSize = .init(width: 4.0, height: 4.0)
 }

@@ -109,7 +109,21 @@ class CTCopAINode: SKNode{
             let carEntity = CTCopCarEntity(carNode: copCar)
             carEntity.gameInfo = gameScene.gameInfo
             carEntity.prepareComponents()
+             
             
+            if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
+                let cop = CTCopNode(imageName: "black", size: gameScene.layoutInfo.copSize)
+                let copEntity = CTCopEntity(cop: cop)
+                copEntity.gameInfo = gameScene.gameInfo
+                copEntity.prepareComponents()
+                
+                arrestingComponent.copEntity = copEntity
+                arrestingComponent.gameScene = gameScene
+                
+                gameScene.copEntities.append(copEntity)
+                
+            }
+           
             gameScene.addChild(copCar)
             gameScene.copCarEntities.append(carEntity)
             
@@ -122,6 +136,19 @@ class CTCopAINode: SKNode{
             let carEntity = CTCopTruckEntity(carNode: copCar)
             carEntity.gameInfo = context.gameScene?.gameInfo
             carEntity.prepareComponents()
+            
+            if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
+                let cop = CTCopNode(imageName: "black", size: gameScene.layoutInfo.copSize)
+                let copEntity = CTCopEntity(cop: cop)
+                copEntity.gameInfo = gameScene.gameInfo
+                copEntity.prepareComponents()
+                
+                arrestingComponent.copEntity = copEntity
+                arrestingComponent.gameScene = gameScene
+                
+                gameScene.copEntities.append(copEntity)
+                
+            }
             
             gameScene.addChild(copCar)
             gameScene.copTruckEntities.append(carEntity)

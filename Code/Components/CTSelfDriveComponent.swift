@@ -112,6 +112,9 @@ class CTSelfDrivingComponent: GKComponent {
                                 drivingComponent?.drive(driveDir: .forward)
                             }
                         }
+                        if(body?.categoryBitMask == CTPhysicsCategory.building){
+                            drivingComponent?.drive(driveDir: .backward)
+                        }
                         break;
                     default:
                         steeringComponent.steer(moveDirection: 0.0)

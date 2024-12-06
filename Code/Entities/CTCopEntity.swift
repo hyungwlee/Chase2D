@@ -9,28 +9,26 @@ import GameplayKit
 import SpriteKit
 
 class CTCopEntity: GKEntity {
-    let carNode: CTCopCarNode
+    let cop: DriveableNode
     var gameInfo: CTGameInfo?
     
-    init(carNode: CTCopCarNode) {
-        self.carNode = carNode
+    init(cop: DriveableNode) {
+        self.cop = cop
         super.init()
     }
     
     func prepareComponents(){
             
-        let drivingComponent = CTDrivingComponent(carNode: carNode)
+        let drivingComponent = CTDrivingComponent(carNode: cop)
         drivingComponent.MOVE_FORCE = gameInfo?.copSpeed ?? 100
         
-        let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.05
-        steeringComponent.DRIFT_FORCE = 0.05
-        steeringComponent.DRIFT_VELOCITY_THRESHOLD = 6
+        let steeringComponent = CTSteeringComponent(carNode: cop)
+        steeringComponent.STEER_IMPULSE = 0.0005
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
-        addComponent(CTSelfDrivingComponent(carNode: carNode))
-        addComponent(CTHealthComponent(carNode: carNode))
+        addComponent(CTCopWalkingComponent(cop: cop))
+        addComponent(CTHealthComponent(carNode: cop))
          
     }
     
