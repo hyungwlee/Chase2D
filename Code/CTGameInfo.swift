@@ -14,6 +14,7 @@ struct CTGameInfo {
     var isPaused = false
     
     var playerHealth:CGFloat = 300
+    let playerStartingHealth: CGFloat
     var playerSpeed:CGFloat = 810
     let fuelConsumptionRate = 0.05
     
@@ -76,6 +77,9 @@ struct CTGameInfo {
     var fuelLabel = SKLabelNode(fontNamed: "Arial")
     var wantedLevelLabel = SKLabelNode(fontNamed: "MarkerFelt-Thin")
     
+    var tapToStartLabel = SKLabelNode(fontNamed: "Arial")
+    var instructionsLabel = SKLabelNode(fontNamed: "Arial")
+    
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
@@ -85,8 +89,10 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
+        playerStartingHealth = playerHealth
+        
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         
@@ -94,6 +100,8 @@ struct CTGameInfo {
         self.scoreLabel = scoreLabel
         scoreLabel.fontSize = 6
         scoreLabel.zPosition = 100
+        // comment the line below if you want to display score
+        scoreLabel.isHidden = true
         
         self.timeLabel = timeLabel
         timeLabel.fontSize = 6
@@ -106,6 +114,8 @@ struct CTGameInfo {
         self.gameOverLabel = gameOverLabel
         gameOverLabel.fontSize = 12
         gameOverLabel.zPosition = 100
+        gameOverLabel.text = "GAME OVER"
+        gameOverLabel.isHidden = true
         
         self.cashLabel = cashLabel
         cashLabel.fontSize = 8
@@ -142,6 +152,16 @@ struct CTGameInfo {
         
         powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
         powerUp.zPosition = 101
+        
+        self.tapToStartLabel = tapToStartLabel
+        tapToStartLabel.fontSize = 8
+        tapToStartLabel.zPosition = 102
+        tapToStartLabel.text = "Tap to Start!"
+        
+        self.instructionsLabel = instructionsLabel
+        instructionsLabel.fontSize = 6
+        instructionsLabel.zPosition = 102
+        instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
     }
     
     mutating func setGameOver()
@@ -158,13 +178,18 @@ struct CTGameInfo {
     {
         if gameOver
         {
-            gameOverLabel.text = "GAME OVER"
+            gameOverLabel.isHidden = false
             return
         }
         
         if isPaused
         {
             return
+        }
+        else
+        {
+            tapToStartLabel.isHidden = true
+            instructionsLabel.isHidden = true
         }
         
         if (gameplaySpeed < 1)
@@ -179,31 +204,31 @@ struct CTGameInfo {
         scoreLabel.text = "Score: " + String(score)
         cashLabel.text = "Cash: " + String(cashCollected) + "/3"
         
-        let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
-        if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
-        {
-            score += SCORE_INCREMENT_AMOUNT
-        }
-        
-        if (((Int(seconds) % FREQUENCY_CHANGE_THRESHHOLD) == 0) && scoreChangeFrequency >= 0.2)
-        {
-            scoreChangeFrequency -= 0.1
-        }
+//        let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
+//        if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
+//        {
+//            score += SCORE_INCREMENT_AMOUNT
+//        }
+//        
+//        if (((Int(seconds) % FREQUENCY_CHANGE_THRESHHOLD) == 0) && scoreChangeFrequency >= 0.2)
+//        {
+//            scoreChangeFrequency -= 0.1
+//        }
         
         updateHealthUI()
     }
     
     func updateHealthUI()
     {
-        if (playerHealth > 75)
+        if (playerHealth > playerStartingHealth * 0.75)
         {
             healthIndicator.texture = SKTexture(imageNamed: "player100")
         }
-        else if (playerHealth > 50)
+        else if (playerHealth > playerStartingHealth * 0.5)
         {
             healthIndicator.texture = SKTexture(imageNamed: "player75")
         }
-        else if (playerHealth > 25)
+        else if (playerHealth > playerStartingHealth * 0.25)
         {
             healthIndicator.texture = SKTexture(imageNamed: "player50")
         }
@@ -272,10 +297,14 @@ struct CTGameInfo {
             fuelLabel.text = "Out of Fuel"
             
             //TODO: update this to call the arrest function instead once that is implemented
-            gameOver = true
+            arrestMade()
         }
     }
     
-    
+    mutating func arrestMade()
+    {
+        gameOver = true
+        gameOverLabel.text = "Arrested"
+    }
 }
 

@@ -44,6 +44,8 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.reverseLabel)
         self.addChild(gameInfo.fuelLabel)
         self.addChild(gameInfo.wantedLevelLabel)
+        self.addChild(gameInfo.tapToStartLabel)
+        self.addChild(gameInfo.instructionsLabel)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -59,7 +61,10 @@ class CTGameScene: SKScene {
         prepareGameContext()
         prepareStartNodes()
         
-        context.stateMachine?.enter(CTGamePlayState.self)
+//        context.stateMachine?.enter(CTGamePlayState.self)
+        context.stateMachine?.enter(CTStartMenuState.self)
+        
+//        gameInfo.isPaused = true
     }
     
     override func update(_ currentTime: TimeInterval)
@@ -76,7 +81,7 @@ class CTGameScene: SKScene {
         self.playerSpeed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
         
 //        print(self.playerSpeed)
-        if (self.playerSpeed < 60.0 && !gameInfo.gameOver)
+        if (self.playerSpeed < 60.0 && !gameInfo.gameOver && !gameInfo.isPaused)
         {
             gameInfo.setReverseIsHiddenVisibility(val: false)
             
@@ -99,6 +104,8 @@ class CTGameScene: SKScene {
         let healthXModifier: CGFloat = 10
         let healthYModifier: CGFloat = 10
         
+        let startMenuTextYModifier: CGFloat = 25.0
+        
         let speedometerYModifier: CGFloat = 9
         
         // Text UI Components
@@ -109,7 +116,10 @@ class CTGameScene: SKScene {
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
         gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 18))
-        gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x + healthXModifier, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 10))
+        gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
+        
+        gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier))
+        gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier))
         
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
         gameInfo.setHealthLabel(value: gameInfo.playerHealth)
@@ -383,12 +393,12 @@ class CTGameScene: SKScene {
         // spawns ped cars
         pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
         pedCarSpawner?.context = context
-        pedCarSpawner?.populateAI()
+//        pedCarSpawner?.populateAI()
         
         // spawns cop cars
         copCarSpawner = self.childNode(withName: "CopAI") as? CTCopAINode
         copCarSpawner?.context = context
-        copCarSpawner?.populateAI()
+//        copCarSpawner?.populateAI()
         
         // obstacle spawner
         let obstacleSpawner = self.childNode(withName: "dynamicObstacle") as? CTDynamicObstacleNode
@@ -417,6 +427,16 @@ class CTGameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let state = context?.stateMachine?.currentState as? CTGamePlayState else {
+//            print("touched")
+            // Tap to play logic
+            if ((gameInfo.instructionsLabel.isHidden == false) && (gameInfo.isPaused == true))
+            {
+    //            gameInfo.isPaused = false
+                context?.stateMachine?.enter(CTGamePlayState.self)
+//                print("trying to play")
+            }
+            pedCarSpawner?.populateAI()
+            copCarSpawner?.populateAI()
             return
         }
         state.handleTouchStart(touches)
