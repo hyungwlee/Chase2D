@@ -47,17 +47,19 @@ class CTArrestingCopComponent: GKComponent {
             if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000
             }
-            gameScene.gameInfo.playerSpeed = 20
         }
         let wait = SKAction.wait(forDuration: 1)
         let endArrest = SKAction.run{
             self.distancewithPlayer = hypot(abs(copEntity.cop.position.x - playerPosition.x - 2.0), abs(copEntity.cop.position.y - playerPosition.y + 2.0))
             
-            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 5 { gameScene.gameInfo.gameOver = true }
+            if self.distancewithPlayer < 7 && gameScene.playerSpeed < 5 {
+                gameScene.gameInfo.playerSpeed = 20
+                gameScene.gameInfo.gameOver = true
+                gameScene.gameInfo.arrestMade()
+            }
             if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000
             }
-            gameScene.gameInfo.arrestMade()
         }
        
         let sequence = SKAction.sequence([startArrest, wait, endArrest])

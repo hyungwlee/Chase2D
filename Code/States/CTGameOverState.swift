@@ -12,6 +12,8 @@ class CTGameOverState: GKState {
     weak var context: CTGameContext?
     weak var scene: CTGameScene?
     
+    var gamePlayState: CTGamePlayState?
+    
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
         self.context = context
@@ -24,6 +26,11 @@ class CTGameOverState: GKState {
     
     override func didEnter(from previousState: GKState?) {
         handlePlayerDeath()
+        gamePlayState = previousState as? CTGamePlayState
+    }
+    
+    override func update(deltaTime seconds: TimeInterval) {
+        gamePlayState?.handleCameraMovement()
     }
     
     func handlePlayerDeath(){

@@ -1,13 +1,13 @@
 //
-//  CTPowerUpNode.swift
+//  CTFuelNode.swift
 //  Chase2D
 //
-//  Created by Roshan Thapa Magar on 11/23/24.
+//  Created by Roshan Thapa Magar on 12/6/24.
 //
 
 import SpriteKit
 
-class CTPowerUpNode: SKSpriteNode {
+class CTFuelNode: SKSpriteNode {
     
     init(imageNamed: String, nodeSize: CGSize){
         let texture = SKTexture(imageNamed: imageNamed)
@@ -25,7 +25,7 @@ class CTPowerUpNode: SKSpriteNode {
         self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
         self.physicsBody?.isDynamic = false
         self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.categoryBitMask = CTPhysicsCategory.powerup
+        self.physicsBody?.categoryBitMask = CTPhysicsCategory.fuel
         self.physicsBody?.contactTestBitMask = CTPhysicsCategory.car
         self.physicsBody?.collisionBitMask = CTPhysicsCategory.none
     }

@@ -15,8 +15,9 @@ struct CTPhysicsCategory {
     static let copTruck: UInt32             = 0b1 << 3
     static let copTank: UInt32              = 0b1 << 4
     static let ped: UInt32                  = 0b1 << 5
-    static let powerup: UInt32              = 0b1 << 6
-    static let copBullet: UInt32            = 0b1 << 7
-    static let playerBullet: UInt32         = 0b1 << 7
-    static let cop: UInt32                  = 0b1 << 8
+    static let cash: UInt32                 = 0b1 << 6
+    static let fuel: UInt32                 = 0b1 << 7
+    static let copBullet: UInt32            = 0b1 << 8
+    static let playerBullet: UInt32         = 0b1 << 9
+    static let cop: UInt32                  = 0b1 << 10
 }

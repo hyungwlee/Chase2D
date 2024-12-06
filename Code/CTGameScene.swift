@@ -138,14 +138,6 @@ class CTGameScene: SKScene {
         updatePedCarComponents()
         updatePlayerCarComponents()
         
-        
-        // spawn powerup section
-        
-        // spawn more cash if cash is low
-        if(gameInfo.numberOfCashNodesInScene < 20){
-            spawnCashNodes(amount:gameInfo.initialCashNumber)
-            gameInfo.numberOfCashNodesInScene = gameInfo.numberOfCashNodesInScene + gameInfo.initialCashNumber
-        }
     }
     
     func updatePlayerCarComponents() {
@@ -171,6 +163,10 @@ class CTGameScene: SKScene {
             if let shootingComponenet = playerCarEntity.component(ofType: CTShootingComponent.self) {
                 shootingComponenet.interval = gameInfo.gunShootInterval
                 shootingComponenet.shoot(target: minPoint ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let arrowFollowComponent = playerCarEntity.component(ofType: CTPickupFollowArrow.self) {
+                arrowFollowComponent.gameScene = self
+                arrowFollowComponent.setTarget(targetPoint: gameInfo.fuelPosition)
             }
         }
     }
@@ -344,25 +340,6 @@ class CTGameScene: SKScene {
         }
     }
     
-    func spawnCashNodes(amount: Int){
-        
-        guard let context else { return }
-        
-        let randomSource = GKRandomSource.sharedRandom()
-        
-        for _ in 0...amount {
-            let randomFloatX = Double(randomSource.nextUniform()) * gameInfo.MAX_PLAYABLE_SIZE - gameInfo.MAX_PLAYABLE_SIZE / 2.0
-            let randomFloatY = Double(randomSource.nextUniform()) * gameInfo.MAX_PLAYABLE_SIZE - gameInfo.MAX_PLAYABLE_SIZE / 2.0
-            
-            let cashNode = CTPowerUpNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
-            cashNode.name = "cash"
-            cashNode.position = CGPoint(x: randomFloatX, y: randomFloatY)
-            cashNode.zPosition = +1
-            addChild(cashNode)
-            
-        }
-    }
-    
     func prepareGameContext(){
     
         guard let context else {
@@ -461,23 +438,33 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         // player collision
         // non-damage collision
-        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.powerup) {
+        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.cash) ||
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.fuel){
             
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
-            // add cash if car hits a powerup and remove cash from total
-            gameInfo.cashCollected = gameInfo.cashCollected + 1
-            gameInfo.numberOfCashNodesInScene = gameInfo.numberOfCashNodesInScene - 1
-            colliderNode?.removeFromParent()
+            let pickupNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyB.node : contact.bodyA.node
             
-            // randomly applies one powerup if we collect 3 powerup
-            if(gameInfo.cashCollected == 3) {
-                activatePowerUp()
-//                giveShootingAbility()
-                gameInfo.cashCollected = 0
+           
+            colliderNode?.removeFromParent()
+            if categoryA == CTPhysicsCategory.cash || categoryB == CTPhysicsCategory.cash {
+                // add cash if car hits a powerup and remove cash from total
+                gameInfo.cashCollected = gameInfo.cashCollected + 1
+                gameInfo.isCashPickedUp = true
+                
+                // randomly applies one powerup if we collect 3 powerup
+                if(gameInfo.cashCollected == 3) {
+                    activatePowerUp()
+    //                giveShootingAbility()
+                    gameInfo.cashCollected = 0
+                }
+                     
             }
             
-            //temporary fuel functionality... currently tied to coins, but will be changed soon
-            gameInfo.refillFuel(amount: 50.0)
+            if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel{
+                gameInfo.refillFuel(amount: 50.0)
+                gameInfo.isFuelPickedUp = true
+            }
+           
         }
         
         

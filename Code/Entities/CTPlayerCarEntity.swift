@@ -26,9 +26,12 @@ class CTPlayerCarEntity: GKEntity {
         steeringComponent.STEER_IMPULSE = 0.04
         steeringComponent.DRIFT_FORCE = 0.04
         steeringComponent.DRIFT_VELOCITY_THRESHOLD = 6
+        
+        let fuelArrow = CTPickupFollowArrow(carNode: carNode)
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
+        addComponent(fuelArrow)
          
     }
     

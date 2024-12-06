@@ -33,6 +33,7 @@ struct CTGameInfo {
     let MAX_SPAWN_RADIUS = 10000.0
     let MAX_PLAYABLE_SIZE = 1500.0
     let COP_SPAWN_RADIUS = 150.0
+    let PICKUP_SPAWN_RADIUS = 300.0
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0
@@ -52,8 +53,10 @@ struct CTGameInfo {
     // cash
     var powerUpPeriod:UInt64 = 2
     var cashCollected = 0
-    var numberOfCashNodesInScene = 0 // leave it 0 to begin with and the update function in gameScene will adjust it properly
-    let initialCashNumber = 50
+    var isFuelPickedUp = true
+    var isCashPickedUp = true
+    var fuelPosition = CGPoint(x: 0.0, y: 0.0)
+    
     
     var fuelLevel: CGFloat = 100.0
     
