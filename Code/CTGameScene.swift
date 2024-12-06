@@ -84,15 +84,14 @@ class CTGameScene: SKScene {
         if (self.playerSpeed < 60.0 && !gameInfo.gameOver && !gameInfo.isPaused)
         {
             gameInfo.setReverseIsHiddenVisibility(val: false)
-            
-            // comment this out if you don't want player to burn fuel when stopped/stuck
-            gameInfo.consumeFuel()
         }
         else
         {
             gameInfo.setReverseIsHiddenVisibility(val: true)
-            
-            //if player is not considered too slow, burn fuel
+        }
+        
+        if !gameInfo.isPaused
+        {
             gameInfo.consumeFuel()
         }
         

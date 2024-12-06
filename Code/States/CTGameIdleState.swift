@@ -28,6 +28,10 @@ class CTGameIdleState: GKState {
         
         scene?.gameInfo.setIsPaused(val: true)
         
+        //TODO: I want the camera to zoom out on the start screen so the player can see the map better
+//        let scaleAction = SKAction.scale(to: 100, duration: 0.0)
+//        scene?.cameraNode?.run(scaleAction)
+        
         if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .none)
         }
