@@ -77,7 +77,6 @@ class CTGameOverState: GKState {
         }
     }
     
-    
     func resetGame() {
         restartPressed = true
        
