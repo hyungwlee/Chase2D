@@ -255,7 +255,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             }
             
             if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel{
-                gameInfo.refillFuel(amount: 50.0)
+                gameInfo.refillFuel(amount: 30.0)
                 gameInfo.isFuelPickedUp = true
             }
            

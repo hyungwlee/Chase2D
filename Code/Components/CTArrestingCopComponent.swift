@@ -55,6 +55,7 @@ class CTArrestingCopComponent: GKComponent {
         let startArrest = SKAction.run {
             if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000
+                self.copEntity?.cop.physicsBody?.collisionBitMask = 0
             }
         }
         let wait = SKAction.wait(forDuration: 0.5)
