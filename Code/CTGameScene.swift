@@ -595,23 +595,20 @@ extension CTGameScene{
         // Sequence of actions
         let sequence = SKAction.sequence([showAction, waitAction, hideAction])
         
-        
-        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 1).nextInt()
+        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 9).nextInt()
         switch(randomNumber){
-//        case 0,1,2,3:
+        case 0,1,2:
 //            boostHealth()
-//            break;
-        case 0:
             destroyCops()
             break;
-        case 1:
+        case 3,4,5,6:
              increaseSpeed()
             break;
-//        case 7,8,9:
-//            giveShootingAbility()
-//            break;
-//        case 10:
-//            giveMachineGun()
+        case 7,8:
+            giveShootingAbility()
+            break;
+        case 9:
+            giveMachineGun()
         default:
             break;
         }
@@ -670,24 +667,24 @@ extension CTGameScene{
         print("increase Speed")
     }
     
-//    func giveShootingAbility() {
-//        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
-//        if let playerCarEntity {
-//            playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
-//        }
-//        print("shootingAbility")
-//    }
-//    
-//    func giveMachineGun() {
-//        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
-//        if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
-//            gameInfo.gunShootInterval = 4_000_000
-//            print("machine gun given")
-//        }else {
-//            // if the player doesnt't have a gun then give another powerup
-//            activatePowerUp()
-//        }
-//    }
+    func giveShootingAbility() {
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+        if let playerCarEntity {
+            playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
+        }
+        print("shootingAbility")
+    }
+    
+    func giveMachineGun() {
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+        if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
+            gameInfo.gunShootInterval = 4_000_000
+            print("machine gun given")
+        }else {
+            // if the player doesnt't have a gun then give another powerup
+            activatePowerUp()
+        }
+    }
     
     func showDamageFlashEffect() {
         // Create a full-screen red overlay

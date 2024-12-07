@@ -79,8 +79,12 @@ class CTCopAINode: SKNode{
             
             spawnPoint = CGPoint(x: spawnPointX + playerPosition.x, y: spawnPointY + playerPosition.y)
             
+            isOverlapping = false
             for nodeAround in getNodesAround() {
-                isOverlapping = nodeAround.frame.contains(spawnPoint)
+                if nodeAround.frame.contains(spawnPoint) {
+                    isOverlapping = true
+                    break;
+                }
             }
             
         } while isOverlapping
