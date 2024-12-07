@@ -52,7 +52,7 @@ class CTArrestingCopComponent: GKComponent {
         let endArrest = SKAction.run{
             self.distancewithPlayer = hypot(abs(copEntity.cop.position.x - playerPosition.x - 2.0), abs(copEntity.cop.position.y - playerPosition.y + 2.0))
             
-            if self.distancewithPlayer < 7 && gameScene.playerSpeed < 5 {
+            if self.distancewithPlayer < 7 && gameScene.playerSpeed < 3 {
                 gameScene.gameInfo.playerSpeed = 20
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()

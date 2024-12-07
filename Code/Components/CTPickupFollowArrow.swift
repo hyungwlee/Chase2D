@@ -35,7 +35,7 @@ class CTPickupFollowArrow: GKComponent {
         }
         
         let angleToTarget = atan2(targetPoint.y - carNode.position.y, targetPoint.x - carNode.position.x)
-        print(angleToTarget)
+//        print(angleToTarget)
         arrow?.position = carNode.position
         
         // Calculate the shortest angle difference

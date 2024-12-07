@@ -27,6 +27,10 @@ class CTGamePlayState: GKState {
     var scaleEffectSet = false
     var time = 0.0
     
+    var arrestStartTime = 0.0
+    var arrestTimer = 0.0
+    var hasStartedArrest = false
+    
    
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -82,24 +86,23 @@ class CTGamePlayState: GKState {
             steerComponent.steer(moveDirection: self.moveDirection)
         }
         
-        if scene.playerSpeed < 5.0 {
-            checkPlayerStuck()
+        if scene.playerSpeed < 3.0 && !hasStartedArrest{
+            hasStartedArrest = true
+            arrestStartTime = seconds
+            
+        } else {
+            hasStartedArrest = false
         }
         
-    }
-    
-    func checkPlayerStuck() {
-        guard let gameScene = scene else { return }
-        
-        let startStuckArrest = SKAction.wait(forDuration: 20)
-        let endStuckArrest = SKAction.run {
-            if gameScene.playerSpeed < 5.0 {
-                gameScene.gameInfo.gameOver = true
-                gameScene.gameInfo.setGameOver()
+        if hasStartedArrest {
+           arrestTimer = seconds - arrestStartTime
+            if arrestTimer > 10.0 && scene.playerSpeed < 3.0{
+                scene.gameInfo.gameOver = true
+                scene.gameInfo.setGameOver()
             }
         }
-        let sequence = SKAction.sequence([startStuckArrest, endStuckArrest])
-        gameScene.playerCarEntity?.carNode.run(sequence)
+//        print(hasStartedArrest, arrestTimer, scene.playerSpeed)
+        
     }
     
     
@@ -115,7 +118,7 @@ class CTGamePlayState: GKState {
         let queryRect = CGRect(x: playerPosition.x - radius, y: playerPosition.y - radius, width: radius * 2, height: radius * 2)
         
         gameScene.physicsWorld.enumerateBodies(in: queryRect) {  body, _ in
-            if let node = body.node, node != playerNode {
+            if let node = body.node, node != playerNode, node != gameScene {
                 nearbyNodes.append(node)
                 print(node)
             }
@@ -144,8 +147,11 @@ class CTGamePlayState: GKState {
             
             spawnPoint = CGPoint(x: spawnPointX + playerPosition.x, y: spawnPointY + playerPosition.y)
             
+            let dummyObject = CTFuelNode(imageNamed: "roof2", nodeSize: gameScene.gameInfo.layoutInfo.powerUpSize)
+            dummyObject.position = spawnPoint
+            
             for nodeAround in getNodesAround() {
-                isOverlapping = nodeAround.frame.contains(spawnPoint)
+                isOverlapping = nodeAround.frame.intersects(dummyObject.frame)
             }
             
         } while isOverlapping
