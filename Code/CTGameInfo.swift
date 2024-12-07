@@ -113,6 +113,7 @@ struct CTGameInfo {
         self.healthLabel = healthLabel
         healthLabel.fontSize = 8
         healthLabel.zPosition = 100
+        healthLabel.isHidden = true
         
         self.gameOverLabel = gameOverLabel
         gameOverLabel.fontSize = 12
@@ -205,7 +206,8 @@ struct CTGameInfo {
         
         timeLabel.text = "Time: " + String(Int(seconds))
         scoreLabel.text = "Score: " + String(score)
-        cashLabel.text = "Cash: " + String(cashCollected) + "/3"
+//        cashLabel.text = "Cash: " + String(cashCollected) + "/3"
+        cashLabel.isHidden = true
         
 //        let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
 //        if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
@@ -223,26 +225,26 @@ struct CTGameInfo {
     
     func updateHealthUI()
     {
-        if (playerHealth > playerStartingHealth * 0.75)
-        {
-            healthIndicator.texture = SKTexture(imageNamed: "player100")
-        }
-        else if (playerHealth > playerStartingHealth * 0.5)
-        {
-            healthIndicator.texture = SKTexture(imageNamed: "player75")
-        }
-        else if (playerHealth > playerStartingHealth * 0.25)
-        {
-            healthIndicator.texture = SKTexture(imageNamed: "player50")
-        }
-        else if (playerHealth > 0)
-        {
-            healthIndicator.texture = SKTexture(imageNamed: "player25")
-        }
-        else
-        {
+//        if (playerHealth > playerStartingHealth * 0.75)
+//        {
+//            healthIndicator.texture = SKTexture(imageNamed: "player100")
+//        }
+//        else if (playerHealth > playerStartingHealth * 0.5)
+//        {
+//            healthIndicator.texture = SKTexture(imageNamed: "player75")
+//        }
+//        else if (playerHealth > playerStartingHealth * 0.25)
+//        {
+//            healthIndicator.texture = SKTexture(imageNamed: "player50")
+//        }
+//        else if (playerHealth > 0)
+//        {
+//            healthIndicator.texture = SKTexture(imageNamed: "player25")
+//        }
+//        else
+//        {
             healthIndicator.isHidden = true
-        }
+//        }
     }
     
     func updateSpeed(speed: CGFloat) -> CGFloat
@@ -264,7 +266,7 @@ struct CTGameInfo {
     
     mutating func decreasePlayerHealth(amount: CGFloat)
     {
-        playerHealth -= amount
+//        playerHealth -= amount
     }
     
     mutating func setReverseIsHiddenVisibility(val: Bool)

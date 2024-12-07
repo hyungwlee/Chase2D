@@ -57,7 +57,7 @@ class CTArrestingCopComponent: GKComponent {
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()
             }
-            if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){
+            if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){ //TODO: there is an error with this...
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000
             }
         }
