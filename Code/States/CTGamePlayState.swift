@@ -148,6 +148,7 @@ class CTGamePlayState: GKState {
             spawnPoint = CGPoint(x: spawnPointX + playerPosition.x, y: spawnPointY + playerPosition.y)
             
             let dummyObject = CTFuelNode(imageNamed: "roof2", nodeSize: gameScene.gameInfo.layoutInfo.powerUpSize)
+            dummyObject.isHidden = true
             dummyObject.position = spawnPoint
             
             for nodeAround in getNodesAround() {
