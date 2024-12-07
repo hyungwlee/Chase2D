@@ -26,7 +26,6 @@ class CTStartMenuState: GKState {
     {
         print("entered start menu state")
         
-        scene?.gameInfo.setIsPaused(val: true)
         
         if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .none)
@@ -34,38 +33,67 @@ class CTStartMenuState: GKState {
         // change cop car speed
         for copCar in scene!.copCarEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = 0.00001
+                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000000
             }
             if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = 0.00001
+                steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
             }
         }
         for copCar in scene!.copTruckEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = 0.0001
+                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000000
             }
             if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = 0.00001
+                steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
             }
         }
         for copCar in scene!.copTankEntities {
             if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = 0.0001
+                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000000
             }
             if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = 0.00001
+                steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
             }
         }
     }
     
     func handleTouchStart(_ touches: Set<UITouch>) {
         guard let scene, let context else { return }
-        var gameInfo = scene.gameInfo
+        let gameInfo = scene.gameInfo
         
         // Tap to play logic
-        if ((gameInfo.instructionsLabel.isHidden == false) && (gameInfo.isPaused == true)){
+            
+            if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
+                drivingComponent.drive(driveDir: .forward)
+            }
+            // change cop car speed
+            for copCar in scene.copCarEntities {
+                if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
+                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000000
+                }
+                if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
+                    steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
+                }
+            }
+            for copCar in scene.copTruckEntities {
+                if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
+                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000000
+                }
+                if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
+                    steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
+                }
+            }
+            for copCar in scene.copTankEntities {
+                if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
+                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000000
+                }
+                if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
+                    steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE * 10000000
+                }
+            }
+            
             context.stateMachine?.enter(CTGamePlayState.self)
-        }
+        
         
         scene.pedCarSpawner?.populateAI()
         scene.copCarSpawner?.populateAI()

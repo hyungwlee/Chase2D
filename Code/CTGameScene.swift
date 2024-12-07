@@ -70,7 +70,6 @@ class CTGameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval)
     {
-        
         context?.stateMachine?.update(deltaTime: currentTime)
         
         gameInfo.updateScore(phoneRuntime: currentTime)
@@ -248,7 +247,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             }
             
             if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel{
-                gameInfo.refillFuel(amount: 30.0)
+                gameInfo.refillFuel(amount: 50.0)
                 gameInfo.isFuelPickedUp = true
             }
            

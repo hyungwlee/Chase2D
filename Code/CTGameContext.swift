@@ -40,6 +40,7 @@ class CTGameContext: GameContext{
         guard let gameScene else { return }
         
         gameScene.gameInfo.reset()
+        gameScene.gameInfo.gameOver = false
         
         gameScene.playerCarEntity?.carNode.position = CGPoint(x: 0.0, y: 0.0)
         if let drivingComponent = gameScene.playerCarEntity?.component(ofType: CTDrivingComponent.self){

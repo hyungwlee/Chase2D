@@ -51,6 +51,7 @@ class CTGamePlayState: GKState {
         guard let scene else { return }
         guard let context else { return }
         
+        
         if(scene.gameInfo.gameOver){
             context.stateMachine?.enter(CTGameOverState.self)
         }
@@ -423,6 +424,7 @@ class CTGamePlayState: GKState {
         
         let playerCarNode = CTCarNode(imageNamed: "playerCar", size: (context.layoutInfo.playerCarSize) )
         playerCarNode.name = "player"
+        playerCarNode.position = CGPoint(x: 0.0, y: 0.0)
         gameScene.playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
         gameScene.playerCarEntity?.gameInfo = gameScene.gameInfo
         gameScene.playerCarEntity?.prepareComponents()

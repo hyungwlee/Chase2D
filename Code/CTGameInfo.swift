@@ -11,14 +11,14 @@ import GameplayKit
 
 struct CTGameInfo {
     var gameOver = false
-    var isPaused = false
+    var isPaused = true
     
     var playerHealth:CGFloat = 300
     let playerStartingHealth: CGFloat
     var playerSpeed:CGFloat = 810
 //    var playerForwardSpeed: CGFloat = 0
     
-    let fuelConsumptionRate = 0.05
+    let fuelConsumptionRate = 0.1
     
     var pedSpeed:CGFloat = 500
     var copCarSpeed:CGFloat = 810
@@ -341,6 +341,7 @@ struct CTGameInfo {
     mutating func reset() {
         
         gameOver = false
+        isPaused = true
         playerSpeed = 810
         copCarSpeed = 810
         copSpeed = 20
