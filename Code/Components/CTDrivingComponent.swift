@@ -65,13 +65,13 @@ class CTDrivingComponent: GKComponent {
     func ram(){
         if isRamming {return}
         // timer
-        let wait = SKAction.wait(forDuration: 0.1)
+        let wait = SKAction.wait(forDuration: 0.05)
         let run = SKAction.run {
             self.isRamming = true
-            self.MOVE_FORCE = self.MOVE_FORCE * 1.5
+            self.MOVE_FORCE = self.MOVE_FORCE * 1.3
         }
         let end = SKAction.run{
-            self.MOVE_FORCE = self.MOVE_FORCE / 1.5
+            self.MOVE_FORCE = self.MOVE_FORCE / 1.3
         }
         let wait2 = SKAction.wait(forDuration: 2)
         let reset = SKAction.run{

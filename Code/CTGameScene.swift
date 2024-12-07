@@ -670,7 +670,7 @@ extension CTGameScene{
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
         {
             self.hidePowerupUI()
-            self.gameInfo.playerSpeed *= 0.5
+            self.gameInfo.playerSpeed /= 2
         }
     }
     
