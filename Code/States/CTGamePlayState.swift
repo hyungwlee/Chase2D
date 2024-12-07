@@ -86,11 +86,13 @@ class CTGamePlayState: GKState {
             steerComponent.steer(moveDirection: self.moveDirection)
         }
         
+        
+        // this part of the code arrests player if they are stationary for more than 10 seconds
         if scene.playerSpeed < 3.0 && !hasStartedArrest{
             hasStartedArrest = true
             arrestStartTime = seconds
             
-        } else {
+        } else if scene.playerSpeed > 3.0 {
             hasStartedArrest = false
         }
         
@@ -101,7 +103,6 @@ class CTGamePlayState: GKState {
                 scene.gameInfo.setGameOver()
             }
         }
-//        print(hasStartedArrest, arrestTimer, scene.playerSpeed)
         
     }
     
@@ -152,7 +153,7 @@ class CTGamePlayState: GKState {
             dummyObject.position = spawnPoint
             
             for nodeAround in getNodesAround() {
-                isOverlapping = nodeAround.frame.intersects(dummyObject.frame)
+                isOverlapping = nodeAround.frame.contains(spawnPoint)
             }
             
         } while isOverlapping
