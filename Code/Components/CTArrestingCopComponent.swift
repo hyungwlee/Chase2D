@@ -54,7 +54,6 @@ class CTArrestingCopComponent: GKComponent {
             
             
             if self.distancewithPlayer < 10 && gameScene.playerSpeed < 60 { //changed from 3 in an effort to reduce cops pushing player infintely
-//                print("arrested by cops")
                 gameScene.gameInfo.playerSpeed = 20
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()

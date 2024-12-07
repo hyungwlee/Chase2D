@@ -70,15 +70,7 @@ class CTGameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval)
     {
-        if(gameInfo.gameOver){
-            context?.stateMachine?.enter(CTGameOverState.self)
-            
-            gameInfo.restart.isHidden = false
-            if (gameInfo.restart.tapped)
-            {
-                resetGame()
-            }
-        }
+        
         context?.stateMachine?.update(deltaTime: currentTime)
         
         gameInfo.updateScore(phoneRuntime: currentTime)
@@ -373,23 +365,14 @@ class CTGameScene: SKScene {
         
         // set player car from scene
 //        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
-        let playerCarNode = CTCarNode(imageNamed: "playerCar", size: (context.layoutInfo.playerCarSize) )
-        playerCarNode.name = "player"
-        playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
-        playerCarEntity?.gameInfo = gameInfo
-        playerCarEntity?.prepareComponents()
-        addChild(playerCarNode)
-        
-       
+      
         // spawns ped cars
         pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
         pedCarSpawner?.context = context
-//        pedCarSpawner?.populateAI()
         
         // spawns cop cars
         copCarSpawner = self.childNode(withName: "CopAI") as? CTCopAINode
         copCarSpawner?.context = context
-//        copCarSpawner?.populateAI()
         
         // obstacle spawner
         let obstacleSpawner = self.childNode(withName: "dynamicObstacle") as? CTDynamicObstacleNode
@@ -703,9 +686,5 @@ extension CTGameScene{
         // Run the sequence
         flashNode.run(sequence)
     }
-    
-    func resetGame() {
-        context?.stateMachine?.enter(CTGamePlayState.self)
-        //TODO: need to make a lot of function calls
-    }
+
 }

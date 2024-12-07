@@ -79,13 +79,27 @@ class CTCopAINode: SKNode{
             
             spawnPoint = CGPoint(x: spawnPointX + playerPosition.x, y: spawnPointY + playerPosition.y)
             
+            // Create a frame for the new spawn position
+            let spawnRect = CGRect(
+                x: spawnPoint.x - gameScene.gameInfo.layoutInfo.copCarSize.width / 2,
+                y: spawnPoint.y - gameScene.gameInfo.layoutInfo.copCarSize.height / 2,
+                width: gameScene.gameInfo.layoutInfo.copCarSize.width,
+                height: gameScene.gameInfo.layoutInfo.copCarSize.height
+            )
+            
+            let debugNode = SKShapeNode(rect: spawnRect)
+            debugNode.strokeColor = .red
+            debugNode.lineWidth = 2
+            gameScene.addChild(debugNode)
+            
             isOverlapping = false
             for nodeAround in getNodesAround() {
-                if nodeAround.frame.contains(spawnPoint) {
+                if spawnRect.intersects(nodeAround.frame) {
                     isOverlapping = true
-                    break;
+                    break
                 }
             }
+            print(isOverlapping)
             
         } while isOverlapping
         

@@ -30,7 +30,6 @@ class CTGamePlayState: GKState {
     var arrestStartTime = 0.0
     var arrestTimer = 0.0
     var hasStartedArrest = false
-    
    
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -45,10 +44,16 @@ class CTGamePlayState: GKState {
         print("did enter play state")
         
         scene?.gameInfo.setIsPaused(val: false)
+        spawnPlayer()
    }
     
     override func update(deltaTime seconds: TimeInterval) {
         guard let scene else { return }
+        guard let context else { return }
+        
+        if(scene.gameInfo.gameOver){
+            context.stateMachine?.enter(CTGameOverState.self)
+        }
         
         time = seconds
         if !initialTimeSet {
@@ -171,6 +176,20 @@ class CTGamePlayState: GKState {
         } while isOverlapping
         
         return spawnPoint
+    }
+    
+    func spawnPlayer() {
+        
+        guard let context else { return }
+        guard let gameScene = scene else { return }
+        
+        let playerCarNode = CTCarNode(imageNamed: "playerCar", size: (context.layoutInfo.playerCarSize) )
+        playerCarNode.name = "player"
+        gameScene.playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
+        gameScene.playerCarEntity?.gameInfo = gameScene.gameInfo
+        gameScene.playerCarEntity?.prepareComponents()
+        gameScene.addChild(playerCarNode)
+        
     }
     
     
@@ -314,5 +333,5 @@ class CTGamePlayState: GKState {
         
         scene?.cameraNode?.run(moveAction)
     }
-    
+   
 }
