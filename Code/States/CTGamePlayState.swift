@@ -113,7 +113,7 @@ class CTGamePlayState: GKState {
         
         let playerNode = gameScene.playerCarEntity?.carNode
         let playerPosition = playerNode?.position ?? CGPoint(x: 0.0, y: 0.0)
-        let radius = gameScene.gameInfo.PICKUP_SPAWN_RADIUS
+        let radius = gameScene.gameInfo.PICKUP_SPAWN_RADIUS + 100
         var nearbyNodes: [SKNode] = []
         
         let queryRect = CGRect(x: playerPosition.x - radius, y: playerPosition.y - radius, width: radius * 2, height: radius * 2)
@@ -121,7 +121,6 @@ class CTGamePlayState: GKState {
         gameScene.physicsWorld.enumerateBodies(in: queryRect) {  body, _ in
             if let node = body.node, node != playerNode, node != gameScene {
                 nearbyNodes.append(node)
-                print(node)
             }
         }
         return nearbyNodes
@@ -148,12 +147,25 @@ class CTGamePlayState: GKState {
             
             spawnPoint = CGPoint(x: spawnPointX + playerPosition.x, y: spawnPointY + playerPosition.y)
             
-            let dummyObject = CTFuelNode(imageNamed: "roof2", nodeSize: gameScene.gameInfo.layoutInfo.powerUpSize)
-            dummyObject.isHidden = true
-            dummyObject.position = spawnPoint
+            // Create a frame for the new spawn position
+            let spawnRect = CGRect(
+                x: spawnPoint.x - gameScene.gameInfo.layoutInfo.powerUpSize.width / 2,
+                y: spawnPoint.y - gameScene.gameInfo.layoutInfo.powerUpSize.height / 2,
+                width: gameScene.gameInfo.layoutInfo.powerUpSize.width,
+                height: gameScene.gameInfo.layoutInfo.powerUpSize.height
+            )
             
+            let debugNode = SKShapeNode(rect: spawnRect)
+            debugNode.strokeColor = .red
+            debugNode.lineWidth = 2
+            gameScene.addChild(debugNode)
+            
+            isOverlapping = false
             for nodeAround in getNodesAround() {
-                isOverlapping = nodeAround.frame.contains(spawnPoint)
+                if spawnRect.intersects(nodeAround.frame) {
+                    isOverlapping = true
+                    break
+                }
             }
             
         } while isOverlapping
@@ -172,7 +184,6 @@ class CTGamePlayState: GKState {
         let fuelNode = CTFuelNode(imageNamed: "roof2", nodeSize: context.layoutInfo.powerUpSize)
         fuelNode.position = spawnPoint
         fuelNode.name = "cash"
-        fuelNode.zPosition = +1
         gameScene.gameInfo.fuelPosition = fuelNode.position
         gameScene.addChild(fuelNode)
         
@@ -187,10 +198,9 @@ class CTGamePlayState: GKState {
         if !gameScene.gameInfo.isCashPickedUp { return }
         
         let spawnPoint = getRandomSpawnPoint()
-        let cashNode = CTCashNode(imageNamed: "scoreBoost2", nodeSize: context.layoutInfo.powerUpSize)
+        let cashNode = CTCashNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
         cashNode.name = "fuel"
         cashNode.position = spawnPoint
-        cashNode.zPosition = +1
         gameScene.addChild(cashNode)
         
         gameScene.gameInfo.isCashPickedUp = false

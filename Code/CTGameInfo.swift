@@ -16,7 +16,7 @@ struct CTGameInfo {
     var playerHealth:CGFloat = 300
     let playerStartingHealth: CGFloat
     var playerSpeed:CGFloat = 810
-    let fuelConsumptionRate = 0.05
+    let fuelConsumptionRate = 0.08
     
     var pedSpeed:CGFloat = 500
     var copCarSpeed:CGFloat = 810
@@ -33,7 +33,7 @@ struct CTGameInfo {
     let MAX_SPAWN_RADIUS = 10000.0
     let MAX_PLAYABLE_SIZE = 1500.0
     let COP_SPAWN_RADIUS = 150.0
-    let PICKUP_SPAWN_RADIUS = 500.0
+    let PICKUP_SPAWN_RADIUS = 200.0
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0
