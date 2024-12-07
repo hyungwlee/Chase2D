@@ -32,8 +32,17 @@ class CTArrestingCopComponent: GKComponent {
             
 //            print(speed, distance)
             if(speed < 3 && distance < 15){
-                spawnCop()
-                startArrest(playerPosition: playerCarNode.position)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) //it takes 2 seconds for cop to decide to get out of car
+                {
+                    if (speed < 3 && distance < 15)
+                    {
+                        self.spawnCop()
+                        self.startArrest(playerPosition: playerCarNode.position)
+                    }
+                }
+                
+//                spawnCop()
+//                startArrest(playerPosition: playerCarNode.position)
             }
         }
     }
@@ -54,7 +63,6 @@ class CTArrestingCopComponent: GKComponent {
             
             
             if self.distancewithPlayer < 10 && gameScene.playerSpeed < 3 {
-                gameScene.gameInfo.playerSpeed = 20
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()
             }
