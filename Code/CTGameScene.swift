@@ -196,20 +196,13 @@ class CTGameScene: SKScene {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let state = context?.stateMachine?.currentState as? CTGamePlayState else {
-//            print("touched")
-            // Tap to play logic
-            if ((gameInfo.instructionsLabel.isHidden == false) && (gameInfo.isPaused == true))
-            {
-    //            gameInfo.isPaused = false
-                context?.stateMachine?.enter(CTGamePlayState.self)
-//                print("trying to play")
-            }
-            pedCarSpawner?.populateAI()
-            copCarSpawner?.populateAI()
-            return
+        
+        if let state = context?.stateMachine?.currentState as? CTStartMenuState {
+            state.handleTouchStart(touches)
         }
-        state.handleTouchStart(touches)
+        if let state = context?.stateMachine?.currentState as? CTGamePlayState {
+            state.handleTouchStart(touches)
+        }
     }
     
     // only for testing purpose

@@ -58,4 +58,21 @@ class CTStartMenuState: GKState {
         }
     }
     
+    func handleTouchStart(_ touches: Set<UITouch>) {
+        guard let scene, let context else { return }
+        var gameInfo = scene.gameInfo
+        
+        // Tap to play logic
+        if ((gameInfo.instructionsLabel.isHidden == false) && (gameInfo.isPaused == true)){
+            context.stateMachine?.enter(CTGamePlayState.self)
+        }
+        
+        scene.pedCarSpawner?.populateAI()
+        scene.copCarSpawner?.populateAI()
+    }
+    
+    func handleTouchEnd(_ touch: UITouch){
+        
+    }
+    
 }
