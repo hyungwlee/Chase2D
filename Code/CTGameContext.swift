@@ -35,6 +35,25 @@ class CTGameContext: GameContext{
             CTGameOverState(scene: gameScene, context: self)
         ])
     }
+    
+    func restartGame() {
+        guard let gameScene else { return }
+        
+        gameScene.gameInfo.reset()
+        
+        gameScene.playerCarEntity?.carNode.position = CGPoint(x: 0.0, y: 0.0)
+        if let drivingComponent = gameScene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
+            drivingComponent.drive(driveDir: .forward)
+        }
+        
+        gameScene.destroyCops()
+        // change cop car speed
+        gameScene.copEntities = []
+        gameScene.copCarEntities = []
+        gameScene.copTankEntities = []
+        gameScene.copTruckEntities = []
+        
+    }
 }
 
 

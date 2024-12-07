@@ -91,7 +91,7 @@ struct CTGameInfo {
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
-    let restart = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
+    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
     var readyToRestart = false
     
     let speedoSize = 0.31
@@ -186,12 +186,12 @@ struct CTGameInfo {
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
         
-        restart.zPosition = 1000
+        restartButton.zPosition = 1000
 //        restart.onTap = {
 ////            print("restart button pressed")
 //            readyToRestart = true
 //        }
-        restart.isHidden = true
+        restartButton.isHidden = true
     }
     
     mutating func setGameOver()
@@ -336,6 +336,30 @@ struct CTGameInfo {
     {
         gameOver = true
         gameOverLabel.text = "Arrested"
+    }
+    
+    mutating func reset() {
+        
+        gameOver = false
+        playerSpeed = 810
+        copCarSpeed = 810
+        copSpeed = 20
+        numberOfCops = 0
+        MAX_NUMBER_OF_COPS = 5
+        MAX_NUMBER_OF_PEDS = 10
+        currentWave = 0
+        canSpawnPoliceTrucks = false
+        canSpawnTanks = false
+        gunShootInterval = 700_000_000
+        powerUpPeriod = 2
+        cashCollected = 0
+        isFuelPickedUp = true
+        isCashPickedUp = true
+        fuelPosition = CGPoint(x: 0.0, y: 0.0)
+        fuelLevel = 100.0
+        score = 0
+        scoreChangeFrequency = 1.0
+        bulletShootInterval = 1
     }
 }
 

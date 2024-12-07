@@ -63,11 +63,6 @@ class CTGamePlayState: GKState {
         
         let elapsedTime = seconds - startTime
         setGameWaveModeParams(elapsedTime: elapsedTime)
-//        print(scene.gameInfo.playerSpeed)
-//        print(scene.gameInfo.copSpeed)
-//        print(scene.gameInfo.MAX_NUMBER_OF_COPS)
-//        print(scene.gameInfo.canSpawnPoliceTrucks)
-//        print(scene.gameInfo.canSpawnTanks)
        
         handleCameraMovement()
         handleFuelSpawn()
@@ -109,6 +104,249 @@ class CTGamePlayState: GKState {
             }
         }
         
+        
+        
+        // ai
+        updateCopTankComponents()
+        updateCopTruckComponents()
+        updateCopCarComponents()
+        updateCopComponents()
+        
+        updatePedCarComponents()
+        
+        // player
+        updatePlayerCarComponents()
+        
+    }
+    
+    
+    func updatePlayerCarComponents() {
+        
+        guard let gameScene = scene else { return }
+        guard let playerCarEntity = gameScene.playerCarEntity else { return }
+        
+        var points: [CGPoint] = []
+        
+        for copCarEntity in gameScene.copTruckEntities{
+            points.append(copCarEntity.carNode.position)
+        }
+        
+        for copCarEntity in gameScene.copCarEntities{
+            points.append(copCarEntity.carNode.position)
+        }
+        
+        for copCarEntity in gameScene.copTankEntities{
+            points.append(copCarEntity.carNode.position)
+        }
+        
+        let minPoint = points.min(by: {
+            playerCarEntity.carNode.calculateSquareDistance(pointA: $0, pointB: playerCarEntity.carNode.position) <
+                playerCarEntity.carNode.calculateSquareDistance(pointA: $1, pointB: playerCarEntity.carNode.position)
+        })
+        if let shootingComponenet = playerCarEntity.component(ofType: CTShootingComponent.self) {
+            shootingComponenet.interval = gameScene.gameInfo.gunShootInterval
+            shootingComponenet.shoot(target: minPoint ?? CGPoint(x: 0.0, y: 0.0))
+        }
+        if let arrowFollowComponent = playerCarEntity.component(ofType: CTPickupFollowArrow.self) {
+            arrowFollowComponent.gameScene = gameScene
+            arrowFollowComponent.setTarget(targetPoint: gameScene.gameInfo.fuelPosition)
+        }
+    }
+    
+    func updatePedCarComponents(){
+        
+        guard let gameScene = scene else { return }
+        
+        for pedCarEntity in gameScene.pedCarEntities {
+            
+            pedCarEntity.updateCurrentTarget()
+            
+            if let trackingComponent = pedCarEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.follow(target: pedCarEntity.currentTarget)
+                trackingComponent.avoidObstacles()
+            }
+            if let drivingComponent = pedCarEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+        }
+    }
+    
+    func updateCopComponents(){
+        
+        guard let gameScene = scene else { return }
+        let playerCarEntity = gameScene.playerCarEntity
+        
+        for copEntity in gameScene.copEntities{
+            if let trackingComponent = copEntity.component(ofType: CTCopWalkingComponent.self) {
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+                trackingComponent.avoidObstacles()
+            }
+            if let drivingComponent = copEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+        }
+    }
+    
+    func updateCopCarComponents(){
+        
+        guard let gameScene = scene else { return }
+        var copCarEntities = gameScene.copCarEntities
+        var playerCarEntity = gameScene.playerCarEntity
+        var gameInfo = gameScene.gameInfo
+        
+        for copCarEntity in copCarEntities{
+            
+            let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copCarEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
+            
+            if distanceWithPlayer >= gameInfo.ITEM_DESPAWN_DIST * gameInfo.ITEM_DESPAWN_DIST {
+                copCarEntity.carNode.removeFromParent()
+                if let index =  copCarEntities.firstIndex(of: copCarEntity) {
+                    copCarEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            // if the health of enemy is very less
+            if copCarEntity.carNode.health <= 0.0 {
+                if let healthComponent = copCarEntity.component(ofType: CTHealthComponent.self) {
+                    healthComponent.applyDeath()
+                }
+                if let index =  copCarEntities.firstIndex(of: copCarEntity) {
+                    copCarEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            func checkCopSpeed() -> CGFloat
+            {
+                let copSpeed = sqrt(pow((copCarEntity.carNode.physicsBody?.velocity.dx)!, 2) + pow((copCarEntity.carNode.physicsBody?.velocity.dy)!, 2))
+                return copSpeed
+            }
+            
+            // Giving cops chance to catch up to player
+            if (copCarEntity.carNode.physicsBody!.mass >= 50 && distanceWithPlayer < 1000.0 && checkCopSpeed() > 110)
+            {
+                copCarEntity.carNode.physicsBody?.mass -= 10
+            }
+            else if (copCarEntity.carNode.physicsBody!.mass < 50)
+            {
+                copCarEntity.carNode.physicsBody?.mass = 50.0
+            }
+            
+            
+            if let trackingComponent = copCarEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.avoidObstacles()
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+            
+            if let shootingComponent = copCarEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            
+            if let arrestngComponent = copCarEntity.component(ofType: CTArrestingCopComponent.self){
+                arrestngComponent.update()
+            }
+            
+        }
+    }
+    func updateCopTruckComponents(){
+        
+        guard let gameScene = scene else { return }
+        var copTruckEntities = gameScene.copTruckEntities
+        let playerCarEntity = gameScene.playerCarEntity
+        var gameInfo = gameScene.gameInfo
+        
+        for copTruckEntity in copTruckEntities{
+            let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copTruckEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
+            
+            if distanceWithPlayer >= gameInfo.ITEM_DESPAWN_DIST * gameInfo.ITEM_DESPAWN_DIST {
+                copTruckEntity.carNode.removeFromParent()
+                if let index =  copTruckEntities.firstIndex(of: copTruckEntity) {
+                    copTruckEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            // if the health of enemy is very less
+            if copTruckEntity.carNode.health <= 0.0 {
+                if let healthComponent = copTruckEntity.component(ofType: CTHealthComponent.self) {
+                    healthComponent.applyDeath()
+                }
+                if let index =  copTruckEntities.firstIndex(of: copTruckEntity) {
+                    copTruckEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            if let trackingComponent = copTruckEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.avoidObstacles()
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+            
+            if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let arrestngComponent = copTruckEntity.component(ofType: CTArrestingCopComponent.self){
+                arrestngComponent.update()
+            }
+            
+        }
+    }
+    
+    func updateCopTankComponents() {
+        
+        guard let gameScene = scene else { return }
+        var copTankEntities = gameScene.copTankEntities
+        let playerCarEntity = gameScene.playerCarEntity
+        var gameInfo = gameScene.gameInfo
+        
+        for copTankEntity in copTankEntities{
+            let distanceWithPlayer = playerCarEntity?.carNode.calculateSquareDistance(pointA: copTankEntity.carNode.position, pointB: playerCarEntity?.carNode.position ?? CGPoint(x: 0, y: 0)) ?? 0
+            
+            if distanceWithPlayer >= gameInfo.ITEM_DESPAWN_DIST * gameInfo.ITEM_DESPAWN_DIST {
+                copTankEntity.carNode.removeFromParent()
+                if let index =  copTankEntities.firstIndex(of: copTankEntity) {
+                    copTankEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            // if the health of enemy is very less
+            if copTankEntity.carNode.health <= 0.0 {
+                if let healthComponent = copTankEntity.component(ofType: CTHealthComponent.self) {
+                    healthComponent.applyDeath()
+                }
+                if let index =  copTankEntities.firstIndex(of: copTankEntity) {
+                    copTankEntities.remove(at: index)
+                }
+                gameInfo.numberOfCops -= 1
+                continue;
+            }
+            
+            if let trackingComponent = copTankEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.avoidObstacles()
+                trackingComponent.follow(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            if let drivingComponent = copTankEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+            
+            if let shootingComponent = copTankEntity.component(ofType: CTShootingComponent.self) {
+                shootingComponent.shoot(target: playerCarEntity?.carNode.position ?? CGPoint(x: 0.0, y: 0.0))
+            }
+            
+        }
     }
     
     
@@ -270,7 +508,7 @@ class CTGamePlayState: GKState {
     }
        
     func handleTouchStart(_ touches: Set<UITouch>) {
-        guard let scene, let context else { return }
+        guard let scene else { return }
         isTouchingSingle = false
         isTouchingDouble = false
          
