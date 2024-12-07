@@ -77,8 +77,14 @@ class CTGameScene: SKScene {
         gameInfo.updateScore(phoneRuntime: currentTime)
         gameInfo.updateFuelUI()
         
+//        let playerNode = playerCarEntity?.carNode
         let velocity = playerCarEntity?.carNode.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
         self.playerSpeed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+        
+//        let forwardDirection = CGVector(dx: cos((playerCarEntity?.carNode.zRotation)!), dy: sin((playerCarEntity?.carNode.zRotation)!))
+//        let forwardSpeed = velocity.dx * forwardDirection.dx + velocity.dy * forwardDirection.dy
+//        gameInfo.playerForwardSpeed = forwardSpeed
+//        print(forwardSpeed)
         
 //        print(self.playerSpeed)
         if (self.playerSpeed < 60.0 && !gameInfo.gameOver && !gameInfo.isPaused)
@@ -487,6 +493,10 @@ extension CTGameScene: SKPhysicsContactDelegate {
             showDamageFlashEffect()
         }
         
+        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.copCar) || collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTruck) || collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTank) || collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped)
+        {
+            showDamageFlashEffect()
+        }
         
         // enemy damages
         
@@ -566,15 +576,26 @@ extension CTGameScene: SKPhysicsContactDelegate {
 extension CTGameScene{
     
     func activatePowerUp() {
-        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 10).nextInt()
+        let sprite = gameInfo.powerUp
+//        gameInfo.powerUp.isHidden = false
+        
+        let showAction = SKAction.run { sprite.isHidden = false }
+        let waitAction = SKAction.wait(forDuration: 3.0)
+        let hideAction = SKAction.run { sprite.isHidden = true }
+
+        // Sequence of actions
+        let sequence = SKAction.sequence([showAction, waitAction, hideAction])
+        
+        
+        let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 1).nextInt()
         switch(randomNumber){
-        case 0,1,2,3:
-            boostHealth()
-            break;
-        case 7,8,9,10:
+//        case 0,1,2,3:
+//            boostHealth()
+//            break;
+        case 0:
             destroyCops()
             break;
-        case 4,5,6:
+        case 1:
              increaseSpeed()
             break;
 //        case 7,8,9:
@@ -585,14 +606,16 @@ extension CTGameScene{
         default:
             break;
         }
+//        gameInfo.powerUp.isHidden = true
+        run(sequence)
     }
     
-    func boostHealth() {
-//        gameInfo.playerHealth = gameInfo.playerHealth + 25
-        gameInfo.increasePlayerHealth(amount: 25)
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "healthBoost")
-        print("boostHealth")
-    }
+//    func boostHealth() {
+////        gameInfo.playerHealth = gameInfo.playerHealth + 25
+//        gameInfo.increasePlayerHealth(amount: 25)
+//        gameInfo.powerUp.texture = SKTexture(imageNamed: "healthBoost")
+//        print("boostHealth")
+//    }
     
     func destroyCops() {
         gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
@@ -638,24 +661,24 @@ extension CTGameScene{
         print("increase Speed")
     }
     
-    func giveShootingAbility() {
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
-        if let playerCarEntity {
-            playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
-        }
-        print("shootingAbility")
-    }
-    
-    func giveMachineGun() {
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
-        if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
-            gameInfo.gunShootInterval = 4_000_000
-            print("machine gun given")
-        }else {
-            // if the player doesnt't have a gun then give another powerup
-            activatePowerUp()
-        }
-    }
+//    func giveShootingAbility() {
+//        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+//        if let playerCarEntity {
+//            playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
+//        }
+//        print("shootingAbility")
+//    }
+//    
+//    func giveMachineGun() {
+//        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+//        if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
+//            gameInfo.gunShootInterval = 4_000_000
+//            print("machine gun given")
+//        }else {
+//            // if the player doesnt't have a gun then give another powerup
+//            activatePowerUp()
+//        }
+//    }
     
     func showDamageFlashEffect() {
         // Create a full-screen red overlay
@@ -663,17 +686,15 @@ extension CTGameScene{
 //        flashNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         flashNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         flashNode.zPosition = 1000 // Ensure it covers everything
-        flashNode.alpha = 0.3 // Start with semi-transparency
+        flashNode.alpha = 0.1 // Start with semi-transparency
         addChild(flashNode)
         
         // Create actions for the fade-out effect
-        let fadeOut = SKAction.fadeOut(withDuration: 0.3)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
         let remove = SKAction.removeFromParent()
         let sequence = SKAction.sequence([fadeOut, remove])
         
         // Run the sequence
         flashNode.run(sequence)
     }
-
-    
 }

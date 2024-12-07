@@ -158,7 +158,7 @@ class CTGamePlayState: GKState {
             let debugNode = SKShapeNode(rect: spawnRect)
             debugNode.strokeColor = .red
             debugNode.lineWidth = 2
-            gameScene.addChild(debugNode)
+//            gameScene.addChild(debugNode)
             
             isOverlapping = false
             for nodeAround in getNodesAround() {
@@ -181,9 +181,9 @@ class CTGamePlayState: GKState {
         if !gameScene.gameInfo.isFuelPickedUp { return }
         
         let spawnPoint = getRandomSpawnPoint()
-        let fuelNode = CTFuelNode(imageNamed: "roof2", nodeSize: context.layoutInfo.powerUpSize)
+        let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.powerUpSize)
         fuelNode.position = spawnPoint
-        fuelNode.name = "cash"
+        fuelNode.name = "cash" //TODO: should this be "fuel"?
         gameScene.gameInfo.fuelPosition = fuelNode.position
         gameScene.addChild(fuelNode)
         
@@ -199,7 +199,7 @@ class CTGamePlayState: GKState {
         
         let spawnPoint = getRandomSpawnPoint()
         let cashNode = CTCashNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
-        cashNode.name = "fuel"
+        cashNode.name = "fuel" //TODO: should this be "cash"?
         cashNode.position = spawnPoint
         gameScene.addChild(cashNode)
         

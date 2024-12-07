@@ -16,6 +16,8 @@ struct CTGameInfo {
     var playerHealth:CGFloat = 300
     let playerStartingHealth: CGFloat
     var playerSpeed:CGFloat = 810
+//    var playerForwardSpeed: CGFloat = 0
+    
     let fuelConsumptionRate = 0.08
     
     var pedSpeed:CGFloat = 500
@@ -145,6 +147,7 @@ struct CTGameInfo {
         
         healthIndicator.size = CGSize(width: (layoutInfo.screenSize.width / 8) * zoomValue, height: (layoutInfo.screenSize.height / 7) * zoomValue)
         healthIndicator.zPosition = 90
+        healthIndicator.isHidden = true
         
         speedometer.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
         speedometer.zPosition = 100
@@ -243,7 +246,7 @@ struct CTGameInfo {
 //        }
 //        else
 //        {
-            healthIndicator.isHidden = true
+//            healthIndicator.isHidden = true
 //        }
     }
     
@@ -301,7 +304,6 @@ struct CTGameInfo {
         {
             fuelLabel.text = "Out of Fuel"
             
-            //TODO: update this to call the arrest function instead once that is implemented
             arrestMade()
         }
     }

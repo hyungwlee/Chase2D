@@ -31,7 +31,7 @@ class CTArrestingCopComponent: GKComponent {
                                  abs(carNode.position.y - playerCarNode.position.y))
             
 //            print(speed, distance)
-            if(speed < 5 && distance < 15){
+            if(speed < 60 && distance < 15){
                 spawnCop()
                 startArrest(playerPosition: playerCarNode.position)
             }
@@ -48,18 +48,18 @@ class CTArrestingCopComponent: GKComponent {
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000
             }
         }
-        let wait = SKAction.wait(forDuration: 1)
+        let wait = SKAction.wait(forDuration: 0.5)
         let endArrest = SKAction.run{
             self.distancewithPlayer = hypot(abs(copEntity.cop.position.x - playerPosition.x - 2.0), abs(copEntity.cop.position.y - playerPosition.y + 2.0))
             
             
-            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 3 {
-                print("arrested by cops")
+            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 60 { //changed from 3 in an effort to reduce cops pushing player infintely
+//                print("arrested by cops")
                 gameScene.gameInfo.playerSpeed = 20
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()
             }
-            if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){ //TODO: there is an error with this...
+            if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000
             }
         }
