@@ -81,9 +81,10 @@ struct CTGameInfo {
     var reverseLabel = SKLabelNode(fontNamed: "Arial")
     var fuelLabel = SKLabelNode(fontNamed: "Arial")
     var wantedLevelLabel = SKLabelNode(fontNamed: "MarkerFelt-Thin")
-    
     var tapToStartLabel = SKLabelNode(fontNamed: "Arial")
     var instructionsLabel = SKLabelNode(fontNamed: "Arial")
+    var powerupLabel = SKLabelNode(fontNamed: "Arial")
+    var powerupHintLabel = SKLabelNode(fontNamed: "Arial")
     
     var healthIndicator = SKSpriteNode(imageNamed: "player100")
     var speedometer = SKSpriteNode(imageNamed: "speedometer")
@@ -97,7 +98,7 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -145,6 +146,17 @@ struct CTGameInfo {
         wantedLevelLabel.fontSize = 10
         wantedLevelLabel.zPosition = 90
         wantedLevelLabel.text = "*"
+        
+        self.powerupLabel = powerupLabel
+        powerupLabel.fontSize = 10
+        powerupLabel.zPosition = 101
+        powerupLabel.isHidden = true
+        
+        self.powerupHintLabel = powerupHintLabel
+        powerupHintLabel.fontSize = 8
+        powerupHintLabel.zPosition = 101
+        powerupHintLabel.isHidden = true
+//        powerupHintLabel.text = "Tap the screen to activate!"
         
         // This is the camera zoom value
         let zoomValue = 0.35
@@ -316,7 +328,7 @@ struct CTGameInfo {
             fuelLabel.text = "Out of Fuel"
             
             arrestMade()
-//            gameOverLabel.text = "Game Over"
+            gameOverLabel.text = "Game Over"
         }
     }
     

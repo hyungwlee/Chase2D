@@ -27,7 +27,7 @@ class CTCopTankNode: SKSpriteNode, EnemyNode, DriveableNode {
         
         physicsBody?.isDynamic = true
         physicsBody?.affectedByGravity = false
-        physicsBody?.mass = 300 // Adjust for realistic movement
+        physicsBody?.mass = 900 // Adjust for realistic movement
         physicsBody?.friction = 0
         physicsBody?.restitution = 0.5 // Controls bounciness
         physicsBody?.angularDamping = 24 // Dampen rotational movement

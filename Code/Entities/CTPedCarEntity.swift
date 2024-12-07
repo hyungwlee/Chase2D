@@ -22,8 +22,10 @@ class CTPedCarEntity: GKEntity {
     }
     
     func prepareComponents(){
+        carNode.physicsBody?.mass = 25
+        
         let drivingComponent = CTDrivingComponent(carNode: carNode)
-        drivingComponent.MOVE_FORCE =  gameInfo?.pedSpeed ?? 700
+        drivingComponent.MOVE_FORCE =  gameInfo?.pedSpeed ?? 350
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.1

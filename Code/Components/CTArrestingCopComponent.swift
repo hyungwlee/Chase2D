@@ -31,7 +31,7 @@ class CTArrestingCopComponent: GKComponent {
                                  abs(carNode.position.y - playerCarNode.position.y))
             
 //            print(speed, distance)
-            if(speed < 60 && distance < 15){
+            if(speed < 3 && distance < 15){
                 spawnCop()
                 startArrest(playerPosition: playerCarNode.position)
             }
@@ -53,7 +53,7 @@ class CTArrestingCopComponent: GKComponent {
             self.distancewithPlayer = hypot(abs(copEntity.cop.position.x - playerPosition.x - 2.0), abs(copEntity.cop.position.y - playerPosition.y + 2.0))
             
             
-            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 60 { //changed from 3 in an effort to reduce cops pushing player infintely
+            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 3 {
                 gameScene.gameInfo.playerSpeed = 20
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()

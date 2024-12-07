@@ -46,6 +46,8 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.wantedLevelLabel)
         self.addChild(gameInfo.tapToStartLabel)
         self.addChild(gameInfo.instructionsLabel)
+        self.addChild(gameInfo.powerupLabel)
+        self.addChild(gameInfo.powerupHintLabel)
         addChild(gameInfo.restart)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
@@ -125,6 +127,9 @@ class CTGameScene: SKScene {
         gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier))
         gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier))
         
+        gameInfo.powerupLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 12))
+        gameInfo.powerupHintLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 8))
+        
         gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
         gameInfo.setHealthLabel(value: gameInfo.playerHealth)
         // Non-text UI components
@@ -144,7 +149,7 @@ class CTGameScene: SKScene {
         updateCopCarComponents()
         updatePedCarComponents()
         updatePlayerCarComponents()
-        
+//        gameInfo.activelyTappingScreen = false
     }
     
     func updatePlayerCarComponents() {
@@ -568,20 +573,21 @@ extension CTGameScene: SKPhysicsContactDelegate {
 extension CTGameScene{
     
     func activatePowerUp() {
-        let sprite = gameInfo.powerUp
+//        let sprite = gameInfo.powerUp
+//        let pUpLabel = gameInfo.powerupLabel
+//        let pUpHintLabel = gameInfo.powerupHintLabel
 //        gameInfo.powerUp.isHidden = false
         
-        let showAction = SKAction.run { sprite.isHidden = false }
-        let waitAction = SKAction.wait(forDuration: 3.0)
-        let hideAction = SKAction.run { sprite.isHidden = true }
-
-        // Sequence of actions
-        let sequence = SKAction.sequence([showAction, waitAction, hideAction])
+//        let showAction = SKAction.run { sprite.isHidden = false; pUpLabel.isHidden = false }
+//        let waitAction = SKAction.wait(forDuration: 5.0)
+//        let hideAction = SKAction.run { sprite.isHidden = true; pUpLabel.isHidden = true }
+//
+//        // Sequence of actions
+//        let sequence = SKAction.sequence([showAction, waitAction, hideAction])
         
         let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 9).nextInt()
         switch(randomNumber){
         case 0,1,2:
-//            boostHealth()
             destroyCops()
             break;
         case 3,4,5,6:
@@ -596,7 +602,7 @@ extension CTGameScene{
             break;
         }
 //        gameInfo.powerUp.isHidden = true
-        run(sequence)
+//        run(sequence)
     }
     
 //    func boostHealth() {
@@ -608,6 +614,9 @@ extension CTGameScene{
     
     func destroyCops() {
         gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+        
+        changePowerupUIText(pUpLabel: "Destroy Nearby Cops", pUpHintText: "Powerup applied automatically.")
+        
         for copCarEntity in copCarEntities{
             let fadeOutAction = SKAction.fadeOut(withDuration: 1.0)
             copCarEntity.carNode.run(fadeOutAction) {
@@ -641,32 +650,80 @@ extension CTGameScene{
             }
             
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
+        {
+            self.hidePowerupUI()
+        }
+        
         print("destroyCops")
     }
     
     func increaseSpeed() {
-        gameInfo.playerSpeed = gameInfo.playerSpeed + 400
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
         print("increase Speed")
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
+        
+        changePowerupUIText(pUpLabel: "Speed Boost", pUpHintText: "Tap to use!")
+        
+        //TODO: on click:
+        gameInfo.playerSpeed *= 2
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
+        {
+            self.hidePowerupUI()
+            self.gameInfo.playerSpeed *= 0.5
+        }
     }
     
     func giveShootingAbility() {
         gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+        
+        changePowerupUIText(pUpLabel: "Shooting", pUpHintText: "Powerup applied automatically.")
+        
         if let playerCarEntity {
             playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
+        {
+            self.hidePowerupUI()
+        }
+        
         print("shootingAbility")
     }
     
     func giveMachineGun() {
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
         if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
+            gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+            changePowerupUIText(pUpLabel: "Machine Gun", pUpHintText: "Powerup applied automatically.")
+            
             gameInfo.gunShootInterval = 4_000_000
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
+            {
+                self.hidePowerupUI()
+            }
+            
             print("machine gun given")
         }else {
             // if the player doesnt't have a gun then give another powerup
             activatePowerUp()
         }
+    }
+    
+    func changePowerupUIText(pUpLabel: String, pUpHintText: String)
+    {
+        gameInfo.powerUp.isHidden = false
+        gameInfo.powerupLabel.text = pUpLabel
+        gameInfo.powerupLabel.isHidden = false
+        gameInfo.powerupHintLabel.text = pUpHintText
+        gameInfo.powerupHintLabel.isHidden = false
+    }
+    
+    func hidePowerupUI()
+    {
+        gameInfo.powerUp.isHidden = true
+        gameInfo.powerupLabel.isHidden = true
+        gameInfo.powerupHintLabel.isHidden = true
     }
     
     func showDamageFlashEffect() {
