@@ -27,6 +27,7 @@ class CTGameOverState: GKState {
     override func didEnter(from previousState: GKState?) {
         handlePlayerDeath()
         gamePlayState = previousState as? CTGamePlayState
+//        print("entered game over state")
     }
     
     override func update(deltaTime seconds: TimeInterval) {

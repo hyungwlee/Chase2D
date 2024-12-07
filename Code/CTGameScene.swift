@@ -46,6 +46,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.wantedLevelLabel)
         self.addChild(gameInfo.tapToStartLabel)
         self.addChild(gameInfo.instructionsLabel)
+        addChild(gameInfo.restart)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -71,6 +72,12 @@ class CTGameScene: SKScene {
     {
         if(gameInfo.gameOver){
             context?.stateMachine?.enter(CTGameOverState.self)
+            
+            gameInfo.restart.isHidden = false
+            if (gameInfo.restart.tapped)
+            {
+                resetGame()
+            }
         }
         context?.stateMachine?.update(deltaTime: currentTime)
         
@@ -137,6 +144,8 @@ class CTGameScene: SKScene {
         gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
         
         gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
+        
+        gameInfo.restart.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
         // ai section
         updateCopComponents()
@@ -696,5 +705,10 @@ extension CTGameScene{
         
         // Run the sequence
         flashNode.run(sequence)
+    }
+    
+    func resetGame() {
+        context?.stateMachine?.enter(CTGamePlayState.self)
+        //TODO: need to make a lot of function calls
     }
 }

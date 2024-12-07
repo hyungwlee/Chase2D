@@ -32,48 +32,48 @@ struct ContentView: View {
 
     }
     var body: some View {
-        VStack{
-            if context.stateMachine?.currentState is CTStartMenuState
-            {
-                
-                Button(action: play)
-                {
-                    Label("Play", systemImage: "gamecontroller.fill")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-            }
-            if context.stateMachine?.currentState is CTGamePlayState
-            {
-                Button(action: pause)
-                {
-                    Label("", systemImage: "pause.fill")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .opacity(0.5)
-                }
-            }
-            if context.stateMachine?.currentState is CTGameIdleState
-            {
-                Button(action: play)
-                {
-                    Text("Resume")
-                        .font(.headline)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-            }
+//        VStack{
+//            if context.stateMachine?.currentState is CTStartMenuState
+//            {
+//                
+//                Button(action: play)
+//                {
+//                    Label("Play", systemImage: "gamecontroller.fill")
+//                        .font(.headline)
+//                        .padding()
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(8)
+//                }
+//            }
+//            if context.stateMachine?.currentState is CTGamePlayState
+//            {
+//                Button(action: pause)
+//                {
+//                    Label("", systemImage: "pause.fill")
+//                        .font(.headline)
+//                        .padding()
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(8)
+//                        .opacity(0.5)
+//                }
+//            }
+//            if context.stateMachine?.currentState is CTGameIdleState
+//            {
+//                Button(action: play)
+//                {
+//                    Text("Resume")
+//                        .font(.headline)
+//                        .padding()
+//                        .background(Color.blue)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(8)
+//                }
+//            }
             
             CTSpriteKitView(scene: self.scene)
-        }
+//        }
         
     }
     

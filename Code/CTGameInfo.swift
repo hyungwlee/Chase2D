@@ -90,12 +90,16 @@ struct CTGameInfo {
     var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
+    let restart = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
+    var readyToRestart = false
+    
     let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
     
     init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
+        readyToRestart = false
         playerStartingHealth = playerHealth
         
         self.score = score
@@ -169,6 +173,13 @@ struct CTGameInfo {
         instructionsLabel.fontSize = 6
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
+        
+        restart.zPosition = 1000
+//        restart.onTap = {
+////            print("restart button pressed")
+//            readyToRestart = true
+//        }
+        restart.isHidden = true
     }
     
     mutating func setGameOver()
@@ -305,6 +316,7 @@ struct CTGameInfo {
             fuelLabel.text = "Out of Fuel"
             
             arrestMade()
+//            gameOverLabel.text = "Game Over"
         }
     }
     

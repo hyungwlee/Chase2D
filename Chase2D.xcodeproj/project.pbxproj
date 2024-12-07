@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A68BF522CFBCB7F00219AD8 /* CTStartMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A68BF512CFBCB7500219AD8 /* CTStartMenuState.swift */; };
+		1ACC53642D04B3FF000263E0 /* CTRestartButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACC53632D04B3F9000263E0 /* CTRestartButtonNode.swift */; };
 		9E16A6E92CF29F490086D22E /* CTCashNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6E82CF29F490086D22E /* CTCashNode.swift */; };
 		9E16A6EB2CF6C3F80086D22E /* CTCopBulletNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EA2CF6C3F80086D22E /* CTCopBulletNode.swift */; };
 		9E16A6ED2CF6C6C60086D22E /* CTShootingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */; };
@@ -85,6 +86,7 @@
 /* Begin PBXFileReference section */
 		1A68BF512CFBCB7500219AD8 /* CTStartMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTStartMenuState.swift; sourceTree = "<group>"; };
 		1AB93CB82CCD7081004123CF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1ACC53632D04B3F9000263E0 /* CTRestartButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTRestartButtonNode.swift; sourceTree = "<group>"; };
 		9E16A6E82CF29F490086D22E /* CTCashNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCashNode.swift; sourceTree = "<group>"; };
 		9E16A6EA2CF6C3F80086D22E /* CTCopBulletNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCopBulletNode.swift; sourceTree = "<group>"; };
 		9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTShootingComponent.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 		9E7B90532CD00F4000137DE8 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				1ACC53632D04B3F9000263E0 /* CTRestartButtonNode.swift */,
 				9EAB11972CF946BA003C0784 /* CTEnemyNode.swift */,
 				9E8AB2CA2CFBD5EA00FE7180 /* CTDriveableNode.swift */,
 				9E7B90542CD00F4800137DE8 /* CTCarNode.swift */,
@@ -506,6 +509,7 @@
 				9E8F39A52CCC358200F418E3 /* ContentView.swift in Sources */,
 				9E910F3A2CDAAAAD0080A801 /* CTPedAINode.swift in Sources */,
 				9E8AB2CF2CFFEBC000FE7180 /* CTCopNode.swift in Sources */,
+				1ACC53642D04B3FF000263E0 /* CTRestartButtonNode.swift in Sources */,
 				9E9F18F82CD010C80005DE27 /* CTGameInfo.swift in Sources */,
 				9EAB11942CF9252F003C0784 /* CTCopTruckEntity.swift in Sources */,
 				9E8AB2C92CFBA51100FE7180 /* CTDynamicObstacleChildNode.swift in Sources */,
