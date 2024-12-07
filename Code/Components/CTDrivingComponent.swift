@@ -73,7 +73,7 @@ class CTDrivingComponent: GKComponent {
         let end = SKAction.run{
             self.MOVE_FORCE = self.MOVE_FORCE / 1.5
         }
-        let wait2 = SKAction.wait(forDuration: 4)
+        let wait2 = SKAction.wait(forDuration: 2)
         let reset = SKAction.run{
             self.isRamming = false
         }

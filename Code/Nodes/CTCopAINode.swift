@@ -51,7 +51,9 @@ class CTCopAINode: SKNode{
         let queryRect = CGRect(x: playerPosition.x - radius, y: playerPosition.y - radius, width: radius * 2, height: radius * 2)
         
         gameScene.physicsWorld.enumerateBodies(in: queryRect) {  body, _ in
-            if let node = body.node, node != playerNode {
+            if let node = body.node, node != playerNode,
+               !(["alley", "parking", "road"].contains(node.name))
+            {
                 nearbyNodes.append(node)
             }
         }
@@ -99,7 +101,6 @@ class CTCopAINode: SKNode{
                     break
                 }
             }
-            print(isOverlapping)
             
         } while isOverlapping
         
