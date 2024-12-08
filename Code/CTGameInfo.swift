@@ -18,7 +18,7 @@ struct CTGameInfo {
     var playerSpeed:CGFloat = 810
 //    var playerForwardSpeed: CGFloat = 0
     
-    let fuelConsumptionRate = 0.07
+    let fuelConsumptionRate = 0.09
     
     var pedSpeed:CGFloat = 500
     var copCarSpeed:CGFloat = 810
