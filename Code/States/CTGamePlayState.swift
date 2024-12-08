@@ -10,6 +10,8 @@ import GameplayKit
 class CTGamePlayState: GKState {
     weak var scene: CTGameScene?
     weak var context: CTGameContext?
+    
+    var playerAlreadySpawned = false
     var moveDirection: CGFloat = 0.0
     var isTouchingSingle: Bool = false
     var isTouchingDouble: Bool = false
@@ -44,7 +46,10 @@ class CTGamePlayState: GKState {
         print("did enter play state")
         
         scene?.gameInfo.setIsPaused(val: false)
-        spawnPlayer()
+        if !playerAlreadySpawned{
+            spawnPlayer()
+            playerAlreadySpawned = true
+        }
    }
     
     override func update(deltaTime seconds: TimeInterval) {
