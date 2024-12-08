@@ -13,7 +13,6 @@ class CTGameOverState: GKState {
     let scene: CTGameScene
     
     var gamePlayState: CTGamePlayState?
-    var restartPressed = false
     
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -30,14 +29,14 @@ class CTGameOverState: GKState {
         gamePlayState = previousState as? CTGamePlayState
         
         scene.gameInfo.restartButton.isHidden = false
-        restartPressed = false
+        scene.gameInfo.restartButton.tapped = false
 
     }
     
     override func update(deltaTime seconds: TimeInterval) {
         gamePlayState?.handleCameraMovement()
         
-        if (scene.gameInfo.restartButton.tapped && !restartPressed)
+        if (scene.gameInfo.restartButton.tapped)
         {
             resetGame()
         }
@@ -78,10 +77,8 @@ class CTGameOverState: GKState {
     }
     
     func resetGame() {
-        restartPressed = true
-       
         context.restartGame()
-        context.stateMachine?.enter(CTStartMenuState.self)
+        context.stateMachine?.enter(CTGamePlayState.self)
     }
     
 }

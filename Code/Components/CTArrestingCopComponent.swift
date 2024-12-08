@@ -86,6 +86,7 @@ class CTArrestingCopComponent: GKComponent {
         guard let copEntity else { return }
         guard let gameScene else { return }
         
+        
         if spawned { return }
         
         if let steeringComponent = entity?.component(ofType: CTSteeringComponent.self) {

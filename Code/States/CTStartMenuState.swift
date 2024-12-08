@@ -11,6 +11,7 @@ class CTStartMenuState: GKState {
     
     weak var context: CTGameContext?
     weak var scene: CTGameScene?
+    var time = 0.0
     
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -30,31 +31,11 @@ class CTStartMenuState: GKState {
         if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .none)
         }
-        // change cop car speed
-        for copCar in scene!.copCarEntities {
-            if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000000
-            }
-            if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
-            }
-        }
-        for copCar in scene!.copTruckEntities {
-            if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000000
-            }
-            if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
-            }
-        }
-        for copCar in scene!.copTankEntities {
-            if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000000
-            }
-            if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
-            }
-        }
+    }
+    
+    override func update(deltaTime seconds: TimeInterval) {
+        time = seconds
+        handleCameraMovement()
     }
     
     func handleTouchStart(_ touches: Set<UITouch>) {
@@ -66,41 +47,35 @@ class CTStartMenuState: GKState {
             if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
                 drivingComponent.drive(driveDir: .forward)
             }
-            // change cop car speed
-            for copCar in scene.copCarEntities {
-                if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000000
-                }
-                if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                    steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
-                }
-            }
-            for copCar in scene.copTruckEntities {
-                if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000000
-                }
-                if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                    steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE / 10000000
-                }
-            }
-            for copCar in scene.copTankEntities {
-                if let drivingComponent = copCar.component(ofType: CTDrivingComponent.self) {
-                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 10000000
-                }
-                if let steeringComponent = copCar.component(ofType: CTSteeringComponent.self) {
-                    steeringComponent.STEER_IMPULSE = steeringComponent.STEER_IMPULSE * 10000000
-                }
-            }
             
             context.stateMachine?.enter(CTGamePlayState.self)
-        
-        
-        scene.pedCarSpawner?.populateAI()
-        scene.copCarSpawner?.populateAI()
     }
     
     func handleTouchEnd(_ touch: UITouch){
         
+    }
+    
+    func handleCameraMovement() {
+            
+        let randomNumber = CGFloat(GKRandomDistribution(lowestValue: 0, highestValue: 5).nextInt())
+        let randomOffsetX = sin(time * 2) * (10 + randomNumber)
+        let randomOffsetY = cos(time * 2) * (10 + randomNumber)
+//        let randomOffsetX = 0.0
+//        let randomOffsetY = 0.0
+        
+        let targetPosition = CGPoint(x: (scene?.playerCarEntity?.carNode.position.x ?? 0.0) + randomOffsetX,  y: (scene?.playerCarEntity?.carNode.position.y ?? 0.0) + randomOffsetY)
+        let moveAction = SKAction.move(to: targetPosition, duration: 0.25)
+        
+        if self.scene?.playerSpeed ?? 101 < 70 {
+            let scaleAction = SKAction.scale(to: 0.2, duration: 0.2)
+            scene?.cameraNode?.run(scaleAction)
+        } else {
+            let scaleAction = SKAction.scale(to: 0.35, duration: 0.2)
+//            let scaleAction = SKAction.scale(to: 1, duration: 0.2)
+            scene?.cameraNode?.run(scaleAction)
+        }
+        
+        scene?.cameraNode?.run(moveAction)
     }
     
 }

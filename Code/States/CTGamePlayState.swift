@@ -46,6 +46,30 @@ class CTGamePlayState: GKState {
         print("did enter play state")
         
         scene?.gameInfo.setIsPaused(val: false)
+        
+        moveDirection = 0.0
+        isTouchingSingle = false
+        isTouchingDouble = false
+        touchLocations = []
+        driveDir = CTDrivingComponent.driveDir.forward
+        
+        startTime = 0.0
+        initialTimeSet = false
+        
+        firstWaveSet = false
+        secondWaveSet = false
+        thirdWaveSet = false
+        fourthWaveSet = false
+        
+        scaleEffectSet = false
+        time = 0.0
+        
+        arrestStartTime = 0.0
+        arrestTimer = 0.0
+        hasStartedArrest = false
+       
+        
+        scene?.copCarSpawner?.populateAI()
         if !playerAlreadySpawned{
             spawnPlayer()
             playerAlreadySpawned = true
@@ -56,9 +80,10 @@ class CTGamePlayState: GKState {
         guard let scene else { return }
         guard let context else { return }
         
-        
+        print(scene.gameInfo.numberOfCops)
         if(scene.gameInfo.gameOver){
             context.stateMachine?.enter(CTGameOverState.self)
+            return
         }
         
         time = seconds
@@ -118,8 +143,6 @@ class CTGamePlayState: GKState {
         updateCopCarComponents()
         updateCopComponents()
         
-        updatePedCarComponents()
-        
         // player
         updatePlayerCarComponents()
         
@@ -158,24 +181,7 @@ class CTGamePlayState: GKState {
             arrowFollowComponent.setTarget(targetPoint: gameScene.gameInfo.fuelPosition)
         }
     }
-    
-    func updatePedCarComponents(){
-        
-        guard let gameScene = scene else { return }
-        
-        for pedCarEntity in gameScene.pedCarEntities {
-            
-            pedCarEntity.updateCurrentTarget()
-            
-            if let trackingComponent = pedCarEntity.component(ofType: CTSelfDrivingComponent.self) {
-                trackingComponent.follow(target: pedCarEntity.currentTarget)
-                trackingComponent.avoidObstacles()
-            }
-            if let drivingComponent = pedCarEntity.component(ofType: CTDrivingComponent.self) {
-                drivingComponent.drive(driveDir: .forward)
-            }
-        }
-    }
+
     
     func updateCopComponents(){
         

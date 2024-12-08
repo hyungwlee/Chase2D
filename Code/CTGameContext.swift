@@ -40,11 +40,18 @@ class CTGameContext: GameContext{
         guard let gameScene else { return }
         
         gameScene.gameInfo.reset()
-        gameScene.gameInfo.gameOver = false
         
         gameScene.playerCarEntity?.carNode.position = CGPoint(x: 0.0, y: 0.0)
+        gameScene.playerCarEntity?.carNode.zRotation = 0.0
         if let drivingComponent = gameScene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .forward)
+        }
+        
+        if let fuelCan = gameScene.childNode(withName: "fuel") {
+            fuelCan.removeFromParent()
+        }
+        if let cashNode = gameScene.childNode(withName: "cash") {
+            cashNode.removeFromParent()
         }
         
         gameScene.destroyCops(gameRestart: true)

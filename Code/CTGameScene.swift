@@ -26,6 +26,8 @@ class CTGameScene: SKScene {
     
     let GAME_SPEED_INCREASE_RATE = 0.01
     
+    var gameHasNotStarted = true
+    
     
     required init?(coder aDecoder: NSCoder) {
         self.gameInfo = CTGameInfo()
@@ -58,19 +60,30 @@ class CTGameScene: SKScene {
             return
         }
         
-        // for collision
-        physicsWorld.contactDelegate = self
-        
-        prepareGameContext()
-        prepareStartNodes()
-        
-        context.stateMachine?.enter(CTStartMenuState.self)
-        
+        if gameHasNotStarted {
+            // for collision
+            physicsWorld.contactDelegate = self
+            
+            prepareGameContext()
+            prepareStartNodes()
+            
+            context.stateMachine?.enter(CTStartMenuState.self)
+            
+            gameHasNotStarted = false
+                 
+        }
+       
     }
     
     override func update(_ currentTime: TimeInterval)
     {
         context?.stateMachine?.update(deltaTime: currentTime)
+        
+        
+        // don't let the number of cops be less than 0
+        if gameInfo.numberOfCops < 0 {
+            gameInfo.numberOfCops = 0
+        }
         
         gameInfo.updateScore(phoneRuntime: currentTime)
         gameInfo.updateFuelUI()
@@ -140,6 +153,24 @@ class CTGameScene: SKScene {
         gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+        
+        updatePedCarComponents()
+    }
+    
+    func updatePedCarComponents(){
+        
+        for pedCarEntity in pedCarEntities {
+            
+            pedCarEntity.updateCurrentTarget()
+            
+            if let trackingComponent = pedCarEntity.component(ofType: CTSelfDrivingComponent.self) {
+                trackingComponent.follow(target: pedCarEntity.currentTarget)
+                trackingComponent.avoidObstacles()
+            }
+            if let drivingComponent = pedCarEntity.component(ofType: CTDrivingComponent.self) {
+                drivingComponent.drive(driveDir: .forward)
+            }
+        }
     }
     
     func prepareGameContext(){
@@ -164,6 +195,7 @@ class CTGameScene: SKScene {
         // spawns ped cars
         pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
         pedCarSpawner?.context = context
+        pedCarSpawner?.populateAI()
         
         // spawns cop cars
         copCarSpawner = self.childNode(withName: "CopAI") as? CTCopAINode
@@ -431,6 +463,17 @@ extension CTGameScene{
                     copCarEntity.carNode.removeFromParent()
                     self.copTruckEntities.remove(at: index)
                     self.gameInfo.numberOfCops -= 1
+                }
+            }
+            
+        }
+        
+        for copEntity in copEntities{
+            let fadeOutAction = SKAction.fadeOut(withDuration: 1.0)
+            copEntity.cop.run(fadeOutAction) {
+                if let index =  self.copEntities.firstIndex(of: copEntity) {
+                    copEntity.cop.removeFromParent()
+                    self.copEntities.remove(at: index)
                 }
             }
             
