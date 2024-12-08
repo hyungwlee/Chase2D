@@ -29,7 +29,7 @@ class CTGameOverState: GKState {
         handlePlayerDeath()
         gamePlayState = previousState as? CTGamePlayState
         
-        scene.gameInfo.restartButton.isHidden = false
+//        scene.gameInfo.restartButton.isHidden = false
         restartPressed = false
 
     }
@@ -37,10 +37,11 @@ class CTGameOverState: GKState {
     override func update(deltaTime seconds: TimeInterval) {
         gamePlayState?.handleCameraMovement()
         
-        if (scene.gameInfo.restartButton.tapped && !restartPressed)
-        {
-            resetGame()
-        }
+        //TODO: we still need restartButton???
+//        if (scene.gameInfo.restartButton.tapped && !restartPressed)
+//        {
+//            resetGame()
+//        }
     }
     
     func handlePlayerDeath(){
