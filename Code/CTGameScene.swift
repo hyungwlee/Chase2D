@@ -511,9 +511,13 @@ extension CTGameScene{
             playerCarEntity.addComponent(CTShootingComponent(carNode: playerCarEntity.carNode))
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
+        // player gets shooting for 10 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0)
         {
             self.hidePowerupUI()
+            if let playerCarEntity = self.playerCarEntity {
+                playerCarEntity.removeComponent(ofType: CTShootingComponent.self)
+            }
         }
         
         print("shootingAbility")
