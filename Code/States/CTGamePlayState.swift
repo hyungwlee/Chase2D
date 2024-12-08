@@ -480,6 +480,10 @@ class CTGamePlayState: GKState {
     func setGameWaveModeParams(elapsedTime: CGFloat){
         guard let scene else { return }
         
+        if (elapsedTime < scene.gameInfo.FIRST_WAVE_TIME)
+        {
+            scene.gameInfo.wantedLevelLabel.text = "*"
+        }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
             scene.gameInfo.playerSpeed += 50
