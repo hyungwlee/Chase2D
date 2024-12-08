@@ -35,7 +35,7 @@ class CTGameScene: SKScene {
 //        self.addChild(gameInfo.scoreLabel)
         self.addChild(gameInfo.timeLabel)
 //        self.addChild(gameInfo.healthLabel)
-//        self.addChild(gameInfo.gameOverLabel)
+        self.addChild(gameInfo.gameOverLabel)
 //        self.addChild(gameInfo.cashLabel)
 //        self.addChild(gameInfo.healthIndicator)
 //        self.addChild(gameInfo.speedometer)
@@ -48,7 +48,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.instructionsLabel)
         self.addChild(gameInfo.powerupLabel)
         self.addChild(gameInfo.powerupHintLabel)
-//        self.addChild(gameInfo.restartButton)
+        self.addChild(gameInfo.restartButton)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -114,7 +114,7 @@ class CTGameScene: SKScene {
         // Text UI Components
 //        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
-//        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
+        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
 //        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
@@ -139,7 +139,7 @@ class CTGameScene: SKScene {
         
         gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
-//        gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+        gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
     }
     
     func prepareGameContext(){
@@ -371,7 +371,7 @@ extension CTGameScene{
         let randomNumber = GKRandomDistribution(lowestValue: 0, highestValue: 9).nextInt()
         switch(randomNumber){
         case 0,1,2:
-            destroyCops()
+            destroyCops(gameRestart: false)
             break;
         case 3,4,5,6:
              increaseSpeed()
@@ -395,10 +395,12 @@ extension CTGameScene{
 //        print("boostHealth")
 //    }
     
-    func destroyCops() {
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
-        
-        changePowerupUIText(pUpLabel: "Destroy Nearby Cops", pUpHintText: "Powerup applied automatically.")
+    func destroyCops(gameRestart: Bool) {
+        if !gameRestart
+        {
+            gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+            changePowerupUIText(pUpLabel: "Destroy Nearby Cops", pUpHintText: "Powerup applied automatically.")
+        }
         
         for copCarEntity in copCarEntities{
             let fadeOutAction = SKAction.fadeOut(withDuration: 1.0)
@@ -449,11 +451,11 @@ extension CTGameScene{
         changePowerupUIText(pUpLabel: "Speed Boost", pUpHintText: "Tap to use!")
         
         //TODO: on click:
-        gameInfo.playerSpeed *= 2
+        gameInfo.playerSpeed *= 3
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
         {
             self.hidePowerupUI()
-            self.gameInfo.playerSpeed /= 2
+            self.gameInfo.playerSpeed /= 3
         }
     }
     
@@ -512,7 +514,6 @@ extension CTGameScene{
     func showDamageFlashEffect() {
         // Create a full-screen red overlay
         let flashNode = SKSpriteNode(color: .red, size: self.size)
-//        flashNode.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
         flashNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         flashNode.zPosition = 1000 // Ensure it covers everything
         flashNode.alpha = 0.1 // Start with semi-transparency

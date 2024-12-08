@@ -76,7 +76,7 @@ struct CTGameInfo {
 //    var scoreLabel = SKLabelNode(fontNamed: "Arial")
     var timeLabel = SKLabelNode(fontNamed: "Arial")
 //    var healthLabel = SKLabelNode(fontNamed: "Arial")
-//    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
+    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
 //    var cashLabel = SKLabelNode(fontNamed: "Arial")
     var reverseLabel = SKLabelNode(fontNamed: "Arial")
     var fuelLabel = SKLabelNode(fontNamed: "Arial")
@@ -91,14 +91,14 @@ struct CTGameInfo {
 //    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
-//    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
+    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
     var readyToRestart = false
     
 //    let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -122,11 +122,11 @@ struct CTGameInfo {
 //        healthLabel.zPosition = 100
 //        healthLabel.isHidden = true
         
-//        self.gameOverLabel = gameOverLabel
-//        gameOverLabel.fontSize = 12
-//        gameOverLabel.zPosition = 100
-//        gameOverLabel.text = "GAME OVER"
-//        gameOverLabel.isHidden = true
+        self.gameOverLabel = gameOverLabel
+        gameOverLabel.fontSize = 12
+        gameOverLabel.zPosition = 100
+        gameOverLabel.text = "GAME OVER"
+        gameOverLabel.isHidden = true
         
 //        self.cashLabel = cashLabel
 //        cashLabel.fontSize = 8
@@ -186,12 +186,12 @@ struct CTGameInfo {
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
         
-//        restartButton.zPosition = 1000
-////        restart.onTap = {
-//////            print("restart button pressed")
-////            readyToRestart = true
-////        }
-//        restartButton.isHidden = true
+        restartButton.zPosition = 1000
+//        restart.onTap = {
+////            print("restart button pressed")
+//            readyToRestart = true
+//        }
+        restartButton.isHidden = true
     }
     
     mutating func setGameOver()
@@ -208,7 +208,7 @@ struct CTGameInfo {
     {
         if gameOver
         {
-//            gameOverLabel.isHidden = false
+            gameOverLabel.isHidden = false
             return
         }
         
@@ -328,14 +328,14 @@ struct CTGameInfo {
             fuelLabel.text = "Out of Fuel"
             
             arrestMade()
-//            gameOverLabel.text = "Game Over"
+            gameOverLabel.text = "Game Over"
         }
     }
     
     mutating func arrestMade()
     {
         gameOver = true
-//        gameOverLabel.text = "Arrested"
+        gameOverLabel.text = "Arrested"
     }
     
     mutating func reset() {
@@ -361,6 +361,9 @@ struct CTGameInfo {
         score = 0
         scoreChangeFrequency = 1.0
         bulletShootInterval = 1
+        
+        gameOverLabel.isHidden = true
+        restartButton.isHidden = true
     }
 }
 

@@ -47,7 +47,7 @@ class CTGameContext: GameContext{
             drivingComponent.drive(driveDir: .forward)
         }
         
-        gameScene.destroyCops()
+        gameScene.destroyCops(gameRestart: true)
         // change cop car speed
         gameScene.copEntities = []
         
