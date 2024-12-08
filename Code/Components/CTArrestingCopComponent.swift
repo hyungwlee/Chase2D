@@ -63,7 +63,7 @@ class CTArrestingCopComponent: GKComponent {
             self.distancewithPlayer = hypot(abs(copEntity.cop.position.x - playerPosition.x - 2.0), abs(copEntity.cop.position.y - playerPosition.y + 2.0))
             
             
-            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 3 {
+            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 10 {
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()
             }

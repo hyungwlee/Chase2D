@@ -73,11 +73,11 @@ struct CTGameInfo {
     var seconds = 0.0
     var pastValue = ProcessInfo.processInfo.systemUptime
     
-    var scoreLabel = SKLabelNode(fontNamed: "Arial")
+//    var scoreLabel = SKLabelNode(fontNamed: "Arial")
     var timeLabel = SKLabelNode(fontNamed: "Arial")
-    var healthLabel = SKLabelNode(fontNamed: "Arial")
-    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
-    var cashLabel = SKLabelNode(fontNamed: "Arial")
+//    var healthLabel = SKLabelNode(fontNamed: "Arial")
+//    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
+//    var cashLabel = SKLabelNode(fontNamed: "Arial")
     var reverseLabel = SKLabelNode(fontNamed: "Arial")
     var fuelLabel = SKLabelNode(fontNamed: "Arial")
     var wantedLevelLabel = SKLabelNode(fontNamed: "MarkerFelt-Thin")
@@ -86,19 +86,19 @@ struct CTGameInfo {
     var powerupLabel = SKLabelNode(fontNamed: "Arial")
     var powerupHintLabel = SKLabelNode(fontNamed: "Arial")
     
-    var healthIndicator = SKSpriteNode(imageNamed: "player100")
-    var speedometer = SKSpriteNode(imageNamed: "speedometer")
-    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
+//    var healthIndicator = SKSpriteNode(imageNamed: "player100")
+//    var speedometer = SKSpriteNode(imageNamed: "speedometer")
+//    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
-    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
+//    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
     var readyToRestart = false
     
-    let speedoSize = 0.31
+//    let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -107,30 +107,30 @@ struct CTGameInfo {
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         
         //TODO: Font size needs to scale with screen size
-        self.scoreLabel = scoreLabel
-        scoreLabel.fontSize = 6
-        scoreLabel.zPosition = 100
-        // comment the line below if you want to display score
-        scoreLabel.isHidden = true
+//        self.scoreLabel = scoreLabel
+//        scoreLabel.fontSize = 6
+//        scoreLabel.zPosition = 100
+//        // comment the line below if you want to display score
+//        scoreLabel.isHidden = true
         
         self.timeLabel = timeLabel
         timeLabel.fontSize = 6
         timeLabel.zPosition = 100
         
-        self.healthLabel = healthLabel
-        healthLabel.fontSize = 8
-        healthLabel.zPosition = 100
-        healthLabel.isHidden = true
+//        self.healthLabel = healthLabel
+//        healthLabel.fontSize = 8
+//        healthLabel.zPosition = 100
+//        healthLabel.isHidden = true
         
-        self.gameOverLabel = gameOverLabel
-        gameOverLabel.fontSize = 12
-        gameOverLabel.zPosition = 100
-        gameOverLabel.text = "GAME OVER"
-        gameOverLabel.isHidden = true
+//        self.gameOverLabel = gameOverLabel
+//        gameOverLabel.fontSize = 12
+//        gameOverLabel.zPosition = 100
+//        gameOverLabel.text = "GAME OVER"
+//        gameOverLabel.isHidden = true
         
-        self.cashLabel = cashLabel
-        cashLabel.fontSize = 8
-        cashLabel.zPosition = 100
+//        self.cashLabel = cashLabel
+//        cashLabel.fontSize = 8
+//        cashLabel.zPosition = 100
         
         self.reverseLabel = reverseLabel
         reverseLabel.fontSize = 6
@@ -161,17 +161,17 @@ struct CTGameInfo {
         // This is the camera zoom value
         let zoomValue = 0.35
         
-        healthIndicator.size = CGSize(width: (layoutInfo.screenSize.width / 8) * zoomValue, height: (layoutInfo.screenSize.height / 7) * zoomValue)
-        healthIndicator.zPosition = 90
-        healthIndicator.isHidden = true
-        
-        speedometer.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
-        speedometer.zPosition = 100
-        speedometer.isHidden = true
-        
-        speedometerBG.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
-        speedometerBG.zPosition = 95
-        speedometerBG.isHidden = true
+//        healthIndicator.size = CGSize(width: (layoutInfo.screenSize.width / 8) * zoomValue, height: (layoutInfo.screenSize.height / 7) * zoomValue)
+//        healthIndicator.zPosition = 90
+//        healthIndicator.isHidden = true
+//        
+//        speedometer.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
+//        speedometer.zPosition = 100
+//        speedometer.isHidden = true
+//        
+//        speedometerBG.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
+//        speedometerBG.zPosition = 95
+//        speedometerBG.isHidden = true
         
         powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
         powerUp.zPosition = 101
@@ -186,12 +186,12 @@ struct CTGameInfo {
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
         
-        restartButton.zPosition = 1000
-//        restart.onTap = {
-////            print("restart button pressed")
-//            readyToRestart = true
-//        }
-        restartButton.isHidden = true
+//        restartButton.zPosition = 1000
+////        restart.onTap = {
+//////            print("restart button pressed")
+////            readyToRestart = true
+////        }
+//        restartButton.isHidden = true
     }
     
     mutating func setGameOver()
@@ -199,16 +199,16 @@ struct CTGameInfo {
         gameOver = true
     }
     
-    func setHealthLabel(value : Double)
-    {
-        healthLabel.text = "Health: " + String(Int(value))
-    }
+//    func setHealthLabel(value : Double)
+//    {
+//        healthLabel.text = "Health: " + String(Int(value))
+//    }
     
     mutating func updateScore(phoneRuntime: TimeInterval)
     {
         if gameOver
         {
-            gameOverLabel.isHidden = false
+//            gameOverLabel.isHidden = false
             return
         }
         
@@ -231,9 +231,9 @@ struct CTGameInfo {
         pastValue = phoneRuntime
         
         timeLabel.text = "Time: " + String(Int(seconds))
-        scoreLabel.text = "Score: " + String(score)
+//        scoreLabel.text = "Score: " + String(score)
 //        cashLabel.text = "Cash: " + String(cashCollected) + "/3"
-        cashLabel.isHidden = true
+//        cashLabel.isHidden = true
         
 //        let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
 //        if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
@@ -285,15 +285,15 @@ struct CTGameInfo {
         isPaused = val
     }
     
-    mutating func increasePlayerHealth(amount: CGFloat)
-    {
-        playerHealth += amount
-    }
-    
-    mutating func decreasePlayerHealth(amount: CGFloat)
-    {
-//        playerHealth -= amount
-    }
+//    mutating func increasePlayerHealth(amount: CGFloat)
+//    {
+//        playerHealth += amount
+//    }
+//    
+//    mutating func decreasePlayerHealth(amount: CGFloat)
+//    {
+////        playerHealth -= amount
+//    }
     
     mutating func setReverseIsHiddenVisibility(val: Bool)
     {
@@ -328,14 +328,14 @@ struct CTGameInfo {
             fuelLabel.text = "Out of Fuel"
             
             arrestMade()
-            gameOverLabel.text = "Game Over"
+//            gameOverLabel.text = "Game Over"
         }
     }
     
     mutating func arrestMade()
     {
         gameOver = true
-        gameOverLabel.text = "Arrested"
+//        gameOverLabel.text = "Arrested"
     }
     
     mutating func reset() {

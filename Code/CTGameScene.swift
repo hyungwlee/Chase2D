@@ -32,14 +32,14 @@ class CTGameScene: SKScene {
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         super.init(coder: aDecoder)
         self.view?.isMultipleTouchEnabled = true
-        self.addChild(gameInfo.scoreLabel)
+//        self.addChild(gameInfo.scoreLabel)
         self.addChild(gameInfo.timeLabel)
-        self.addChild(gameInfo.healthLabel)
-        self.addChild(gameInfo.gameOverLabel)
-        self.addChild(gameInfo.cashLabel)
-        self.addChild(gameInfo.healthIndicator)
-        self.addChild(gameInfo.speedometer)
-        self.addChild(gameInfo.speedometerBG)
+//        self.addChild(gameInfo.healthLabel)
+//        self.addChild(gameInfo.gameOverLabel)
+//        self.addChild(gameInfo.cashLabel)
+//        self.addChild(gameInfo.healthIndicator)
+//        self.addChild(gameInfo.speedometer)
+//        self.addChild(gameInfo.speedometerBG)
         self.addChild(gameInfo.powerUp)
         self.addChild(gameInfo.reverseLabel)
         self.addChild(gameInfo.fuelLabel)
@@ -48,7 +48,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.instructionsLabel)
         self.addChild(gameInfo.powerupLabel)
         self.addChild(gameInfo.powerupHintLabel)
-        addChild(gameInfo.restartButton)
+//        self.addChild(gameInfo.restartButton)
         
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
@@ -113,10 +113,10 @@ class CTGameScene: SKScene {
         let speedometerYModifier: CGFloat = 9
         
         // Text UI Components
-        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
+//        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
         gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
-        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
-        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
+//        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 14))
+//        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
         gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 18))
@@ -128,19 +128,19 @@ class CTGameScene: SKScene {
         gameInfo.powerupLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 12))
         gameInfo.powerupHintLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 8))
         
-        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
-        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
-        // Non-text UI components
-        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
-        gameInfo.healthIndicator.alpha = 0.5
+//        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
+//        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
+//        // Non-text UI components
+//        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
+//        gameInfo.healthIndicator.alpha = 0.5
         
         
-        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
-        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
+//        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
+//        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
         
         gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
-        gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+//        gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
     }
     
     func prepareGameContext(){
@@ -270,7 +270,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         // bullet collision
         if collision == (CTPhysicsCategory.copBullet | CTPhysicsCategory.car) {
 //            gameInfo.playerHealth -= 25
-            gameInfo.decreasePlayerHealth(amount: 25.0)
+//            gameInfo.decreasePlayerHealth(amount: 25.0)
             showDamageFlashEffect()
         }
         
