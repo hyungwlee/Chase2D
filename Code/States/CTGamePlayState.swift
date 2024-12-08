@@ -580,8 +580,8 @@ class CTGamePlayState: GKState {
             let scaleAction = SKAction.scale(to: 0.2, duration: 0.2)
             scene?.cameraNode?.run(scaleAction)
         } else {
-//            let scaleAction = SKAction.scale(to: 0.35, duration: 0.2)
-            let scaleAction = SKAction.scale(to: 1, duration: 0.2)
+            let scaleAction = SKAction.scale(to: 0.35, duration: 0.2)
+//            let scaleAction = SKAction.scale(to: 1, duration: 0.2)
             scene?.cameraNode?.run(scaleAction)
         }
         
