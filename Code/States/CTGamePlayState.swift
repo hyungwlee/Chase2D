@@ -80,7 +80,6 @@ class CTGamePlayState: GKState {
         guard let scene else { return }
         guard let context else { return }
         
-        print(scene.gameInfo.numberOfCops)
         if(scene.gameInfo.gameOver){
             context.stateMachine?.enter(CTGameOverState.self)
             return

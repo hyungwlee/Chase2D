@@ -10,9 +10,11 @@ import SpriteKit
 class CTCopWalkingComponent: CTSelfDrivingComponent{
     
     var copEntity: CTCopEntity?
-    var newTarget = CGPoint(x: 0.0, y: 0.0)
+    var nearestTarget = CGPoint(x: 0.0, y: 0.0)
+    var cop: DriveableNode
     
     init(cop: DriveableNode){
+        self.cop = cop
         super.init(carNode: cop)
         self.rays  = [
             "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 105),
@@ -29,10 +31,15 @@ class CTCopWalkingComponent: CTSelfDrivingComponent{
     
     override func follow(target: CGPoint) {
         
+        let target1 = CGPoint(x: target.x + 2.0, y: target.y + 2.0)
+        let target2 = CGPoint(x: target.x - 2.0, y: target.y + 2.0)
+
+        let distance1 = hypot(abs(cop.position.x - target1.x), abs(cop.position.y - target1.y))
+        let distance2 = hypot(abs(cop.position.x - target2.x), abs(cop.position.y - target2.y))
+
+        nearestTarget = distance1 < distance2 ? target1 : target2
         
-        
-        newTarget = CGPoint(x: target.x - 2.0, y: target.y + 2.0)
-        super.follow(target: newTarget)
+        super.follow(target: nearestTarget)
     }
     
     

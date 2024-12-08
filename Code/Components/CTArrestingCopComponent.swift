@@ -41,8 +41,6 @@ class CTArrestingCopComponent: GKComponent {
                     }
                 }
                 
-//                spawnCop()
-//                startArrest(playerPosition: playerCarNode.position)
             }
         }
     }

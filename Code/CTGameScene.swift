@@ -312,76 +312,76 @@ extension CTGameScene: SKPhysicsContactDelegate {
         
         // enemy damages
         
-        // bullet collision
-//        if  collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copCar)  ||
-//                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTank) ||
-//                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTruck) {
-//            print("enemy hit by bullet")
-//
-//            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
-//
-//            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
-//
-//            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
-//               let truck = contact.bodyA.node as? CTCopTruckNode {
-//                enemy = truck
-//            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
-//                      let truck = contact.bodyB.node as? CTCopTruckNode {
-//                enemy = truck
-//            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
-//                      let car = contact.bodyA.node as? CTCopCarNode {
-//                enemy = car
-//            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
-//                      let car = contact.bodyB.node as? CTCopCarNode {
-//                enemy = car
-//            }
-//
-//            // Apply health reduction if an enemy was found
-//            if var enemy = enemy {
-//                enemy.health -= 10.0
-//            }
-//
-//        }
+//         bullet collision
+        if  collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copCar)  ||
+                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTank) ||
+                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTruck) {
+            print("enemy hit by bullet")
+
+            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
+
+            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
+
+            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
+               let truck = contact.bodyA.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
+                      let truck = contact.bodyB.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyA.node as? CTCopCarNode {
+                enemy = car
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyB.node as? CTCopCarNode {
+                enemy = car
+            }
+
+            // Apply health reduction if an enemy was found
+            if var enemy = enemy {
+                enemy.health -= 10.0
+            }
+
+        }
         
         
-        // damage collision
-//        if  (categoryA == CTPhysicsCategory.copCar || categoryB == CTPhysicsCategory.copCar) ||
-//                (categoryA == CTPhysicsCategory.copTank || categoryB == CTPhysicsCategory.copTank) ||
-//                (categoryA == CTPhysicsCategory.copTruck || categoryB == CTPhysicsCategory.copTruck)
-//
-//        {
-//
-//            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
-//
-//            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
-//               let truck = contact.bodyA.node as? CTCopTruckNode {
-//                enemy = truck
-//            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
-//                      let truck = contact.bodyB.node as? CTCopTruckNode {
-//                enemy = truck
-//            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
-//                      let car = contact.bodyA.node as? CTCopCarNode {
-//                enemy = car
-//            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
-//                      let car = contact.bodyB.node as? CTCopCarNode {
-//                enemy = car
-//            }
-//
-//
-//            let colliderNode = (
-//                contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar   ||
-//                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTank  ||
-//                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck
-//            ) ? contact.bodyB.node : contact.bodyA.node
-//
-//            let carVelocityMag = pow(enemy?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(enemy?.physicsBody?.velocity.dy ?? 0.0, 2)
-//            let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
-//
-//            // Apply health reduction if an enemy was found
-//            if var enemy = enemy {
-//                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.00008
-//            }
-//        }
+//         damage collision only for enemy to enemy damage
+        if  (categoryA == CTPhysicsCategory.copCar || categoryB == CTPhysicsCategory.copCar) ||
+                (categoryA == CTPhysicsCategory.copTank || categoryB == CTPhysicsCategory.copTank) ||
+                (categoryA == CTPhysicsCategory.copTruck || categoryB == CTPhysicsCategory.copTruck)
+
+        {
+
+            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
+
+            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
+               let truck = contact.bodyA.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
+                      let truck = contact.bodyB.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyA.node as? CTCopCarNode {
+                enemy = car
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyB.node as? CTCopCarNode {
+                enemy = car
+            }
+
+
+            let colliderNode = (
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar   ||
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTank  ||
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck
+            ) ? contact.bodyB.node : contact.bodyA.node
+
+            let carVelocityMag = pow(enemy?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(enemy?.physicsBody?.velocity.dy ?? 0.0, 2)
+            let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
+
+            // Apply health reduction if an enemy was found
+            if var enemy = enemy {
+                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.0008
+            }
+        }
     }
 }
 
