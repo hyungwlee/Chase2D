@@ -448,7 +448,7 @@ extension CTGameScene{
         print("increase Speed")
         gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
         
-        changePowerupUIText(pUpLabel: "Speed Boost", pUpHintText: "Tap to use!")
+        changePowerupUIText(pUpLabel: "Speed Boost", pUpHintText: "Powerup applied automatically.")
         
         //TODO: on click:
         gameInfo.playerSpeed *= 3
