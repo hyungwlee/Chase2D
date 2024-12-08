@@ -41,6 +41,13 @@ struct CTGameInfo {
     let SECOND_WAVE_TIME    = 40.0
     let THIRD_WAVE_TIME     = 90.0
     let FOURTH_WAVE_TIME    = 300.0
+//
+    
+    // debug values
+//    let FIRST_WAVE_TIME     = 5.0
+//    let SECOND_WAVE_TIME    = 5.0
+//    let THIRD_WAVE_TIME     = 5.0
+//    let FOURTH_WAVE_TIME    = 5.0
     
     var currentWave = 0
     

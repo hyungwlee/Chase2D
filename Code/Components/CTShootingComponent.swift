@@ -52,23 +52,11 @@ class CTShootingComponent: GKComponent {
        
         // incase the bullet doesn't hit anything we remove it from the scene after 5 seconds
         
-        let initialContactTestBitMask = bullet.physicsBody?.contactTestBitMask ?? CTPhysicsCategory.none
-       
-        let wait = SKAction.wait(forDuration: 0.01)
-        let run = SKAction.run {
-            if self.car.name == "player"{
-                bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.playerBullet
-            } else {
-                bullet.physicsBody?.contactTestBitMask = CTPhysicsCategory.copBullet
-            }
-        }
-        let reset = SKAction.run{
-            bullet.physicsBody?.contactTestBitMask = initialContactTestBitMask
-        }
-        let wait2 = SKAction.wait(forDuration: 5)
+        
+        let wait = SKAction.wait(forDuration: 5)
         let remove = SKAction.removeFromParent()
         
-        let sequence = SKAction.sequence([run, wait, reset, wait2, remove])
+        let sequence = SKAction.sequence([wait, remove])
         
         bullet.run(sequence)
         

@@ -301,12 +301,12 @@ extension CTGameScene: SKPhysicsContactDelegate {
         // bullet collision
         if collision == (CTPhysicsCategory.copBullet | CTPhysicsCategory.car) {
             
-            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
-            
-            let bulletVelocity = bullet?.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
-            let bulletVelocityMagnitude = hypot(bullet?.physicsBody?.velocity.dx ?? 0.0, bullet?.physicsBody?.velocity.dy ?? 0.0)
-            let bulletVelocityNormalizedApply = CGVector(dx: bulletVelocity.dx / bulletVelocityMagnitude * 100, dy: bulletVelocity.dy / bulletVelocityMagnitude * 100)
-            playerCarEntity?.carNode.physicsBody?.applyForce(bulletVelocity)
+//            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
+//
+//            let bulletVelocity = bullet?.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
+//            let bulletVelocityMagnitude = hypot(bullet?.physicsBody?.velocity.dx ?? 0.0, bullet?.physicsBody?.velocity.dy ?? 0.0)
+//            let bulletVelocityNormalizedApply = CGVector(dx: bulletVelocity.dx / bulletVelocityMagnitude * 100, dy: bulletVelocity.dy / bulletVelocityMagnitude * 100)
+//            playerCarEntity?.carNode.physicsBody?.applyForce(bulletVelocity)
 //            gameInfo.playerHealth -= 25
 //            gameInfo.decreasePlayerHealth(amount: 25.0)
             showDamageFlashEffect()
