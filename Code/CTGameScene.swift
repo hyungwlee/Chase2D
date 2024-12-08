@@ -271,8 +271,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
                 
                 // randomly applies one powerup if we collect 3 powerup
                 if(gameInfo.cashCollected == 1) {
-//                    activatePowerUp()
-                    increaseSpeed()
+                    activatePowerUp()
+//                    increaseSpeed()
                     gameInfo.cashCollected = 0
                 }
                      
