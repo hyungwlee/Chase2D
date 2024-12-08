@@ -338,7 +338,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
 
             // Apply health reduction if an enemy was found
             if var enemy = enemy {
-                enemy.health -= 5.0
+                enemy.health -= 25.0
             }
 
         }
