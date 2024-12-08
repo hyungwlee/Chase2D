@@ -156,6 +156,7 @@ class CTGameScene: SKScene {
         
         updatePedCarComponents()
     }
+
     
     func updatePedCarComponents(){
         
@@ -172,13 +173,12 @@ class CTGameScene: SKScene {
             }
         }
     }
-    
     func prepareGameContext(){
-    
+        
         guard let context else {
             return
         }
-
+        
         context.scene = scene
         context.updateLayoutInfo(withScreenSize: size)
         context.configureStates()

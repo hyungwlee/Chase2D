@@ -15,10 +15,10 @@ class CTCopWalkingComponent: CTSelfDrivingComponent{
     init(cop: DriveableNode){
         super.init(carNode: cop)
         self.rays  = [
-            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 135),
-            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 105),
+            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 105),
+            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 75),
             "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 45),
-            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 150),
+            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 135),
             "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 90),
         ]
     }
