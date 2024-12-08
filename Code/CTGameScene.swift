@@ -271,8 +271,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
                 
                 // randomly applies one powerup if we collect 3 powerup
                 if(gameInfo.cashCollected == 1) {
-                    activatePowerUp()
-    //                giveShootingAbility()
+//                    activatePowerUp()
+                    increaseSpeed()
                     gameInfo.cashCollected = 0
                 }
                      
@@ -494,11 +494,21 @@ extension CTGameScene{
         changePowerupUIText(pUpLabel: "Speed Boost", pUpHintText: "Powerup applied automatically.")
         
         //TODO: on click:
-        gameInfo.playerSpeed *= 3
+        
+        if let playerCarEntity {
+            if let drivingComponent = playerCarEntity.component(ofType: CTDrivingComponent.self){
+                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 1.5
+            }
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
         {
             self.hidePowerupUI()
-            self.gameInfo.playerSpeed /= 3
+            if let playerCarEntity = self.playerCarEntity {
+                if let drivingComponent = playerCarEntity.component(ofType: CTDrivingComponent.self){
+                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 1.5
+                }
+            }
         }
     }
     
