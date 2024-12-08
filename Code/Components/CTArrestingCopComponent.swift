@@ -74,7 +74,7 @@ class CTArrestingCopComponent: GKComponent {
        
         let sequence = SKAction.sequence([startArrest, wait, endArrest])
         self.carNode.run(sequence)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) //it takes 2 seconds for cop to decide to get out of car
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0)
         {
             self.copEntity?.cop.physicsBody?.collisionBitMask = oldCollisionBitmask
         }

@@ -26,6 +26,7 @@ class CTStartMenuState: GKState {
     override func didEnter(from previousState: GKState?)
     {
         print("entered start menu state")
+//        scene?.gameInfo.gameOver = false
         
         
         if let drivingComponent = scene?.playerCarEntity?.component(ofType: CTDrivingComponent.self){
