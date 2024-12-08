@@ -32,7 +32,7 @@ class CTArrestingCopComponent: GKComponent {
             
 //            print(speed, distance)
             if(speed < 3 && distance < 15){
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) //it takes 2 seconds for cop to decide to get out of car
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) //it takes 2 seconds for cop to decide to get out of car
                 {
                     if (speed < 3 && distance < 15)
                     {
@@ -48,14 +48,15 @@ class CTArrestingCopComponent: GKComponent {
     }
     
     func startArrest (playerPosition: CGPoint) {
-        let oldCollisionBitmask = (self.copEntity?.cop.physicsBody?.collisionBitMask)!
         guard let gameScene else { return }
         guard let copEntity else { return }
+        
+        let oldCollisionBitmask = copEntity.cop.physicsBody?.collisionBitMask ?? CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck | CTPhysicsCategory.cop
         // timer
         let startArrest = SKAction.run {
             if let drivingComponent = self.entity?.component(ofType: CTDrivingComponent.self){
                 drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 10000
-                self.copEntity?.cop.physicsBody?.collisionBitMask = 0
+                self.copEntity?.cop.physicsBody?.collisionBitMask = CTPhysicsCategory.car | CTPhysicsCategory.building | CTPhysicsCategory.ped | CTPhysicsCategory.cop
             }
         }
         let wait = SKAction.wait(forDuration: 0.5)
@@ -63,7 +64,7 @@ class CTArrestingCopComponent: GKComponent {
             self.distancewithPlayer = hypot(abs(copEntity.cop.position.x - playerPosition.x - 2.0), abs(copEntity.cop.position.y - playerPosition.y + 2.0))
             
             
-            if self.distancewithPlayer < 10 && gameScene.playerSpeed < 10 {
+            if self.distancewithPlayer < 5 && gameScene.playerSpeed < 10 {
                 gameScene.gameInfo.gameOver = true
                 gameScene.gameInfo.arrestMade()
             }
@@ -74,7 +75,7 @@ class CTArrestingCopComponent: GKComponent {
        
         let sequence = SKAction.sequence([startArrest, wait, endArrest])
         self.carNode.run(sequence)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
         {
             self.copEntity?.cop.physicsBody?.collisionBitMask = oldCollisionBitmask
         }

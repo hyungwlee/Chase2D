@@ -88,12 +88,7 @@ class CTCopAINode: SKNode{
                 width: gameScene.gameInfo.layoutInfo.copCarSize.width,
                 height: gameScene.gameInfo.layoutInfo.copCarSize.height
             )
-            
-            let debugNode = SKShapeNode(rect: spawnRect)
-            debugNode.strokeColor = .red
-            debugNode.lineWidth = 2
-            gameScene.addChild(debugNode)
-            
+                        
             isOverlapping = false
             for nodeAround in getNodesAround() {
                 if spawnRect.intersects(nodeAround.frame) {

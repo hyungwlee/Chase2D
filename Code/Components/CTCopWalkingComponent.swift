@@ -10,9 +10,17 @@ import SpriteKit
 class CTCopWalkingComponent: CTSelfDrivingComponent{
     
     var copEntity: CTCopEntity?
+    var newTarget = CGPoint(x: 0.0, y: 0.0)
     
     init(cop: DriveableNode){
         super.init(carNode: cop)
+        self.rays  = [
+            "Left" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 135),
+            "Right" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 105),
+            "FarRight" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 45),
+            "FarLeft" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 150),
+            "Up" : PointPairs(start: CGPoint(x: 0, y: 0), distance: 10, angle: 90),
+        ]
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,7 +28,10 @@ class CTCopWalkingComponent: CTSelfDrivingComponent{
     }
     
     override func follow(target: CGPoint) {
-        let newTarget = CGPoint(x: target.x - 2.0, y: target.y + 2.0)
+        
+        
+        
+        newTarget = CGPoint(x: target.x - 2.0, y: target.y + 2.0)
         super.follow(target: newTarget)
     }
     
