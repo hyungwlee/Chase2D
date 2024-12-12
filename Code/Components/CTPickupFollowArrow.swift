@@ -19,34 +19,32 @@ class CTPickupFollowArrow: GKComponent {
         self.carNode = carNode
         super.init()
     }
-        
+    
     required init?(coder: NSCoder) {
         fatalError("NSCoder not implementd")
     }
         
     func setTarget(targetPoint: CGPoint){
         guard let gameScene else { return }
+        
+        let radius:CGFloat = 25.0
+        
         if !addedArrowToScene {
             
             arrow = CTArrowNode(imageName: "arrow_n", size: gameScene.layoutInfo.pickUpPointArrow)
+            arrow?.size = CGSize(width: 20.0, height: 20.0)
             arrow?.zPosition = 100
             gameScene.addChild(arrow!)
             addedArrowToScene = true
         }
         
         let angleToTarget = atan2(targetPoint.y - carNode.position.y, targetPoint.x - carNode.position.x)
-//        print(angleToTarget)
-        arrow?.position = carNode.position
         
-        // Calculate the shortest angle difference
-//        var angleDifference = angleToTarget - carNode.zRotation + .pi / 2.0
-//
-//        if angleDifference > .pi {
-//            angleDifference -= 2 * .pi
-//        } else if angleDifference < -.pi {
-//            angleDifference += 2 * .pi
-//        }
+        let targetAngle = angleToTarget - .pi / 2.0
+        let polarX = cos(targetAngle + .pi / 2.0) * radius + carNode.position.x
+        let polarY = sin(targetAngle + .pi / 2.0) * radius + carNode.position.y
         
-        arrow?.zRotation = angleToTarget - .pi / 2.0
+        arrow?.position = CGPoint(x: polarX, y: polarY)
+        arrow?.zRotation = targetAngle
     }
 }

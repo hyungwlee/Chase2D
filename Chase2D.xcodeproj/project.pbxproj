@@ -16,6 +16,8 @@
 		9E3A12D82CCC45140003D097 /* GameModeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D42CCC45140003D097 /* GameModeType.swift */; };
 		9E3A12D92CCC45140003D097 /* GameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D52CCC45140003D097 /* GameContext.swift */; };
 		9E3A12DA2CCC45140003D097 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D62CCC45140003D097 /* GameType.swift */; };
+		9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */; };
+		9E593EAF2D0A51D400099F2A /* CTSmokeParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E593EAE2D0A51D400099F2A /* CTSmokeParticle.swift */; };
 		9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90452CD00BC200137DE8 /* CTGameContext.swift */; };
 		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
 		9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTCarNode.swift */; };
@@ -94,6 +96,8 @@
 		9E3A12D42CCC45140003D097 /* GameModeType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameModeType.swift; sourceTree = "<group>"; };
 		9E3A12D52CCC45140003D097 /* GameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameContext.swift; sourceTree = "<group>"; };
 		9E3A12D62CCC45140003D097 /* GameType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
+		9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CTCarSmoke.sks; sourceTree = "<group>"; };
+		9E593EAE2D0A51D400099F2A /* CTSmokeParticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTSmokeParticle.swift; sourceTree = "<group>"; };
 		9E7B90452CD00BC200137DE8 /* CTGameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameContext.swift; sourceTree = "<group>"; };
 		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
 		9E7B90542CD00F4800137DE8 /* CTCarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCarNode.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 			children = (
 				9E8F39A62CCC358600F418E3 /* Assets.xcassets */,
 				9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */,
+				9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -241,6 +246,7 @@
 				9E8AB2CC2CFC619000FE7180 /* CTPlayerBulletNode.swift */,
 				9E8AB2C42CFB97AE00FE7180 /* CTDynamicObstacleNode.swift */,
 				9EA3AEBE2D03B33C00FE2C6B /* CTArrowNode.swift */,
+				9E593EAE2D0A51D400099F2A /* CTSmokeParticle.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -458,6 +464,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E8F39AB2CCC358600F418E3 /* Preview Assets.xcassets in Resources */,
+				9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */,
 				9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */,
 				9E8A88A52CD41CE300FC9ED1 /* CTGameScene.sks in Resources */,
 			);
@@ -494,6 +501,7 @@
 				9E9F18FA2CD0112B0005DE27 /* CTLayoutInfo.swift in Sources */,
 				9E9B77D62CE3072B00F88543 /* CTDrivingComponent.swift in Sources */,
 				9E9B77D22CE3066400F88543 /* CTPlayerCarEntity.swift in Sources */,
+				9E593EAF2D0A51D400099F2A /* CTSmokeParticle.swift in Sources */,
 				9E16A6E92CF29F490086D22E /* CTCashNode.swift in Sources */,
 				9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */,
 				9E9B77E82CE45FCC00F88543 /* CTGameIdleState.swift in Sources */,

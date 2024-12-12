@@ -19,6 +19,7 @@ class CTCarNode: SKSpriteNode, DriveableNode{
         texture.filteringMode = .nearest
        
         super.init(texture: texture, color: .clear, size: size)
+        zPosition = 1
        
         addChild(frontLeftWheel)
         addChild(frontRightWheel)

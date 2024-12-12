@@ -39,10 +39,7 @@ class CTSteeringComponent: GKComponent {
         // Apply torque to simulate steering and drifting
         let torque = moveDirection * STEER_IMPULSE * -1.5 * min(max(speed, 0), 1)
         physicsBody.applyAngularImpulse(torque)
-//
-//        // Apply additional force to simulate drift
-//        let driftForce = CGVector(dx: lateralVelocity.dx * -5, dy: lateralVelocity.dy * -5)
-//        physicsBody.applyForce(driftForce)
+        
     }
 
     // Helper: Dot product for velocity calculation

@@ -15,6 +15,8 @@ class CTCopAINode: SKNode{
    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        zPosition = 1
+
     }
     
     func populateAI (){

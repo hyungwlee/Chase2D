@@ -23,9 +23,7 @@ class CTPlayerCarEntity: GKEntity {
         drivingComponent.MOVE_FORCE = gameInfo?.playerSpeed ?? 1300
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
-        steeringComponent.STEER_IMPULSE = 0.04
-        steeringComponent.DRIFT_FORCE = 0.04
-        steeringComponent.DRIFT_VELOCITY_THRESHOLD = 6
+        steeringComponent.STEER_IMPULSE = 0.06
         
         let fuelArrow = CTPickupFollowArrow(carNode: carNode)
             

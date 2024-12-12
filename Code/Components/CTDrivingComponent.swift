@@ -14,6 +14,9 @@ class CTDrivingComponent: GKComponent {
     var MOVE_FORCE:CGFloat = 1300
     var hasStopped = false
     var isRamming = false
+    var maxLateralImpulse: CGFloat = 100.0
+    let smokeParticle: CTSmokeParticle
+    var enableSmoke = true
    
     enum driveDir {
         case forward
@@ -23,6 +26,8 @@ class CTDrivingComponent: GKComponent {
     
     init(carNode: SKSpriteNode) {
         self.carNode = carNode
+        smokeParticle = CTSmokeParticle()
+        carNode.addChild(smokeParticle)
         super.init()
     }
     
@@ -33,6 +38,12 @@ class CTDrivingComponent: GKComponent {
     func drive(driveDir: driveDir){
         
         guard let physicsBody = carNode.physicsBody else {return}
+        
+        reduceLateralVelocity()
+        
+        if enableSmoke {
+            smokeParticle.particleSystemUpdate()
+        }
        
         if (driveDir == .backward){
             
@@ -54,12 +65,27 @@ class CTDrivingComponent: GKComponent {
             hasStopped = false
             self.carNode.physicsBody?.linearDamping = 10.0
             
-            let directionX = -sin(self.carNode.zRotation) * MOVE_FORCE * 70
+            let directionX = -sin(self.carNode.zRotation) * MOVE_FORCE * 75
             let directionY = cos(self.carNode.zRotation) * MOVE_FORCE * 70
             let force = CGVector(dx: directionX, dy: directionY)
             self.carNode.physicsBody?.applyForce(force)
         }
        
+    }
+    
+    func reduceLateralVelocity() {
+        guard let body = carNode.physicsBody else { return }
+        let rightNormal = CGVector(dx: -sin(carNode.zRotation), dy: cos(carNode.zRotation))
+        let lateralSpeed = body.velocity.dx * rightNormal.dx + body.velocity.dy * rightNormal.dy
+        let lateralImpulse = CGVector(dx: rightNormal.dx * -lateralSpeed, dy: rightNormal.dy * -lateralSpeed)
+        let impulseLength = sqrt(pow(lateralImpulse.dx, 2) + pow(lateralImpulse.dy, 2))
+
+        if impulseLength > maxLateralImpulse {
+            let factor = maxLateralImpulse / impulseLength
+            body.applyImpulse(CGVector(dx: lateralImpulse.dx * factor , dy: lateralImpulse.dy * factor))
+        } else {
+            body.applyImpulse(lateralImpulse)
+        }
     }
     
     func ram(){

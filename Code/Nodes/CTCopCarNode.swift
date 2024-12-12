@@ -16,6 +16,7 @@ class CTCopCarNode: SKSpriteNode, EnemyNode, DriveableNode {
         texture.filteringMode = .nearest
        
         super.init(texture: texture, color: .clear, size: size)
+        zPosition = 1
          
         enablePhysics()
         addLights()

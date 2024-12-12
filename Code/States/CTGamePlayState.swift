@@ -110,6 +110,7 @@ class CTGamePlayState: GKState {
         
         if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: self.driveDir)
+//            drivingComponent.MOVE_FORCE = scene.gameInfo.playerSpeed
         }
         
         if let steerComponent = scene.playerCarEntity?.component(ofType: CTSteeringComponent.self){
@@ -253,6 +254,7 @@ class CTGamePlayState: GKState {
             }
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
+//                drivingComponent.MOVE_FORCE = gameScene.gameInfo.copCarSpeed
             }
             
             if let shootingComponent = copCarEntity.component(ofType: CTShootingComponent.self) {
@@ -302,6 +304,7 @@ class CTGamePlayState: GKState {
             }
             if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
+//                drivingComponent.MOVE_FORCE = gameScene.gameInfo.copCarSpeed
             }
             
             if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
@@ -452,7 +455,7 @@ class CTGamePlayState: GKState {
         let spawnPoint = getRandomSpawnPoint()
         let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.powerUpSize)
         fuelNode.position = spawnPoint
-        fuelNode.name = "cash" //TODO: should this be "fuel"?
+        fuelNode.name = "fuel" //TODO: should this be "fuel"?
         gameScene.gameInfo.fuelPosition = fuelNode.position
         gameScene.addChild(fuelNode)
         
@@ -468,7 +471,7 @@ class CTGamePlayState: GKState {
         
         let spawnPoint = getRandomSpawnPoint()
         let cashNode = CTCashNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
-        cashNode.name = "fuel" //TODO: should this be "cash"?
+        cashNode.name = "cash" //TODO: should this be "cash"?
         cashNode.position = spawnPoint
         gameScene.addChild(cashNode)
         
@@ -486,40 +489,36 @@ class CTGamePlayState: GKState {
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
             scene.gameInfo.playerSpeed += 50
-            scene.gameInfo.copCarSpeed += 200
+            scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "**"
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
-            print("firstWaveOver")
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
-            scene.gameInfo.playerSpeed += 150
-            scene.gameInfo.copCarSpeed += 200
+            scene.gameInfo.playerSpeed += 50
+            scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "***"
             secondWaveSet = true
-            print("secondWaveOver")
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
-            scene.gameInfo.playerSpeed += 100
-            scene.gameInfo.copCarSpeed += 150
+            scene.gameInfo.playerSpeed += 25
+            scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "****"
             thirdWaveSet = true
-            print("thirdwaveover")
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
-            scene.gameInfo.playerSpeed += 100
-            scene.gameInfo.copCarSpeed += 100
+            scene.gameInfo.playerSpeed += 25
+            scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "*****"
             fourthWaveSet = true
-            print("fourthWaveOver")
         }
     }
        

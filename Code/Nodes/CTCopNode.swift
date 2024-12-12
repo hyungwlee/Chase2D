@@ -15,6 +15,7 @@ class CTCopNode: SKSpriteNode, EnemyNode, DriveableNode {
         texture.filteringMode = .nearest
         super.init(texture: texture, color: .clear, size: size)
         enablePhysics()
+        zPosition = 1
     }
     
     required init?(coder aDecoder: NSCoder) {

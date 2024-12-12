@@ -21,6 +21,7 @@ class CTCopEntity: GKEntity {
             
         let drivingComponent = CTDrivingComponent(carNode: cop)
         drivingComponent.MOVE_FORCE = gameInfo?.copSpeed ?? 100
+        drivingComponent.enableSmoke = false
         
         let steeringComponent = CTSteeringComponent(carNode: cop)
         steeringComponent.STEER_IMPULSE = 0.0005

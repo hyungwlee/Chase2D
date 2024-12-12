@@ -13,7 +13,7 @@ struct CTSpriteKitView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> SKView {
         let skView = SKView()
-        skView.showsPhysics = true // Enable physics debug outlines
+//        skView.showsPhysics = true // Enable physics debug outlines
         skView.showsFPS = true     // Optional: Show FPS
         skView.showsNodeCount = true // Optional: Show node count
 //        skView.presentScene(scene)  // Set the scene
