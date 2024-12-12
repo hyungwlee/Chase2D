@@ -21,6 +21,7 @@ class CTSmokeParticle: SKNode {
         
         let smokeParticle = SKShapeNode(rectOf: CGSize(width: 2.0, height: 2.0))
         smokeParticle.fillColor = .black
+        smokeParticle.strokeColor = .clear
         
         smokeParticle.alpha = 0.5 // Start fully opaque
         smokeParticle.position = CGPoint(x: position.x, y: position.y - 5.0)

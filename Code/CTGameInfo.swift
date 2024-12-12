@@ -358,6 +358,7 @@ struct CTGameInfo {
         
         gameOver = false
         isPaused = true
+        seconds = 0
         playerSpeed = 810
         copCarSpeed = 810
         copSpeed = 20
