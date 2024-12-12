@@ -440,6 +440,7 @@ class CTGamePlayState: GKState {
         playerCarNode.position = CGPoint(x: 0.0, y: 0.0)
         gameScene.playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
         gameScene.playerCarEntity?.gameInfo = gameScene.gameInfo
+        gameScene.playerCarEntity?.gameScene = gameScene
         gameScene.playerCarEntity?.prepareComponents()
         gameScene.addChild(playerCarNode)
         

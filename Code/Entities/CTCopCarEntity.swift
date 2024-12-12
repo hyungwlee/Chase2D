@@ -11,6 +11,7 @@ import SpriteKit
 class CTCopCarEntity: GKEntity {
     let carNode: CTCopCarNode
     var gameInfo: CTGameInfo?
+    weak var gameScene: CTGameScene?
     
     init(carNode: CTCopCarNode) {
         self.carNode = carNode
@@ -22,6 +23,9 @@ class CTCopCarEntity: GKEntity {
             
         let drivingComponent = CTDrivingComponent(carNode: carNode)
         drivingComponent.MOVE_FORCE = gameInfo?.copCarSpeed ?? 100
+        for driftParticle in drivingComponent.driftParticles {
+            driftParticle.targetNode = gameScene
+        }
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.05

@@ -11,11 +11,12 @@ import SpriteKit
 class CTDrivingComponent: GKComponent {
     
     let carNode: SKSpriteNode
-    var MOVE_FORCE:CGFloat = 1300
+    var MOVE_FORCE: CGFloat = 1300
     var hasStopped = false
     var isRamming = false
     var maxLateralImpulse: CGFloat = 100.0
     let smokeParticle: CTSmokeParticle
+    var driftParticles: [SKEmitterNode] = [] // Drift particle system
     var enableSmoke = true
    
     enum driveDir {
@@ -26,29 +27,65 @@ class CTDrivingComponent: GKComponent {
     
     init(carNode: SKSpriteNode) {
         self.carNode = carNode
-        smokeParticle = CTSmokeParticle()
+        self.smokeParticle = CTSmokeParticle()
         carNode.addChild(smokeParticle)
+        
+        // Initialize the drift particle system
+        if let drift1 = SKEmitterNode(fileNamed: "CTDriftParticle") {
+            drift1.position = CGPoint(x: carNode.position.x + (carNode.size.width / 3.0), y: carNode.position.y + (carNode.size.height / 3.0))
+            drift1.particleBirthRate = 0 // Start with disabled particles
+            drift1.particleSize = CGSize(width: 1.0, height: 1.0)
+            driftParticles.append(drift1)
+            carNode.addChild(drift1)
+        }
+        
+        // Initialize the drift particle system
+        if let drift2 = SKEmitterNode(fileNamed: "CTDriftParticle") {
+            drift2.position = CGPoint(x: carNode.position.x - (carNode.size.width / 3.0), y: carNode.position.y + (carNode.size.height / 3.0))
+            drift2.particleBirthRate = 0 // Start with disabled particles
+            drift2.particleSize = CGSize(width: 1.0, height: 1.0)
+            driftParticles.append(drift2)
+            carNode.addChild(drift2)
+        }
+        
+        // Initialize the drift particle system
+        if let drift3 = SKEmitterNode(fileNamed: "CTDriftParticle") {
+            drift3.position = CGPoint(x: carNode.position.x + (carNode.size.width / 3.0), y: carNode.position.y - (carNode.size.height / 3.0))
+            drift3.particleBirthRate = 0 // Start with disabled particles
+            drift3.particleSize = CGSize(width: 1.0, height: 1.0)
+            driftParticles.append(drift3)
+            carNode.addChild(drift3)
+        }
+        
+        // Initialize the drift particle system
+        if let drift4 = SKEmitterNode(fileNamed: "CTDriftParticle") {
+            drift4.position = CGPoint(x: carNode.position.x - (carNode.size.width / 3.0), y: carNode.position.y - (carNode.size.height / 3.0))
+            drift4.particleBirthRate = 0 // Start with disabled particles
+            drift4.particleSize = CGSize(width: 1.0, height: 1.0)
+            driftParticles.append(drift4)
+            carNode.addChild(drift4)
+        }
+        
+        
         super.init()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder: ) has not been implemented")
     }
     
-    func drive(driveDir: driveDir){
-        
-        guard let physicsBody = carNode.physicsBody else {return}
+    func drive(driveDir: driveDir) {
+        guard let physicsBody = carNode.physicsBody else { return }
         
         reduceLateralVelocity()
         
         if enableSmoke {
             smokeParticle.particleSystemUpdate()
         }
-       
-        if (driveDir == .backward){
-            
-            if((physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) > 700 &&
-             !hasStopped){
+        
+        if driveDir == .backward {
+            if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) > 700 && !hasStopped {
                 self.carNode.physicsBody?.linearDamping = 1.0
                 self.carNode.physicsBody?.angularVelocity = 0.0
             } else {
@@ -59,9 +96,7 @@ class CTDrivingComponent: GKComponent {
                 let force = CGVector(dx: -directionX, dy: -directionY)
                 self.carNode.physicsBody?.applyForce(force)
             }
-            
-        }else if(driveDir == .forward){
-            
+        } else if driveDir == .forward {
             hasStopped = false
             self.carNode.physicsBody?.linearDamping = 10.0
             
@@ -70,7 +105,6 @@ class CTDrivingComponent: GKComponent {
             let force = CGVector(dx: directionX, dy: directionY)
             self.carNode.physicsBody?.applyForce(force)
         }
-       
     }
     
     func reduceLateralVelocity() {
@@ -82,30 +116,38 @@ class CTDrivingComponent: GKComponent {
 
         if impulseLength > maxLateralImpulse {
             let factor = maxLateralImpulse / impulseLength
-            body.applyImpulse(CGVector(dx: lateralImpulse.dx * factor , dy: lateralImpulse.dy * factor))
+            body.applyImpulse(CGVector(dx: lateralImpulse.dx * factor, dy: lateralImpulse.dy * factor))
+            activateDriftParticles(false)
         } else {
             body.applyImpulse(lateralImpulse)
+            activateDriftParticles(true)
         }
     }
     
-    func ram(){
-        if isRamming {return}
-        // timer
+    func activateDriftParticles(_ active: Bool) {
+        for driftParticle in driftParticles {
+            driftParticle.particleBirthRate = active ? 100 : 0 // Enable/disable particles
+        }
+        
+    }
+    
+    func ram() {
+        if isRamming { return }
+        // Timer logic for ramming
         let wait = SKAction.wait(forDuration: 0.05)
         let run = SKAction.run {
             self.isRamming = true
             self.MOVE_FORCE = self.MOVE_FORCE * 1.1
         }
-        let end = SKAction.run{
+        let end = SKAction.run {
             self.MOVE_FORCE = self.MOVE_FORCE / 1.1
         }
         let wait2 = SKAction.wait(forDuration: 2)
-        let reset = SKAction.run{
+        let reset = SKAction.run {
             self.isRamming = false
         }
         
         let sequence = SKAction.sequence([run, wait, end, wait2, reset])
         self.carNode.run(sequence)
     }
-    
 }

@@ -124,6 +124,7 @@ class CTCopAINode: SKNode{
             
             let carEntity = CTCopCarEntity(carNode: copCar)
             carEntity.gameInfo = gameScene.gameInfo
+            carEntity.gameScene = gameScene
             carEntity.prepareComponents()
              
             
@@ -151,6 +152,7 @@ class CTCopAINode: SKNode{
             
             let carEntity = CTCopTruckEntity(carNode: copCar)
             carEntity.gameInfo = context.gameScene?.gameInfo
+            carEntity.gameScene = gameScene
             carEntity.prepareComponents()
             
             if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
@@ -178,6 +180,7 @@ class CTCopAINode: SKNode{
             copCar.name = "cop"
             
             let carEntity = CTCopTankEntity(carNode: copCar)
+            carEntity.gameScene = gameScene
             carEntity.gameInfo = context.gameScene?.gameInfo
             carEntity.prepareComponents()
             

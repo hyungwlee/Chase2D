@@ -20,7 +20,7 @@ class CTSmokeParticle: SKNode {
     func particleSystemUpdate() {
         
         let smokeParticle = SKShapeNode(rectOf: CGSize(width: 2.0, height: 2.0))
-        smokeParticle.fillColor = .black
+        smokeParticle.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
         smokeParticle.strokeColor = .clear
         
         smokeParticle.alpha = 0.5 // Start fully opaque
@@ -47,9 +47,9 @@ class CTSmokeParticle: SKNode {
         addChild(smokeParticle)
 
         // Add actions for fading, shrinking, and removing
-        let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-        let scaleDown = SKAction.scale(to: 0, duration: 0.5)
-        let rotate = SKAction.rotate(byAngle: 2 * .pi, duration: 0.5)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.25)
+        let scaleDown = SKAction.scale(to: 2, duration: 0.25)
+        let rotate = SKAction.rotate(byAngle: .pi / 6.0 , duration: 0.25)
         let remove = SKAction.removeFromParent()
         let sequence = SKAction.sequence([SKAction.group([fadeOut, scaleDown, rotate]), remove])
         smokeParticle.run(sequence)
