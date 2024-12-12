@@ -6,9 +6,13 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class CTGameScene: SKScene {
     weak var context: CTGameContext?
+    
+    var bgMusicPlayer: AVAudioPlayer?
+    let outlineShader = SKShader(fileNamed: "outlineShader.fsh")
     
     var playerCarEntity: CTPlayerCarEntity?
     var pedCarSpawner: CTPedAINode?
@@ -52,12 +56,29 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.powerupHintLabel)
         self.addChild(gameInfo.restartButton)
         
+//        outlineShader.uniforms = [
+//            SKUniform(name: "outlineWidth", float: 0.02),
+//            SKUniform(name: "outlineColor", vectorFloat4: SIMD4<Float>(0, 0, 0, 1))
+//        ]
+        
         context?.stateMachine?.enter(CTStartMenuState.self)
     }
     
     override func didMove(to view: SKView) {
         guard let context else {
             return
+        }
+        
+        
+        if let musicURL = Bundle.main.url(forResource: "Battlefield_Symphony", withExtension: "mp3") {
+            do {
+                bgMusicPlayer = try AVAudioPlayer(contentsOf: musicURL)
+                bgMusicPlayer?.volume = 0.25
+                bgMusicPlayer?.numberOfLoops = -1 // Infinite loop
+                bgMusicPlayer?.play()
+            } catch {
+                print("Error loading background music: \(error)")
+            }
         }
         
         if gameHasNotStarted {
