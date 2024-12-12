@@ -121,7 +121,8 @@ struct CTGameInfo {
 //        scoreLabel.isHidden = true
         
         self.timeLabel = timeLabel
-        timeLabel.fontSize = 6
+//        timeLabel.fontSize = 6
+        timeLabel.fontSize = layoutInfo.screenSize.width / 66
         timeLabel.zPosition = 100
         
 //        self.healthLabel = healthLabel
@@ -130,7 +131,8 @@ struct CTGameInfo {
 //        healthLabel.isHidden = true
         
         self.gameOverLabel = gameOverLabel
-        gameOverLabel.fontSize = 12
+//        gameOverLabel.fontSize = 12
+        gameOverLabel.fontSize = layoutInfo.screenSize.width / 33
         gameOverLabel.zPosition = 100
         gameOverLabel.text = "GAME OVER"
         gameOverLabel.isHidden = true
@@ -140,27 +142,32 @@ struct CTGameInfo {
 //        cashLabel.zPosition = 100
         
         self.reverseLabel = reverseLabel
-        reverseLabel.fontSize = 6
+//        reverseLabel.fontSize = 6
+        reverseLabel.fontSize = layoutInfo.screenSize.width / 66
         reverseLabel.zPosition = 90
         reverseLabel.isHidden = true
         reverseLabel.text = "Throw it in Reverse!"
         
         self.fuelLabel = fuelLabel
-        fuelLabel.fontSize = 8
+//        fuelLabel.fontSize = 8
+        fuelLabel.fontSize = layoutInfo.screenSize.width / 66
         fuelLabel.zPosition = 102
         
         self.wantedLevelLabel = wantedLevelLabel
-        wantedLevelLabel.fontSize = 10
+//        wantedLevelLabel.fontSize = 10
+        wantedLevelLabel.fontSize = layoutInfo.screenSize.width / 33
         wantedLevelLabel.zPosition = 90
         wantedLevelLabel.text = "*"
         
         self.powerupLabel = powerupLabel
-        powerupLabel.fontSize = 10
+//        powerupLabel.fontSize = 10
+        powerupLabel.fontSize = layoutInfo.screenSize.width / 33
         powerupLabel.zPosition = 101
         powerupLabel.isHidden = true
         
         self.powerupHintLabel = powerupHintLabel
-        powerupHintLabel.fontSize = 8
+//        powerupHintLabel.fontSize = 8
+        powerupHintLabel.fontSize = layoutInfo.screenSize.width / 66
         powerupHintLabel.zPosition = 101
         powerupHintLabel.isHidden = true
 //        powerupHintLabel.text = "Tap the screen to activate!"
@@ -184,12 +191,14 @@ struct CTGameInfo {
         powerUp.zPosition = 101
         
         self.tapToStartLabel = tapToStartLabel
-        tapToStartLabel.fontSize = 8
+//        tapToStartLabel.fontSize = 8
+        tapToStartLabel.fontSize = layoutInfo.screenSize.width / 45
         tapToStartLabel.zPosition = 102
         tapToStartLabel.text = "Tap to Start!"
         
         self.instructionsLabel = instructionsLabel
-        instructionsLabel.fontSize = 6
+//        instructionsLabel.fontSize = 6
+        instructionsLabel.fontSize = layoutInfo.screenSize.width / 100
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
         
