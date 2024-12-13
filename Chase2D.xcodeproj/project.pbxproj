@@ -11,6 +11,8 @@
 		1ACC53642D04B3FF000263E0 /* CTRestartButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACC53632D04B3F9000263E0 /* CTRestartButtonNode.swift */; };
 		1ACC53662D0B2A2F000263E0 /* Battlefield_Symphony.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC53652D0B2A2F000263E0 /* Battlefield_Symphony.mp3 */; };
 		1ACC53682D0B2D6D000263E0 /* outlineShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC53672D0B2D61000263E0 /* outlineShader.fsh */; };
+		1ACC536B2D0CB506000263E0 /* starthings.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC536A2D0CB506000263E0 /* starthings.ttf */; };
+		1ACC536D2D0CB85A000263E0 /* Eating Pasta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */; };
 		9E16A6E92CF29F490086D22E /* CTCashNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6E82CF29F490086D22E /* CTCashNode.swift */; };
 		9E16A6EB2CF6C3F80086D22E /* CTCopBulletNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EA2CF6C3F80086D22E /* CTCopBulletNode.swift */; };
 		9E16A6ED2CF6C6C60086D22E /* CTShootingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */; };
@@ -94,6 +96,9 @@
 		1ACC53632D04B3F9000263E0 /* CTRestartButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTRestartButtonNode.swift; sourceTree = "<group>"; };
 		1ACC53652D0B2A2F000263E0 /* Battlefield_Symphony.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Battlefield_Symphony.mp3; sourceTree = "<group>"; };
 		1ACC53672D0B2D61000263E0 /* outlineShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = outlineShader.fsh; sourceTree = "<group>"; };
+		1ACC53692D0CB0D9000263E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1ACC536A2D0CB506000263E0 /* starthings.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = starthings.ttf; sourceTree = "<group>"; };
+		1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eating Pasta.ttf"; sourceTree = "<group>"; };
 		9E16A6E82CF29F490086D22E /* CTCashNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCashNode.swift; sourceTree = "<group>"; };
 		9E16A6EA2CF6C3F80086D22E /* CTCopBulletNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCopBulletNode.swift; sourceTree = "<group>"; };
 		9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTShootingComponent.swift; sourceTree = "<group>"; };
@@ -218,6 +223,8 @@
 				9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */,
 				1ACC53652D0B2A2F000263E0 /* Battlefield_Symphony.mp3 */,
 				9E593EB22D0B48B600099F2A /* CTDriftParticle.sks */,
+				1ACC536A2D0CB506000263E0 /* starthings.ttf */,
+				1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -298,6 +305,7 @@
 		9E8F39A12CCC358200F418E3 /* Chase2D */ = {
 			isa = PBXGroup;
 			children = (
+				1ACC53692D0CB0D9000263E0 /* Info.plist */,
 				9E8F39A22CCC358200F418E3 /* Chase2DApp.swift */,
 				9E8F39A42CCC358200F418E3 /* ContentView.swift */,
 				9EAB118D2CF7CF9B003C0784 /* CTSpriteKitView.swift */,
@@ -473,6 +481,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E8F39AB2CCC358600F418E3 /* Preview Assets.xcassets in Resources */,
+				1ACC536B2D0CB506000263E0 /* starthings.ttf in Resources */,
+				1ACC536D2D0CB85A000263E0 /* Eating Pasta.ttf in Resources */,
 				9E593EB32D0B48B700099F2A /* CTDriftParticle.sks in Resources */,
 				9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */,
 				9E8F39A72CCC358600F418E3 /* Assets.xcassets in Resources */,
@@ -711,6 +721,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Chase2D/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Chase2D/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -747,6 +758,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Chase2D/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Chase2D/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

@@ -456,7 +456,8 @@ class CTGamePlayState: GKState {
         let spawnPoint = getRandomSpawnPoint()
         let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.powerUpSize)
         fuelNode.position = spawnPoint
-        fuelNode.name = "fuel" //TODO: should this be "fuel"?
+        fuelNode.zPosition = 5
+        fuelNode.name = "fuel"
         gameScene.gameInfo.fuelPosition = fuelNode.position
         gameScene.addChild(fuelNode)
         
@@ -485,14 +486,14 @@ class CTGamePlayState: GKState {
         
         if (elapsedTime < scene.gameInfo.FIRST_WAVE_TIME)
         {
-            scene.gameInfo.wantedLevelLabel.text = "*"
+            scene.gameInfo.wantedLevelLabel.text = "b"
         }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "**"
+            scene.gameInfo.wantedLevelLabel.text = "bb"
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
         }
@@ -501,7 +502,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "***"
+            scene.gameInfo.wantedLevelLabel.text = "bbb"
             secondWaveSet = true
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
@@ -510,7 +511,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "****"
+            scene.gameInfo.wantedLevelLabel.text = "bbbb"
             thirdWaveSet = true
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
@@ -518,7 +519,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 25
             scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "*****"
+            scene.gameInfo.wantedLevelLabel.text = "bbbbb"
             fourthWaveSet = true
         }
     }

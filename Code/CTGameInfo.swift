@@ -80,18 +80,18 @@ struct CTGameInfo {
     var seconds = 0.0
     var pastValue = ProcessInfo.processInfo.systemUptime
     
-//    var scoreLabel = SKLabelNode(fontNamed: "Arial")
-    var timeLabel = SKLabelNode(fontNamed: "Arial")
-//    var healthLabel = SKLabelNode(fontNamed: "Arial")
-    var gameOverLabel = SKLabelNode(fontNamed: "Arial")
-//    var cashLabel = SKLabelNode(fontNamed: "Arial")
-    var reverseLabel = SKLabelNode(fontNamed: "Arial")
-    var fuelLabel = SKLabelNode(fontNamed: "Arial")
-    var wantedLevelLabel = SKLabelNode(fontNamed: "MarkerFelt-Thin")
-    var tapToStartLabel = SKLabelNode(fontNamed: "Arial")
-    var instructionsLabel = SKLabelNode(fontNamed: "Arial")
-    var powerupLabel = SKLabelNode(fontNamed: "Arial")
-    var powerupHintLabel = SKLabelNode(fontNamed: "Arial")
+//    var scoreLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var timeLabel = SKLabelNode(fontNamed: "Eating Pasta")
+//    var healthLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var gameOverLabel = SKLabelNode(fontNamed: "Eating Pasta")
+//    var cashLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var reverseLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var fuelLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var wantedLevelLabel = SKLabelNode(fontNamed: "Star Things")
+    var tapToStartLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var instructionsLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var powerupLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var powerupHintLabel = SKLabelNode(fontNamed: "Eating Pasta")
     
 //    var healthIndicator = SKSpriteNode(imageNamed: "player100")
 //    var speedometer = SKSpriteNode(imageNamed: "speedometer")
@@ -100,14 +100,14 @@ struct CTGameInfo {
     
     var logo = SKSpriteNode(imageNamed: "chase2dLogo")
     
-    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.85, green: 0.35, blue: 0.2, alpha: 1.0))
+    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.95, green: 0.3, blue: 0.2, alpha: 1.0))
     var readyToRestart = false
     
 //    let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "Star Things"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -124,7 +124,8 @@ struct CTGameInfo {
         
         self.timeLabel = timeLabel
 //        timeLabel.fontSize = 6
-        timeLabel.fontSize = layoutInfo.screenSize.width / 66
+//        timeLabel.fontSize = layoutInfo.screenSize.width / 45
+        timeLabel.setScale(0.5)
         timeLabel.zPosition = 100
         
 //        self.healthLabel = healthLabel
@@ -134,7 +135,8 @@ struct CTGameInfo {
         
         self.gameOverLabel = gameOverLabel
 //        gameOverLabel.fontSize = 12
-        gameOverLabel.fontSize = layoutInfo.screenSize.width / 33
+//        gameOverLabel.fontSize = layoutInfo.screenSize.width / 33
+        gameOverLabel.setScale(0.5)
         gameOverLabel.zPosition = 100
         gameOverLabel.text = "GAME OVER"
         gameOverLabel.isHidden = true
@@ -145,31 +147,36 @@ struct CTGameInfo {
         
         self.reverseLabel = reverseLabel
 //        reverseLabel.fontSize = 6
-        reverseLabel.fontSize = layoutInfo.screenSize.width / 66
+//        reverseLabel.fontSize = layoutInfo.screenSize.width / 66
+        reverseLabel.setScale(0.25)
         reverseLabel.zPosition = 90
         reverseLabel.isHidden = true
         reverseLabel.text = "Throw it in Reverse!"
         
         self.fuelLabel = fuelLabel
 //        fuelLabel.fontSize = 8
-        fuelLabel.fontSize = layoutInfo.screenSize.width / 66
+//        fuelLabel.fontSize = layoutInfo.screenSize.width / 66
+        fuelLabel.setScale(0.5)
         fuelLabel.zPosition = 102
         
         self.wantedLevelLabel = wantedLevelLabel
 //        wantedLevelLabel.fontSize = 10
-        wantedLevelLabel.fontSize = layoutInfo.screenSize.width / 33
+//        wantedLevelLabel.fontSize = layoutInfo.screenSize.width / 45
+        wantedLevelLabel.setScale(0.5)
         wantedLevelLabel.zPosition = 90
-        wantedLevelLabel.text = "*"
+        wantedLevelLabel.text = "b"
         
         self.powerupLabel = powerupLabel
 //        powerupLabel.fontSize = 10
-        powerupLabel.fontSize = layoutInfo.screenSize.width / 33
+//        powerupLabel.fontSize = layoutInfo.screenSize.width / 33
+        powerupLabel.setScale(0.35)
         powerupLabel.zPosition = 101
         powerupLabel.isHidden = true
         
         self.powerupHintLabel = powerupHintLabel
 //        powerupHintLabel.fontSize = 8
-        powerupHintLabel.fontSize = layoutInfo.screenSize.width / 66
+//        powerupHintLabel.fontSize = layoutInfo.screenSize.width / 66
+        powerupHintLabel.setScale(0.2)
         powerupHintLabel.zPosition = 101
         powerupHintLabel.isHidden = true
 //        powerupHintLabel.text = "Tap the screen to activate!"
@@ -194,13 +201,15 @@ struct CTGameInfo {
         
         self.tapToStartLabel = tapToStartLabel
 //        tapToStartLabel.fontSize = 8
-        tapToStartLabel.fontSize = layoutInfo.screenSize.width / 45
+//        tapToStartLabel.fontSize = layoutInfo.screenSize.width / 45
+        tapToStartLabel.setScale(0.3)
         tapToStartLabel.zPosition = 102
         tapToStartLabel.text = "Tap to Start!"
         
         self.instructionsLabel = instructionsLabel
 //        instructionsLabel.fontSize = 6
-        instructionsLabel.fontSize = layoutInfo.screenSize.width / 100
+//        instructionsLabel.fontSize = layoutInfo.screenSize.width / 100
+        instructionsLabel.setScale(0.1)
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
         
@@ -209,6 +218,8 @@ struct CTGameInfo {
         logo.zPosition = 1000
         
         restartButton.zPosition = 1000
+        restartButton.yScale = 0.8
+        restartButton.setScale(0.75)
 //        restart.onTap = {
 ////            print("restart button pressed")
 //            readyToRestart = true
@@ -253,7 +264,7 @@ struct CTGameInfo {
         seconds += (phoneRuntime - pastValue)
         pastValue = phoneRuntime
         
-        timeLabel.text = "Time: " + String(Int(seconds))
+        timeLabel.text = String(Int(seconds))
 //        scoreLabel.text = "Score: " + String(score)
 //        cashLabel.text = "Cash: " + String(cashCollected) + "/3"
 //        cashLabel.isHidden = true
@@ -351,7 +362,7 @@ struct CTGameInfo {
             fuelLabel.text = "Out of Fuel"
             
             arrestMade()
-            gameOverLabel.text = "Game Over"
+//            gameOverLabel.text = "Game Over"
         }
     }
     
