@@ -15,6 +15,15 @@ class CTFuelNode: SKSpriteNode {
         
         super.init(texture: texture, color: .clear, size: nodeSize)
         enablePhysics()
+        
+//        let pointLight = SKLightNode()
+//        pointLight.categoryBitMask = 1 // Set a category for the light
+//        pointLight.position = self.position // Position the light
+//        pointLight.lightColor = .red // Color of the light
+//        pointLight.falloff = 5.0
+////        pointLight.ambientColor = .gray // Ambient light color
+////        pointLight.shadowColor = .black // Color of the shadows
+//        scene?.addChild(pointLight)
     }
     
     required init?(coder aDecoder: NSCoder) {
