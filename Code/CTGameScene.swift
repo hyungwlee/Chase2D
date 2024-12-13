@@ -56,6 +56,8 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.powerupHintLabel)
         self.addChild(gameInfo.restartButton)
         self.addChild(gameInfo.logo)
+        self.addChild(gameInfo.backgroundNode)
+//        self.addChild(gameInfo.blurryOverlay)
         
 //        outlineShader.uniforms = [
 //            SKUniform(name: "outlineWidth", float: 0.02),
@@ -153,7 +155,7 @@ class CTGameScene: SKScene {
 //        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
-        gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 10))
+        gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 12))
         gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85))
         
         gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 2))
@@ -177,6 +179,9 @@ class CTGameScene: SKScene {
         gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
         gameInfo.logo.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier))
+        
+        gameInfo.backgroundNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+//        gameInfo.blurryOverlay.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
         updatePedCarComponents()
     }

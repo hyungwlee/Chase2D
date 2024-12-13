@@ -101,7 +101,14 @@ struct CTGameInfo {
     var logo = SKSpriteNode(imageNamed: "chase2dLogo")
     
     let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.95, green: 0.3, blue: 0.2, alpha: 1.0))
+    
+    var backgroundNode = SKSpriteNode(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.7), size: CGSize(width: 1000, height: 1000))
+    
     var readyToRestart = false
+    
+    
+//    let blurryOverlay = SKEffectNode()
+//    let blurFilter = CIFilter(name: "CIGaussianBlur")
     
 //    let speedoSize = 0.31
     
@@ -148,7 +155,7 @@ struct CTGameInfo {
         self.reverseLabel = reverseLabel
 //        reverseLabel.fontSize = 6
 //        reverseLabel.fontSize = layoutInfo.screenSize.width / 66
-        reverseLabel.setScale(0.25)
+        reverseLabel.setScale(0.2)
         reverseLabel.zPosition = 90
         reverseLabel.isHidden = true
         reverseLabel.text = "Throw it in Reverse!"
@@ -156,7 +163,7 @@ struct CTGameInfo {
         self.fuelLabel = fuelLabel
 //        fuelLabel.fontSize = 8
 //        fuelLabel.fontSize = layoutInfo.screenSize.width / 66
-        fuelLabel.setScale(0.5)
+        fuelLabel.setScale(0.4)
         fuelLabel.zPosition = 102
         
         self.wantedLevelLabel = wantedLevelLabel
@@ -225,11 +232,23 @@ struct CTGameInfo {
 //            readyToRestart = true
 //        }
         restartButton.isHidden = true
+        
+        
+//        blurryOverlay.shouldEnableEffects = false
+//        blurFilter?.setValue(10.0, forKey: kCIInputRadiusKey) // Adjust blur intensity
+//        blurryOverlay.filter = blurFilter
+        
+        
+        backgroundNode.zPosition = 50
+        backgroundNode.alpha = 0.5
+        backgroundNode.isHidden = true
     }
     
     mutating func setGameOver()
     {
         gameOver = true
+        
+//        blurryOverlay.shouldEnableEffects = true
     }
     
 //    func setHealthLabel(value : Double)
@@ -242,6 +261,8 @@ struct CTGameInfo {
         if gameOver
         {
             gameOverLabel.isHidden = false
+            backgroundNode.isHidden = false
+            
             return
         }
         
@@ -397,9 +418,11 @@ struct CTGameInfo {
         scoreChangeFrequency = 1.0
         bulletShootInterval = 1
         
+//        blurryOverlay.shouldEnableEffects = false
+        
         gameOverLabel.isHidden = true
         restartButton.isHidden = true
         logo.isHidden = false
+        backgroundNode.isHidden = true
     }
 }
-
