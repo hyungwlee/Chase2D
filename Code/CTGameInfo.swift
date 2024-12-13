@@ -98,14 +98,16 @@ struct CTGameInfo {
 //    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
-    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.0, green: 0.5, blue: 1.0, alpha: 1.0))
+    var logo = SKSpriteNode(imageNamed: "chase2dLogo")
+    
+    let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.85, green: 0.35, blue: 0.2, alpha: 1.0))
     var readyToRestart = false
     
 //    let speedoSize = 0.31
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "MarkerFelt-Thin"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Arial"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -202,6 +204,10 @@ struct CTGameInfo {
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
         
+        self.logo = logo
+        logo.size = CGSize(width: layoutInfo.screenSize.width / 5, height: layoutInfo.screenSize.height / 10)
+        logo.zPosition = 1000
+        
         restartButton.zPosition = 1000
 //        restart.onTap = {
 ////            print("restart button pressed")
@@ -236,6 +242,7 @@ struct CTGameInfo {
         {
             tapToStartLabel.isHidden = true
             instructionsLabel.isHidden = true
+            logo.isHidden = true
         }
         
         if (gameplaySpeed < 1)
@@ -381,6 +388,7 @@ struct CTGameInfo {
         
         gameOverLabel.isHidden = true
         restartButton.isHidden = true
+        logo.isHidden = false
     }
 }
 

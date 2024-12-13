@@ -31,7 +31,7 @@ class CTPickupFollowArrow: GKComponent {
         
         if !addedArrowToScene {
             
-            arrow = CTArrowNode(imageName: "arrow_n", size: gameScene.layoutInfo.pickUpPointArrow)
+            arrow = CTArrowNode(imageName: "gasArrow", size: gameScene.layoutInfo.pickUpPointArrow)
             arrow?.size = CGSize(width: 20.0, height: 20.0)
             arrow?.zPosition = 100
             gameScene.addChild(arrow!)
