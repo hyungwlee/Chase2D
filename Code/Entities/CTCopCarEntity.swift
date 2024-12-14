@@ -26,6 +26,7 @@ class CTCopCarEntity: GKEntity {
         for driftParticle in drivingComponent.driftParticles {
             driftParticle.targetNode = gameScene
         }
+        drivingComponent.smokeParticle?.targetNode = gameScene
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.05

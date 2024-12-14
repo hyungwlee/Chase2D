@@ -30,6 +30,7 @@ class CTPedAINode: SKNode{
             
             let pedCarEntity = CTPedCarEntity(carNode: pedCar)
             pedCarEntity.prepareComponents()
+            pedCarEntity.gameScene = context?.gameScene
             pedCarEntity.checkPointsList = checkPointsHolder.children
             pedCarEntity.currentTargetIndex = index + 1
             pedCarEntity.currentTarget = child.position

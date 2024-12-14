@@ -15,7 +15,7 @@ class CTDrivingComponent: GKComponent {
     var hasStopped = false
     var isRamming = false
     var maxLateralImpulse: CGFloat = 100.0
-    let smokeParticle: CTSmokeParticle
+    let smokeParticle: SKEmitterNode?
     var driftParticles: [SKEmitterNode] = [] // Drift particle system
     var enableSmoke = true
    
@@ -27,45 +27,51 @@ class CTDrivingComponent: GKComponent {
     
     init(carNode: SKSpriteNode) {
         self.carNode = carNode
-        self.smokeParticle = CTSmokeParticle()
-        carNode.addChild(smokeParticle)
+//        self.smokeParticle = CTSmokeParticle()
+//        carNode.addChild(smokeParticle)
+        
+        smokeParticle = SKEmitterNode(fileNamed: "CTCarSmoke")
+        smokeParticle?.position = CGPoint(x: 0.0, y: carNode.size.height / 2.0)
+        smokeParticle?.particleSize = CGSize(width: 50, height: 50)
+        carNode.addChild(smokeParticle!)
+        
+        let driftParticleSize = CGSize(width: 10, height: 10)
         
         // Initialize the drift particle system
         if let drift1 = SKEmitterNode(fileNamed: "CTDriftParticle") {
-            drift1.position = CGPoint(x: carNode.position.x + (carNode.size.width / 3.0), y: carNode.position.y + (carNode.size.height / 3.0))
+            drift1.position = CGPoint(x: (carNode.size.width / 3.0), y: (carNode.size.height / 3.0))
             drift1.particleBirthRate = 0 // Start with disabled particles
-            drift1.particleSize = CGSize(width: 1.0, height: 1.0)
+            drift1.particleSize = driftParticleSize
             driftParticles.append(drift1)
             carNode.addChild(drift1)
         }
         
         // Initialize the drift particle system
         if let drift2 = SKEmitterNode(fileNamed: "CTDriftParticle") {
-            drift2.position = CGPoint(x: carNode.position.x - (carNode.size.width / 3.0), y: carNode.position.y + (carNode.size.height / 3.0))
+            drift2.position = CGPoint(x: -(carNode.size.width / 3.0), y: (carNode.size.height / 3.0))
             drift2.particleBirthRate = 0 // Start with disabled particles
-            drift2.particleSize = CGSize(width: 1.0, height: 1.0)
+            drift2.particleSize = driftParticleSize
             driftParticles.append(drift2)
             carNode.addChild(drift2)
         }
         
         // Initialize the drift particle system
         if let drift3 = SKEmitterNode(fileNamed: "CTDriftParticle") {
-            drift3.position = CGPoint(x: carNode.position.x + (carNode.size.width / 3.0), y: carNode.position.y - (carNode.size.height / 3.0))
+            drift3.position = CGPoint(x: (carNode.size.width / 3.0), y: (carNode.size.height / 3.0))
             drift3.particleBirthRate = 0 // Start with disabled particles
-            drift3.particleSize = CGSize(width: 1.0, height: 1.0)
+            drift3.particleSize = driftParticleSize
             driftParticles.append(drift3)
             carNode.addChild(drift3)
         }
         
         // Initialize the drift particle system
         if let drift4 = SKEmitterNode(fileNamed: "CTDriftParticle") {
-            drift4.position = CGPoint(x: carNode.position.x - (carNode.size.width / 3.0), y: carNode.position.y - (carNode.size.height / 3.0))
+            drift4.position = CGPoint(x: -(carNode.size.width / 3.0), y: -(carNode.size.height / 3.0))
             drift4.particleBirthRate = 0 // Start with disabled particles
-            drift4.particleSize = CGSize(width: 1.0, height: 1.0)
+            drift4.particleSize = driftParticleSize
             driftParticles.append(drift4)
             carNode.addChild(drift4)
         }
-        
         
         super.init()
         
@@ -80,9 +86,9 @@ class CTDrivingComponent: GKComponent {
         
         reduceLateralVelocity()
         
-        if enableSmoke {
-            smokeParticle.particleSystemUpdate()
-        }
+//        if enableSmoke {
+//            smokeParticle.particleSystemUpdate()
+//        }
         
         if driveDir == .backward {
             if (physicsBody.velocity.dx * physicsBody.velocity.dx + physicsBody.velocity.dy * physicsBody.velocity.dy) > 700 && !hasStopped {

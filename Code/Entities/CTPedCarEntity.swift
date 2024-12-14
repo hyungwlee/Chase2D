@@ -15,6 +15,7 @@ class CTPedCarEntity: GKEntity {
     var currentTarget: CGPoint = CGPoint(x: 100, y: 50)
     var checkPointsList: [SKNode] = []
     var currentTargetIndex = 0
+    weak var gameScene: CTGameScene?
     
     init(carNode: DriveableNode) {
         self.carNode = carNode
@@ -26,6 +27,7 @@ class CTPedCarEntity: GKEntity {
         
         let drivingComponent = CTDrivingComponent(carNode: carNode)
         drivingComponent.MOVE_FORCE =  gameInfo?.pedSpeed ?? 350
+        drivingComponent.smokeParticle?.targetNode = gameScene
         
         let steeringComponent = CTSteeringComponent(carNode: carNode)
         steeringComponent.STEER_IMPULSE = 0.1
