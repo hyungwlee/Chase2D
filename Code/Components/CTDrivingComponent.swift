@@ -35,7 +35,7 @@ class CTDrivingComponent: GKComponent {
         smokeParticle?.particleSize = CGSize(width: 50, height: 50)
         carNode.addChild(smokeParticle!)
         
-        let driftParticleSize = CGSize(width: 10, height: 10)
+        let driftParticleSize = CGSize(width: 3, height: 3)
         
         // Initialize the drift particle system
         if let drift1 = SKEmitterNode(fileNamed: "CTDriftParticle") {
