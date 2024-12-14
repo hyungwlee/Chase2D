@@ -358,6 +358,48 @@ extension CTGameScene: SKPhysicsContactDelegate {
                 print(enemy.health)
             }
         }
+        
+        
+//         damage collision only for enemy to enemy damage
+        if  (categoryA == CTPhysicsCategory.copCar || categoryB == CTPhysicsCategory.copCar) ||
+                (categoryA == CTPhysicsCategory.copTank || categoryB == CTPhysicsCategory.copTank) ||
+                (categoryA == CTPhysicsCategory.copTruck || categoryB == CTPhysicsCategory.copTruck)
+
+        {
+
+            var enemy: EnemyNode? // Replace EnemyNode with your base type if applicable
+
+            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
+               let truck = contact.bodyA.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
+                      let truck = contact.bodyB.node as? CTCopTruckNode {
+                enemy = truck
+            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyA.node as? CTCopCarNode {
+                enemy = car
+            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
+                      let car = contact.bodyB.node as? CTCopCarNode {
+                enemy = car
+            }
+
+
+            let colliderNode = (
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar   ||
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTank  ||
+                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck
+            ) ? contact.bodyB.node : contact.bodyA.node
+
+            let carVelocityMag = pow(enemy?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(enemy?.physicsBody?.velocity.dy ?? 0.0, 2)
+            let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
+
+            // Apply health reduction if an enemy was found
+            if let enemy = enemy {
+                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
+                print(enemy.health)
+            }
+        }
+        
     }
     
     // Trigger haptics for non-damage collisions
