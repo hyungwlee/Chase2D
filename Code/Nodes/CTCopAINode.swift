@@ -129,7 +129,7 @@ class CTCopAINode: SKNode{
              
             
             if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
-                let cop = CTCopNode(imageName: "black", size: gameScene.layoutInfo.copSize)
+                let cop = CTCopNode(imageName: "copOnFoot", size: gameScene.layoutInfo.copSize)
                 let copEntity = CTCopEntity(cop: cop)
                 copEntity.gameInfo = gameScene.gameInfo
                 copEntity.prepareComponents()
@@ -156,7 +156,7 @@ class CTCopAINode: SKNode{
             carEntity.prepareComponents()
             
             if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
-                let cop = CTCopNode(imageName: "black", size: gameScene.layoutInfo.copSize)
+                let cop = CTCopNode(imageName: "copOnFoot", size: gameScene.layoutInfo.copSize)
                 let copEntity = CTCopEntity(cop: cop)
                 copEntity.gameInfo = gameScene.gameInfo
                 copEntity.prepareComponents()

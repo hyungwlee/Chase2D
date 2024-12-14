@@ -224,7 +224,7 @@ struct CTGameInfo {
         logo.size = CGSize(width: layoutInfo.screenSize.width / 5, height: layoutInfo.screenSize.height / 10)
         logo.zPosition = 1000
         
-        restartButton.zPosition = 1000
+        restartButton.zPosition = 1001
         restartButton.yScale = 0.8
         restartButton.setScale(0.75)
 //        restart.onTap = {
