@@ -36,11 +36,15 @@ class CTCopTankEntity: GKEntity {
         
         let shootingComponent = CTShootingComponent(carNode: carNode)
             
+        let healthComponent = CTHealthComponent(carNode: carNode)
+        healthComponent.gameScene = gameScene
+            
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
+        addComponent(healthComponent)
+        addComponent(CTArrestingCopComponent(carNode: carNode))
         addComponent(shootingComponent)
-        addComponent(CTHealthComponent(carNode: carNode))
          
     }
     

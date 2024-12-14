@@ -22,8 +22,9 @@
 		9E3A12DA2CCC45140003D097 /* GameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E3A12D62CCC45140003D097 /* GameType.swift */; };
 		9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */; };
 		9E593EAF2D0A51D400099F2A /* CTSmokeParticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E593EAE2D0A51D400099F2A /* CTSmokeParticle.swift */; };
-		9E593EB72D0CBC7400099F2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EB52D0CBC7400099F2A /* Assets.xcassets */; };
 		9E593EB92D0CBD1300099F2A /* CTDriftParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EB82D0CBD1300099F2A /* CTDriftParticle.sks */; };
+		9E593EC02D0D42F500099F2A /* CTCarExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EBE2D0D42F500099F2A /* CTCarExplosion.sks */; };
+		9E593EC12D0D42F500099F2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EBF2D0D42F500099F2A /* Assets.xcassets */; };
 		9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90452CD00BC200137DE8 /* CTGameContext.swift */; };
 		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
 		9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTCarNode.swift */; };
@@ -108,8 +109,9 @@
 		9E3A12D62CCC45140003D097 /* GameType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameType.swift; sourceTree = "<group>"; };
 		9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CTCarSmoke.sks; sourceTree = "<group>"; };
 		9E593EAE2D0A51D400099F2A /* CTSmokeParticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTSmokeParticle.swift; sourceTree = "<group>"; };
-		9E593EB52D0CBC7400099F2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E593EB82D0CBD1300099F2A /* CTDriftParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CTDriftParticle.sks; sourceTree = "<group>"; };
+		9E593EBE2D0D42F500099F2A /* CTCarExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = CTCarExplosion.sks; sourceTree = "<group>"; };
+		9E593EBF2D0D42F500099F2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9E7B90452CD00BC200137DE8 /* CTGameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameContext.swift; sourceTree = "<group>"; };
 		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
 		9E7B90542CD00F4800137DE8 /* CTCarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCarNode.swift; sourceTree = "<group>"; };
@@ -221,11 +223,11 @@
 				9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */,
 				9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */,
 				1ACC53652D0B2A2F000263E0 /* Battlefield_Symphony.mp3 */,
-				9E593EB22D0B48B600099F2A /* CTDriftParticle.sks */,
 				1ACC536A2D0CB506000263E0 /* starthings.ttf */,
 				1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */,
-				9E593EB52D0CBC7400099F2A /* Assets.xcassets */,
 				9E593EB82D0CBD1300099F2A /* CTDriftParticle.sks */,
+				9E593EBE2D0D42F500099F2A /* CTCarExplosion.sks */,
+				9E593EBF2D0D42F500099F2A /* Assets.xcassets */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -484,11 +486,11 @@
 				9E8F39AB2CCC358600F418E3 /* Preview Assets.xcassets in Resources */,
 				1ACC536B2D0CB506000263E0 /* starthings.ttf in Resources */,
 				1ACC536D2D0CB85A000263E0 /* Eating Pasta.ttf in Resources */,
-				9E593EB32D0B48B700099F2A /* CTDriftParticle.sks in Resources */,
 				9E593EB92D0CBD1300099F2A /* CTDriftParticle.sks in Resources */,
+				9E593EC12D0D42F500099F2A /* Assets.xcassets in Resources */,
 				9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */,
+				9E593EC02D0D42F500099F2A /* CTCarExplosion.sks in Resources */,
 				1ACC53662D0B2A2F000263E0 /* Battlefield_Symphony.mp3 in Resources */,
-				9E593EB72D0CBC7400099F2A /* Assets.xcassets in Resources */,
 				9E8A88A52CD41CE300FC9ED1 /* CTGameScene.sks in Resources */,
 				1ACC53682D0B2D6D000263E0 /* outlineShader.fsh in Resources */,
 			);

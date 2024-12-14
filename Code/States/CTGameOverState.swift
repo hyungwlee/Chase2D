@@ -30,6 +30,8 @@ class CTGameOverState: GKState {
         
         scene.gameInfo.restartButton.isHidden = false
         scene.gameInfo.restartButton.tapped = false
+        
+        scene.speed = 0.01
 
     }
     
@@ -77,6 +79,7 @@ class CTGameOverState: GKState {
     }
     
     func resetGame() {
+        scene.speed = 1
         context.restartGame()
         context.stateMachine?.enter(CTGamePlayState.self)
     }

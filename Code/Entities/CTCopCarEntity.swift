@@ -32,11 +32,14 @@ class CTCopCarEntity: GKEntity {
         steeringComponent.STEER_IMPULSE = 0.05
         steeringComponent.DRIFT_FORCE = 0.05
         steeringComponent.DRIFT_VELOCITY_THRESHOLD = 6
+        
+        let healthComponent = CTHealthComponent(carNode: carNode)
+        healthComponent.gameScene = gameScene
             
         addComponent(drivingComponent)
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
-        addComponent(CTHealthComponent(carNode: carNode))
+        addComponent(healthComponent)
         addComponent(CTArrestingCopComponent(carNode: carNode))
          
     }
