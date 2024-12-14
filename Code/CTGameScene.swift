@@ -7,6 +7,7 @@
 import SpriteKit
 import GameplayKit
 import AVFoundation
+import UIKit
 
 class CTGameScene: SKScene {
     weak var context: CTGameContext?
@@ -282,82 +283,62 @@ extension CTGameScene: SKPhysicsContactDelegate {
         let categoryB = contact.bodyB.categoryBitMask
         
         let collision = categoryA | categoryB
-        
-        // player collision
-        // non-damage collision
+
+        // Non-damage collisions
         if collision == (CTPhysicsCategory.car | CTPhysicsCategory.cash) ||
-            collision == (CTPhysicsCategory.car | CTPhysicsCategory.fuel){
+            collision == (CTPhysicsCategory.car | CTPhysicsCategory.fuel) {
+            
+            // Haptic feedback for non-damage collision
+            triggerHapticFeedback(style: .light)
             
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
-            let pickupNode = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyB.node : contact.bodyA.node
+            _ = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyB.node : contact.bodyA.node
             
-           
             colliderNode?.removeFromParent()
             if categoryA == CTPhysicsCategory.cash || categoryB == CTPhysicsCategory.cash {
-                // add cash if car hits a powerup and remove cash from total
                 gameInfo.cashCollected = gameInfo.cashCollected + 1
                 gameInfo.isCashPickedUp = true
                 
-                // randomly applies one powerup if we collect 3 powerup
-                if(gameInfo.cashCollected == 1) {
+                if gameInfo.cashCollected == 1 {
                     activatePowerUp()
-//                    increaseSpeed()
                     gameInfo.cashCollected = 0
                 }
-                     
             }
             
-            if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel{
+            if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel {
                 gameInfo.refillFuel(amount: 50.0)
                 gameInfo.isFuelPickedUp = true
             }
-           
         }
-        
-        
-        // if bullet hits anything remove it from the scene
+
+        // Bullet collisions
         if categoryB == CTPhysicsCategory.copBullet || categoryA == CTPhysicsCategory.copBullet {
-            print("bullet hit something")
             let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.copBullet) ? contact.bodyA.node as? CTCopBulletNode : contact.bodyB.node as? CTCopBulletNode
             bullet?.removeFromParent()
         }
+
         if categoryB == CTPhysicsCategory.playerBullet || categoryA == CTPhysicsCategory.playerBullet {
-            print("bullet hit something")
             let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
             bullet?.removeFromParent()
         }
-        
-        // bullet collision
-        if collision == (CTPhysicsCategory.copBullet | CTPhysicsCategory.car) {
-            
-//            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
-//
-//            let bulletVelocity = bullet?.physicsBody?.velocity ?? CGVector(dx: 0.0, dy: 0.0)
-//            let bulletVelocityMagnitude = hypot(bullet?.physicsBody?.velocity.dx ?? 0.0, bullet?.physicsBody?.velocity.dy ?? 0.0)
-//            let bulletVelocityNormalizedApply = CGVector(dx: bulletVelocity.dx / bulletVelocityMagnitude * 100, dy: bulletVelocity.dy / bulletVelocityMagnitude * 100)
-//            playerCarEntity?.carNode.physicsBody?.applyForce(bulletVelocity)
-//            gameInfo.playerHealth -= 25
-//            gameInfo.decreasePlayerHealth(amount: 25.0)
+
+        // Car and cop collision
+        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.copCar) ||
+           collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTruck) ||
+           collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTank) ||
+           collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
             showDamageFlashEffect()
         }
-        
-        if collision == (CTPhysicsCategory.car | CTPhysicsCategory.copCar) || collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTruck) || collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTank) || collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped)
-        {
-            showDamageFlashEffect()
-        }
-        
-        // enemy damages
-        
-//         bullet collision
-        if  collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copCar)  ||
-                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTank) ||
-                collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTruck) {
+
+        // Player bullet hitting enemy
+        if collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copCar) ||
+           collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTruck) ||
+           collision == (CTPhysicsCategory.playerBullet | CTPhysicsCategory.copTank) {
             print("enemy hit by bullet")
-
-            let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
-
-            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
-
+            
+            _ = (contact.bodyA.categoryBitMask == CTPhysicsCategory.playerBullet) ? contact.bodyA.node as? CTPlayerBulletNode : contact.bodyB.node as? CTPlayerBulletNode
+            
+            var enemy: EnemyNode?
             if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
                let truck = contact.bodyA.node as? CTCopTruckNode {
                 enemy = truck
@@ -371,54 +352,19 @@ extension CTGameScene: SKPhysicsContactDelegate {
                       let car = contact.bodyB.node as? CTCopCarNode {
                 enemy = car
             }
-
-            // Apply health reduction if an enemy was found
-            if var enemy = enemy {
+            
+            if let enemy = enemy {
                 enemy.health -= 10.0
                 print(enemy.health)
             }
-
         }
-        
-        
-//         damage collision only for enemy to enemy damage
-        if  (categoryA == CTPhysicsCategory.copCar || categoryB == CTPhysicsCategory.copCar) ||
-                (categoryA == CTPhysicsCategory.copTank || categoryB == CTPhysicsCategory.copTank) ||
-                (categoryA == CTPhysicsCategory.copTruck || categoryB == CTPhysicsCategory.copTruck)
-
-        {
-
-            var enemy: EnemyNode? // Replace `EnemyNode` with your base type if applicable
-
-            if contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck,
-               let truck = contact.bodyA.node as? CTCopTruckNode {
-                enemy = truck
-            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copTruck,
-                      let truck = contact.bodyB.node as? CTCopTruckNode {
-                enemy = truck
-            } else if contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar,
-                      let car = contact.bodyA.node as? CTCopCarNode {
-                enemy = car
-            } else if contact.bodyB.categoryBitMask == CTPhysicsCategory.copCar,
-                      let car = contact.bodyB.node as? CTCopCarNode {
-                enemy = car
-            }
-
-
-            let colliderNode = (
-                contact.bodyA.categoryBitMask == CTPhysicsCategory.copCar   ||
-                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTank  ||
-                contact.bodyA.categoryBitMask == CTPhysicsCategory.copTruck
-            ) ? contact.bodyB.node : contact.bodyA.node
-
-            let carVelocityMag = pow(enemy?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(enemy?.physicsBody?.velocity.dy ?? 0.0, 2)
-            let colliderVelocityMag:CGFloat = pow(colliderNode?.physicsBody?.velocity.dx ?? 0.0, 2) + pow(colliderNode?.physicsBody?.velocity.dy ?? 0.0, 2)
-
-            // Apply health reduction if an enemy was found
-            if var enemy = enemy {
-                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
-            }
-        }
+    }
+    
+    // Trigger haptics for non-damage collisions
+    func triggerHapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
+        let generator = UIImpactFeedbackGenerator(style: style)
+        generator.prepare()
+        generator.impactOccurred()
     }
 }
 

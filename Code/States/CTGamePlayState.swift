@@ -406,10 +406,10 @@ class CTGamePlayState: GKState {
             
             // Create a frame for the new spawn position
             let spawnRect = CGRect(
-                x: spawnPoint.x - gameScene.gameInfo.layoutInfo.powerUpSize.width / 2,
-                y: spawnPoint.y - gameScene.gameInfo.layoutInfo.powerUpSize.height / 2,
-                width: gameScene.gameInfo.layoutInfo.powerUpSize.width,
-                height: gameScene.gameInfo.layoutInfo.powerUpSize.height
+                x: spawnPoint.x - gameScene.gameInfo.layoutInfo.fuelSize.width / 2,
+                y: spawnPoint.y - gameScene.gameInfo.layoutInfo.fuelSize.height / 2,
+                width: gameScene.gameInfo.layoutInfo.fuelSize.width,
+                height: gameScene.gameInfo.layoutInfo.fuelSize.height
             )
             
             let debugNode = SKShapeNode(rect: spawnRect)
@@ -454,7 +454,7 @@ class CTGamePlayState: GKState {
         if !gameScene.gameInfo.isFuelPickedUp { return }
         
         let spawnPoint = getRandomSpawnPoint()
-        let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.powerUpSize)
+        let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.fuelSize)
         fuelNode.position = spawnPoint
         fuelNode.zPosition = 5
         fuelNode.name = "fuel"
@@ -472,7 +472,7 @@ class CTGamePlayState: GKState {
         if !gameScene.gameInfo.isCashPickedUp { return }
         
         let spawnPoint = getRandomSpawnPoint()
-        let cashNode = CTCashNode(imageNamed: "scoreBoost", nodeSize: context.layoutInfo.powerUpSize)
+        let cashNode = CTCashNode(imageNamed: "lightning", nodeSize: context.layoutInfo.powerupSize)
         cashNode.name = "cash" //TODO: should this be "cash"?
         cashNode.position = spawnPoint
         gameScene.addChild(cashNode)
