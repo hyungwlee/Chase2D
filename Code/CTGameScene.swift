@@ -416,7 +416,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
 
             // Apply health reduction if an enemy was found
             if var enemy = enemy {
-                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.0003
+                enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
             }
         }
     }
