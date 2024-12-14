@@ -221,14 +221,11 @@
 				9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */,
 				9E593EAC2D0A48C800099F2A /* CTCarSmoke.sks */,
 				1ACC53652D0B2A2F000263E0 /* Battlefield_Symphony.mp3 */,
-<<<<<<< Updated upstream
 				9E593EB22D0B48B600099F2A /* CTDriftParticle.sks */,
 				1ACC536A2D0CB506000263E0 /* starthings.ttf */,
 				1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */,
-=======
 				9E593EB52D0CBC7400099F2A /* Assets.xcassets */,
 				9E593EB82D0CBD1300099F2A /* CTDriftParticle.sks */,
->>>>>>> Stashed changes
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -485,13 +482,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E8F39AB2CCC358600F418E3 /* Preview Assets.xcassets in Resources */,
-<<<<<<< Updated upstream
 				1ACC536B2D0CB506000263E0 /* starthings.ttf in Resources */,
 				1ACC536D2D0CB85A000263E0 /* Eating Pasta.ttf in Resources */,
 				9E593EB32D0B48B700099F2A /* CTDriftParticle.sks in Resources */,
-=======
 				9E593EB92D0CBD1300099F2A /* CTDriftParticle.sks in Resources */,
->>>>>>> Stashed changes
 				9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */,
 				1ACC53662D0B2A2F000263E0 /* Battlefield_Symphony.mp3 in Resources */,
 				9E593EB72D0CBC7400099F2A /* Assets.xcassets in Resources */,
