@@ -487,6 +487,7 @@ class CTGamePlayState: GKState {
         if (elapsedTime < scene.gameInfo.FIRST_WAVE_TIME)
         {
             scene.gameInfo.wantedLevelLabel.text = "b"
+            //            scene.gameInfo.wantedLights(freq: 2.0)
         }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
@@ -494,6 +495,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "bb"
+            //            scene.gameInfo.wantedLights(freq: 1.75)
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
         }
@@ -503,6 +505,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "bbb"
+            //            scene.gameInfo.wantedLights(freq: 1.5)
             secondWaveSet = true
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
@@ -512,6 +515,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "bbbb"
+            //            scene.gameInfo.wantedLights(freq: 1.0)
             thirdWaveSet = true
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
@@ -520,6 +524,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "bbbbb"
+            //            scene.gameInfo.wantedLights(freq: 0.5)
             fourthWaveSet = true
         }
     }

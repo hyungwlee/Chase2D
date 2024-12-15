@@ -22,7 +22,7 @@ class CTPlayerCarEntity: GKEntity {
         
         guard let gameScene else { return }
         
-        let drivingComponent = CTDrivingComponent(carNode: carNode)
+        let drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
         drivingComponent.MOVE_FORCE = gameInfo?.playerSpeed ?? 1300
         
         for driftParticle in drivingComponent.driftParticles {

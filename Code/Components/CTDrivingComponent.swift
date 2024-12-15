@@ -17,7 +17,6 @@ class CTDrivingComponent: GKComponent {
     var maxLateralImpulse: CGFloat = 100.0
     let smokeParticle: SKEmitterNode?
     var driftParticles: [SKEmitterNode] = [] // Drift particle system
-    var enableSmoke = true
    
     enum driveDir {
         case forward
@@ -25,7 +24,7 @@ class CTDrivingComponent: GKComponent {
         case none
     }
     
-    init(carNode: SKSpriteNode) {
+    init(carNode: SKSpriteNode, enableSmoke: Bool) {
         self.carNode = carNode
 //        self.smokeParticle = CTSmokeParticle()
 //        carNode.addChild(smokeParticle)
@@ -33,7 +32,10 @@ class CTDrivingComponent: GKComponent {
         smokeParticle = SKEmitterNode(fileNamed: "CTCarSmoke")
         smokeParticle?.position = CGPoint(x: 0.0, y: carNode.size.height / 2.0)
         smokeParticle?.particleSize = CGSize(width: 50, height: 50)
-        carNode.addChild(smokeParticle!)
+        
+        if enableSmoke {
+           carNode.addChild(smokeParticle!)
+       }
         
         let driftParticleSize = CGSize(width: 3, height: 3)
         

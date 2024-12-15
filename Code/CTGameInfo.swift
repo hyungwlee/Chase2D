@@ -209,16 +209,17 @@ struct CTGameInfo {
         self.tapToStartLabel = tapToStartLabel
 //        tapToStartLabel.fontSize = 8
 //        tapToStartLabel.fontSize = layoutInfo.screenSize.width / 45
-        tapToStartLabel.setScale(0.3)
+        tapToStartLabel.setScale(0.1)
         tapToStartLabel.zPosition = 102
         tapToStartLabel.text = "Tap to Start!"
         
         self.instructionsLabel = instructionsLabel
 //        instructionsLabel.fontSize = 6
 //        instructionsLabel.fontSize = layoutInfo.screenSize.width / 100
-        instructionsLabel.setScale(0.1)
+        instructionsLabel.setScale(0.12)
         instructionsLabel.zPosition = 102
-        instructionsLabel.text = "Avoid the Police and Don't Run Out of Fuel!"
+        instructionsLabel.text = "Avoid the Police & Don't Run Out of Fuel!"
+        instructionsLabel.fontColor = .yellow
         
         self.logo = logo
         logo.size = CGSize(width: layoutInfo.screenSize.width / 5, height: layoutInfo.screenSize.height / 10)
@@ -301,11 +302,11 @@ struct CTGameInfo {
 //            scoreChangeFrequency -= 0.1
 //        }
         
-        updateHealthUI()
+//        updateHealthUI()
     }
     
-    func updateHealthUI()
-    {
+//    func updateHealthUI()
+//    {
 //        if (playerHealth > playerStartingHealth * 0.75)
 //        {
 //            healthIndicator.texture = SKTexture(imageNamed: "player100")
@@ -326,7 +327,7 @@ struct CTGameInfo {
 //        {
 //            healthIndicator.isHidden = true
 //        }
-    }
+//    }
     
     func updateSpeed(speed: CGFloat) -> CGFloat
     {
@@ -357,7 +358,10 @@ struct CTGameInfo {
     
     mutating func consumeFuel()
     {
-        fuelLevel -= fuelConsumptionRate
+        if !gameOver
+        {
+            fuelLevel -= fuelConsumptionRate
+        }
     }
     
     mutating func refillFuel(amount: CGFloat)
@@ -374,6 +378,27 @@ struct CTGameInfo {
     
     mutating func updateFuelUI()
     {
+        if (fuelLevel > 75)
+        {
+            fuelLabel.fontColor = .green
+            fuelLabel.setScale(0.40)
+        }
+        else if (fuelLevel > 50)
+        {
+            fuelLabel.fontColor = .yellow
+            fuelLabel.setScale(0.42)
+        }
+        else if (fuelLevel > 25)
+        {
+            fuelLabel.fontColor = .orange
+            fuelLabel.setScale(0.44)
+        }
+        else
+        {
+            fuelLabel.fontColor = .red
+            fuelLabel.setScale(0.48)
+        }
+        
         if (fuelLevel > 0 && !gameOver && !isPaused)
         {
             fuelLabel.text = "Fuel: " + String(Int(fuelLevel)) + "%"
@@ -392,6 +417,17 @@ struct CTGameInfo {
         gameOver = true
         gameOverLabel.text = "Arrested"
     }
+    
+    //    func wantedLights(freq: CGFloat)
+    //    {
+    //        // Create the actions
+    //        let changeToRed = SKAction.run { wantedLevelLabel.fontColor = .red }
+    //        let changeToBlue = SKAction.run { wantedLevelLabel.fontColor = .blue }
+    //        let wait = SKAction.wait(forDuration: freq) // Specify the duration between color switches
+    //        let colorChangeSequence = SKAction.sequence([changeToRed, wait, changeToBlue, wait])
+    ////        wantedLevelLabel.run(SKAction.repeatForever(colorChangeSequence))
+    //        wantedLevelLabel.run(colorChangeSequence)
+    //    }
     
     mutating func reset() {
         

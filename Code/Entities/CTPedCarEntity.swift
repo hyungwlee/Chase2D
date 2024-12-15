@@ -25,7 +25,7 @@ class CTPedCarEntity: GKEntity {
     func prepareComponents(){
         carNode.physicsBody?.mass = 25
         
-        let drivingComponent = CTDrivingComponent(carNode: carNode)
+        let drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
         drivingComponent.MOVE_FORCE =  gameInfo?.pedSpeed ?? 350
         drivingComponent.smokeParticle?.targetNode = gameScene
         drivingComponent.driftParticles = []
