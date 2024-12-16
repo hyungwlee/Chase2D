@@ -37,6 +37,7 @@
 		9E593ED72D0FC1F200099F2A /* track5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9E593ED12D0FC1F200099F2A /* track5.mp3 */; };
 		9E593ED82D0FC1F200099F2A /* tarck6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9E593ED22D0FC1F200099F2A /* tarck6.mp3 */; };
 		9E593ED92D0FC1F200099F2A /* track4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9E593ED32D0FC1F200099F2A /* track4.mp3 */; };
+		9E593EDF2D0FC8DE00099F2A /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9E593EDE2D0FC8DE00099F2A /* explosion.mp3 */; };
 		9E7B904B2CD00BC200137DE8 /* CTGameContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90452CD00BC200137DE8 /* CTGameContext.swift */; };
 		9E7B904D2CD00BC200137DE8 /* CTGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90472CD00BC200137DE8 /* CTGameScene.swift */; };
 		9E7B90552CD00F4800137DE8 /* CTCarNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7B90542CD00F4800137DE8 /* CTCarNode.swift */; };
@@ -136,6 +137,7 @@
 		9E593ED12D0FC1F200099F2A /* track5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = track5.mp3; sourceTree = "<group>"; };
 		9E593ED22D0FC1F200099F2A /* tarck6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tarck6.mp3; sourceTree = "<group>"; };
 		9E593ED32D0FC1F200099F2A /* track4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = track4.mp3; sourceTree = "<group>"; };
+		9E593EDE2D0FC8DE00099F2A /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		9E7B90452CD00BC200137DE8 /* CTGameContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameContext.swift; sourceTree = "<group>"; };
 		9E7B90472CD00BC200137DE8 /* CTGameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTGameScene.swift; sourceTree = "<group>"; };
 		9E7B90542CD00F4800137DE8 /* CTCarNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTCarNode.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				9E593ECE2D0FC1F100099F2A /* track1.mp3 */,
 				9E593ED02D0FC1F100099F2A /* track2.mp3 */,
 				9E593ECF2D0FC1F100099F2A /* track3.mp3 */,
+				9E593EDE2D0FC8DE00099F2A /* explosion.mp3 */,
 				9E593ED32D0FC1F200099F2A /* track4.mp3 */,
 				9E593ED12D0FC1F200099F2A /* track5.mp3 */,
 				9E8A88A42CD41CE300FC9ED1 /* CTGameScene.sks */,
@@ -523,6 +526,7 @@
 				1ACC536B2D0CB506000263E0 /* starthings.ttf in Resources */,
 				9E593ED72D0FC1F200099F2A /* track5.mp3 in Resources */,
 				1ACC536D2D0CB85A000263E0 /* Eating Pasta.ttf in Resources */,
+				9E593EDF2D0FC8DE00099F2A /* explosion.mp3 in Resources */,
 				9E593EB92D0CBD1300099F2A /* CTDriftParticle.sks in Resources */,
 				9E593ED42D0FC1F200099F2A /* track1.mp3 in Resources */,
 				9E593EC92D0FC00900099F2A /* drift.mp3 in Resources */,
