@@ -28,10 +28,14 @@ class CTGameScene: SKScene {
     var layoutInfo: CTLayoutInfo
     var playerSpeed: CGFloat = 0.0
     
+    var powerupPickupSound: AVAudioPlayer?
+    var fuelPickupSound: AVAudioPlayer?
     
     let GAME_SPEED_INCREASE_RATE = 0.01
     
     var gameHasNotStarted = true
+    
+    
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,7 +78,7 @@ class CTGameScene: SKScene {
         }
         
         
-        if let musicURL = Bundle.main.url(forResource: "Battlefield_Symphony", withExtension: "mp3") {
+        if let musicURL = Bundle.main.url(forResource: "track1", withExtension: "mp3") {
             do {
                 bgMusicPlayer = try AVAudioPlayer(contentsOf: musicURL)
                 bgMusicPlayer?.volume = 0.25
@@ -84,6 +88,24 @@ class CTGameScene: SKScene {
                 print("Error loading background music: \(error)")
             }
         }
+        
+        if let powerupSoundURL = Bundle.main.url(forResource: "powerup_pickup", withExtension: "mp3") {
+             do {
+                 powerupPickupSound = try AVAudioPlayer(contentsOf: powerupSoundURL)
+                 powerupPickupSound?.volume = 0.5
+             } catch {
+                 print("Error loading cash pickup sound: \(error)")
+             }
+         }
+         
+         if let fuelSoundURL = Bundle.main.url(forResource: "fuel_pickup", withExtension: "mp3") {
+             do {
+                 fuelPickupSound = try AVAudioPlayer(contentsOf: fuelSoundURL)
+                 fuelPickupSound?.volume = 0.5
+             } catch {
+                 print("Error loading fuel pickup sound: \(error)")
+             }
+         }
         
         if gameHasNotStarted {
             // for collision
@@ -299,6 +321,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             if categoryA == CTPhysicsCategory.cash || categoryB == CTPhysicsCategory.cash {
                 gameInfo.cashCollected = gameInfo.cashCollected + 1
                 gameInfo.isCashPickedUp = true
+                powerupPickupSound?.play()
                 
                 if gameInfo.cashCollected == 1 {
                     activatePowerUp()
@@ -307,6 +330,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             }
             
             if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel {
+                fuelPickupSound?.play()
                 gameInfo.refillFuel(amount: 50.0)
                 gameInfo.isFuelPickedUp = true
             }
