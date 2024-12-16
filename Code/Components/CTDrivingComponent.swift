@@ -7,6 +7,7 @@
 
 import GameplayKit
 import SpriteKit
+import AVFAudio
 
 class CTDrivingComponent: GKComponent {
     
@@ -17,6 +18,12 @@ class CTDrivingComponent: GKComponent {
     var maxLateralImpulse: CGFloat = 100.0
     let smokeParticle: SKEmitterNode?
     var driftParticles: [SKEmitterNode] = [] // Drift particle system
+    var enableEngineSound: Bool = false
+    private var soundSetup = false
+
+    var enginePlayer: AVAudioPlayer?
+    var driftPlayer: AVAudioPlayer?
+    var isDrifting: Bool = false
    
     enum driveDir {
         case forward
@@ -75,6 +82,7 @@ class CTDrivingComponent: GKComponent {
             carNode.addChild(drift4)
         }
         
+        
         super.init()
         
     }
@@ -87,7 +95,13 @@ class CTDrivingComponent: GKComponent {
         guard let physicsBody = carNode.physicsBody else { return }
         
         reduceLateralVelocity()
-        
+        if enableEngineSound && !soundSetup {
+            playEngineSound()
+            playDriftSound()
+            soundSetup = true
+        }
+             
+       
 //        if enableSmoke {
 //            smokeParticle.particleSystemUpdate()
 //        }
@@ -115,6 +129,37 @@ class CTDrivingComponent: GKComponent {
         }
     }
     
+    
+    func playEngineSound() {
+        // Load the engine running sound from the main bundle
+        if let url = Bundle.main.url(forResource: "engine_running", withExtension: "mp3") {
+            do {
+                enginePlayer = try AVAudioPlayer(contentsOf: url)
+                enginePlayer?.numberOfLoops = -1 // Loop indefinitely
+                enginePlayer?.volume = 0.2 // Set constant volume
+                enginePlayer?.play()
+            } catch {
+                print("Failed to play engine sound: \(error.localizedDescription)")
+            }
+        } else {
+            print("Engine running sound file not found.")
+        }
+    }
+    
+    func playDriftSound() {
+        // Load the engine running sound from the main bundle
+        if let url = Bundle.main.url(forResource: "drift", withExtension: "mp3") {
+            do {
+                driftPlayer = try AVAudioPlayer(contentsOf: url)
+                driftPlayer?.volume = 0.25 // Set constant volume
+            } catch {
+                print("Failed to play engine sound: \(error.localizedDescription)")
+            }
+        } else {
+            print("Engine drift sound file not found.")
+        }
+    }
+    
     func reduceLateralVelocity() {
         guard let body = carNode.physicsBody else { return }
         let rightNormal = CGVector(dx: -sin(carNode.zRotation), dy: cos(carNode.zRotation))
@@ -126,9 +171,16 @@ class CTDrivingComponent: GKComponent {
             let factor = maxLateralImpulse / impulseLength
             body.applyImpulse(CGVector(dx: lateralImpulse.dx * factor, dy: lateralImpulse.dy * factor))
             activateDriftParticles(false)
+            if driftPlayer?.isPlaying == true {
+                driftPlayer?.stop()
+            }
         } else {
             body.applyImpulse(lateralImpulse)
             activateDriftParticles(true)
+            if driftPlayer?.isPlaying == false {
+                driftPlayer?.play()
+            }
+            
         }
     }
     

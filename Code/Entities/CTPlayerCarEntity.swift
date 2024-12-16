@@ -24,6 +24,7 @@ class CTPlayerCarEntity: GKEntity {
         
         let drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
         drivingComponent.MOVE_FORCE = gameInfo?.playerSpeed ?? 1300
+        drivingComponent.enableEngineSound = true
         
         for driftParticle in drivingComponent.driftParticles {
             driftParticle.targetNode = gameScene
