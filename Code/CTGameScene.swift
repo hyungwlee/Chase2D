@@ -196,8 +196,8 @@ class CTGameScene: SKScene {
         gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 12))
         gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85))
         
-        gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 0.475))
-        gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y/* + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1*/)
+        gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 0.445))
+        gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 0.2)
         
         gameInfo.powerupLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 8))
         gameInfo.powerupHintLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 6))
@@ -216,7 +216,7 @@ class CTGameScene: SKScene {
         
         gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
-        gameInfo.logo.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1.2)
+        gameInfo.logo.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1.4)
         gameInfo.instructions.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier))
         
         gameInfo.backgroundNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)

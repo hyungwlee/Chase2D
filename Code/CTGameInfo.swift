@@ -159,7 +159,7 @@ struct CTGameInfo {
         reverseLabel.setScale(0.2)
         reverseLabel.zPosition = 90
         reverseLabel.isHidden = true
-        reverseLabel.text = "Throw it in Reverse!"
+        reverseLabel.text = "Two Fingers to Reverse!"
         
         self.fuelLabel = fuelLabel
 //        fuelLabel.fontSize = 8
@@ -221,7 +221,7 @@ struct CTGameInfo {
         self.instructionsLabel = instructionsLabel
 //        instructionsLabel.fontSize = 6
 //        instructionsLabel.fontSize = layoutInfo.screenSize.width / 100
-        instructionsLabel.setScale(0.12)
+        instructionsLabel.setScale(0.115)
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police & Don't Run Out of Fuel!"
         instructionsLabel.fontColor = .orange
