@@ -111,6 +111,8 @@ class CTGameScene: SKScene {
             // for collision
             physicsWorld.contactDelegate = self
             
+//            triggerHapticFeedback(style: .light, intensity: 0.75)
+            
             prepareGameContext()
             prepareStartNodes()
             
@@ -280,13 +282,28 @@ class CTGameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        //Two-finger touch
+        let activeTouches = event?.allTouches?.filter { $0.phase == .began || $0.phase == .stationary }
+        
         if let state = context?.stateMachine?.currentState as? CTStartMenuState {
-            state.handleTouchStart(touches)
+//            state.handleTouchStart(touches)
+            state.handleTouchStart(activeTouches ?? touches)
         }
         if let state = context?.stateMachine?.currentState as? CTGamePlayState {
-            state.handleTouchStart(touches)
+//            state.handleTouchStart(touches)
+            state.handleTouchStart(activeTouches ?? touches)
         }
+        
+//        if activeTouches?.count == 2 {
+//            handleTwoFingerTouch()
+//        }
+        
     }
+    
+//    func handleTwoFingerTouch() {
+//        print("Two-finger touch detected!")
+//        // Trigger your game event here
+//    }
     
     // only for testing purpose
     
@@ -310,9 +327,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
         if collision == (CTPhysicsCategory.car | CTPhysicsCategory.cash) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.fuel) {
             
-            // Haptic feedback for non-damage collision
-//            triggerHapticFeedback(style: .light)
-            triggerHapticFeedback(style: .heavy)
+            // Haptic feedback for non-damage/pick-up collision
+            triggerHapticFeedback(style: .soft, intensity: 0.75)
             
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
             _ = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyB.node : contact.bodyA.node
@@ -340,6 +356,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         if categoryB == CTPhysicsCategory.copBullet || categoryA == CTPhysicsCategory.copBullet {
             let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.copBullet) ? contact.bodyA.node as? CTCopBulletNode : contact.bodyB.node as? CTCopBulletNode
             bullet?.removeFromParent()
+            triggerHapticFeedback(style: .rigid, intensity: 1.0)
         }
 
         if categoryB == CTPhysicsCategory.playerBullet || categoryA == CTPhysicsCategory.playerBullet {
@@ -353,6 +370,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
            collision == (CTPhysicsCategory.car | CTPhysicsCategory.copTank) ||
            collision == (CTPhysicsCategory.car | CTPhysicsCategory.ped) {
             showDamageFlashEffect()
+//            triggerHapticFeedback(style: .light, intensity: 0.1)
         }
 
         // Player bullet hitting enemy
@@ -428,10 +446,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
     }
     
     // Trigger haptics for non-damage collisions
-    func triggerHapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
-//        let generator = UIImpactFeedbackGenerator(style: style)
-//        generator.prepare()
-//        generator.impactOccurred(intensity: 1)
+    func triggerHapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle, intensity: CGFloat) {
         UIImpactFeedbackGenerator(style: style).impactOccurred(intensity: 1.0)
         print("haptics active")
     }

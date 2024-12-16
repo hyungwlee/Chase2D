@@ -538,7 +538,9 @@ class CTGamePlayState: GKState {
         
         
         // this code is for emulator only
-        if(loc?.y ?? 0.0 > (scene.frame.height - 100)){
+//        if(loc?.y ?? 0.0 > (scene.frame.height - 100)){
+        if (touches.count == 2) {
+            print("reversing")
             isTouchingDouble = true
             self.driveDir = CTDrivingComponent.driveDir.backward
             self.moveDirection = -1.0
