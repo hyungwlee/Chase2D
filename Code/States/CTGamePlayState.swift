@@ -498,17 +498,15 @@ class CTGamePlayState: GKState {
         
         if (elapsedTime < scene.gameInfo.FIRST_WAVE_TIME)
         {
-            scene.gameInfo.wantedLevelLabel.text = "b"
+            scene.gameInfo.wantedLevelLabel.text = "a"
 //            copStarIncreaseSound?.play()
-            //            scene.gameInfo.wantedLights(freq: 2.0)
         }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "bb"
-            //            scene.gameInfo.wantedLights(freq: 1.75)
+            scene.gameInfo.wantedLevelLabel.text = "aa"
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
             copStarIncreaseSound?.play()
@@ -518,8 +516,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "bbb"
-            //            scene.gameInfo.wantedLights(freq: 1.5)
+            scene.gameInfo.wantedLevelLabel.text = "aaa"
             secondWaveSet = true
             copStarIncreaseSound?.play()
         }
@@ -529,8 +526,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "bbbb"
-            //            scene.gameInfo.wantedLights(freq: 1.0)
+            scene.gameInfo.wantedLevelLabel.text = "aaaa"
             thirdWaveSet = true
             copStarIncreaseSound?.play()
         }
@@ -539,8 +535,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.playerSpeed += 25
             scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.currentWave += 1
-            scene.gameInfo.wantedLevelLabel.text = "bbbbb"
-            //            scene.gameInfo.wantedLights(freq: 0.5)
+            scene.gameInfo.wantedLevelLabel.text = "aaaaa"
             fourthWaveSet = true
             copStarIncreaseSound?.play()
         }
