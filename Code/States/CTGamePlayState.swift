@@ -6,6 +6,7 @@
 //
 
 import GameplayKit
+import AVFAudio
 
 class CTGamePlayState: GKState {
     weak var scene: CTGameScene?
@@ -32,6 +33,8 @@ class CTGamePlayState: GKState {
     var arrestStartTime = 0.0
     var arrestTimer = 0.0
     var hasStartedArrest = false
+    
+    var copStarIncreaseSound: AVAudioPlayer?
    
     init(scene: CTGameScene, context: CTGameContext) {
         self.scene = scene
@@ -73,6 +76,15 @@ class CTGamePlayState: GKState {
         if !playerAlreadySpawned{
             spawnPlayer()
             playerAlreadySpawned = true
+        }
+        
+        if let copStarIncreaseURL = Bundle.main.url(forResource: "copSiren", withExtension: "mp3") {
+            do {
+                copStarIncreaseSound = try AVAudioPlayer(contentsOf: copStarIncreaseURL)
+                copStarIncreaseSound?.volume = 0.5
+            } catch {
+                print("Error loading background music: \(error)")
+            }
         }
    }
     
@@ -487,6 +499,7 @@ class CTGamePlayState: GKState {
         if (elapsedTime < scene.gameInfo.FIRST_WAVE_TIME)
         {
             scene.gameInfo.wantedLevelLabel.text = "b"
+//            copStarIncreaseSound?.play()
             //            scene.gameInfo.wantedLights(freq: 2.0)
         }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
@@ -498,6 +511,7 @@ class CTGamePlayState: GKState {
             //            scene.gameInfo.wantedLights(freq: 1.75)
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
+            copStarIncreaseSound?.play()
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
@@ -507,6 +521,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.wantedLevelLabel.text = "bbb"
             //            scene.gameInfo.wantedLights(freq: 1.5)
             secondWaveSet = true
+            copStarIncreaseSound?.play()
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 1
@@ -517,6 +532,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.wantedLevelLabel.text = "bbbb"
             //            scene.gameInfo.wantedLights(freq: 1.0)
             thirdWaveSet = true
+            copStarIncreaseSound?.play()
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
@@ -526,6 +542,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.wantedLevelLabel.text = "bbbbb"
             //            scene.gameInfo.wantedLights(freq: 0.5)
             fourthWaveSet = true
+            copStarIncreaseSound?.play()
         }
     }
        
