@@ -7,10 +7,12 @@
 
 import GameplayKit
 import SpriteKit
+import AVFAudio
 
 class CTHealthComponent: GKComponent {
     let car: SKSpriteNode
     weak var gameScene: CTGameScene?
+    var explosionSound: AVAudioPlayer?
     
     init(carNode: SKSpriteNode) {
         self.car = carNode
@@ -36,6 +38,7 @@ class CTHealthComponent: GKComponent {
     }
     func explode() {
         guard let gameScene else { return }
+        playExplosionSound()
         if let explosion = SKEmitterNode(fileNamed: "CTCarExplosion") {
             explosion.position = car.position
             explosion.particleSize = CGSize(width: 100.0, height: 100.0)
@@ -49,6 +52,18 @@ class CTHealthComponent: GKComponent {
             let wait2 = SKAction.wait(forDuration: 1.0)
             let remove = SKAction.removeFromParent()
             explosion.run(SKAction.sequence([wait, reduce_emmission, wait2, remove]))
+        }
+    }
+    
+    func playExplosionSound() {
+        // Load the explosion sound
+        if let explosionSoundURL = Bundle.main.url(forResource: "explosion", withExtension: "mp3") {
+            do {
+                explosionSound = try AVAudioPlayer(contentsOf: explosionSoundURL)
+                explosionSound?.play()
+            } catch {
+                print("Error loading explosion sound: \(error)")
+            }
         }
     }
 

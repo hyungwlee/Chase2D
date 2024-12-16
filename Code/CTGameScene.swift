@@ -81,7 +81,7 @@ class CTGameScene: SKScene {
         if let musicURL = Bundle.main.url(forResource: "track1", withExtension: "mp3") {
             do {
                 bgMusicPlayer = try AVAudioPlayer(contentsOf: musicURL)
-                bgMusicPlayer?.volume = 0.25
+                bgMusicPlayer?.volume = 0.4
                 bgMusicPlayer?.numberOfLoops = -1 // Infinite loop
                 bgMusicPlayer?.play()
             } catch {

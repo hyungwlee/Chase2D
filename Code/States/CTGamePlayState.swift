@@ -408,8 +408,8 @@ class CTGamePlayState: GKState {
             let spawnRect = CGRect(
                 x: spawnPoint.x - gameScene.gameInfo.layoutInfo.fuelSize.width / 2,
                 y: spawnPoint.y - gameScene.gameInfo.layoutInfo.fuelSize.height / 2,
-                width: gameScene.gameInfo.layoutInfo.fuelSize.width,
-                height: gameScene.gameInfo.layoutInfo.fuelSize.height
+                width: gameScene.gameInfo.layoutInfo.fuelSize.width * 2,
+                height: gameScene.gameInfo.layoutInfo.fuelSize.height * 2
             )
             
             let debugNode = SKShapeNode(rect: spawnRect)
