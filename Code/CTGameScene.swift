@@ -289,7 +289,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.fuel) {
             
             // Haptic feedback for non-damage collision
-            triggerHapticFeedback(style: .light)
+//            triggerHapticFeedback(style: .light)
+            triggerHapticFeedback(style: .heavy)
             
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
             _ = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyB.node : contact.bodyA.node
@@ -355,7 +356,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             
             if let enemy = enemy {
                 enemy.health -= 10.0
-                print(enemy.health)
+//                print(enemy.health)
             }
         }
         
@@ -396,7 +397,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
             // Apply health reduction if an enemy was found
             if let enemy = enemy {
                 enemy.health -= abs(carVelocityMag - colliderVelocityMag) * 0.0001
-                print(enemy.health)
+//                print(enemy.health)
             }
         }
         
@@ -404,9 +405,11 @@ extension CTGameScene: SKPhysicsContactDelegate {
     
     // Trigger haptics for non-damage collisions
     func triggerHapticFeedback(style: UIImpactFeedbackGenerator.FeedbackStyle) {
-        let generator = UIImpactFeedbackGenerator(style: style)
-        generator.prepare()
-        generator.impactOccurred()
+//        let generator = UIImpactFeedbackGenerator(style: style)
+//        generator.prepare()
+//        generator.impactOccurred(intensity: 1)
+        UIImpactFeedbackGenerator(style: style).impactOccurred(intensity: 1.0)
+        print("haptics active")
     }
 }
 
