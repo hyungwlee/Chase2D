@@ -10,6 +10,7 @@ import GameplayKit
 
 class CTPickupFollowArrow: GKComponent {
     var arrow: SKSpriteNode?
+    var label: SKLabelNode?
     let carNode: DriveableNode
     var gameScene: CTGameScene?
     let radius = 20.0
@@ -35,6 +36,14 @@ class CTPickupFollowArrow: GKComponent {
             arrow?.size = CGSize(width: 20.0, height: 20.0)
             arrow?.zPosition = 100
             gameScene.addChild(arrow!)
+            
+            label = SKLabelNode(text: "Gas")
+            label?.setScale(0.25)
+            label?.zPosition = 100
+            label?.fontName = "Eating Pasta"
+            label?.fontColor = UIColor(red: 1.0, green: 0.3, blue: 0.0, alpha: 1.0)
+            gameScene.addChild(label!)
+            
             addedArrowToScene = true
         }
         
@@ -45,6 +54,7 @@ class CTPickupFollowArrow: GKComponent {
         let polarY = sin(targetAngle + .pi / 2.0) * radius + carNode.position.y
         
         arrow?.position = CGPoint(x: polarX, y: polarY)
+        label?.position = CGPoint(x: polarX, y: polarY - 15)
         arrow?.zRotation = targetAngle
     }
 }

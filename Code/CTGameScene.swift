@@ -61,6 +61,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.powerupHintLabel)
         self.addChild(gameInfo.restartButton)
         self.addChild(gameInfo.logo)
+        self.addChild(gameInfo.instructions)
         self.addChild(gameInfo.backgroundNode)
 //        self.addChild(gameInfo.blurryOverlay)
         
@@ -183,8 +184,8 @@ class CTGameScene: SKScene {
         gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 12))
         gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85))
         
-        gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 2))
-        gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier))
+        gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 0.475))
+        gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y/* + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1*/)
         
         gameInfo.powerupLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 8))
         gameInfo.powerupHintLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 6))
@@ -203,7 +204,8 @@ class CTGameScene: SKScene {
         
         gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
         
-        gameInfo.logo.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier))
+        gameInfo.logo.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1.2)
+        gameInfo.instructions.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier))
         
         gameInfo.backgroundNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
 //        gameInfo.blurryOverlay.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)

@@ -99,6 +99,7 @@ struct CTGameInfo {
     var powerUp = SKSpriteNode()
     
     var logo = SKSpriteNode(imageNamed: "chase2dLogo")
+    var instructions = SKSpriteNode(imageNamed: "startingInstructions")
     
     let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.95, green: 0.3, blue: 0.2, alpha: 1.0))
     
@@ -114,7 +115,7 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "Star Things"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "Star Things"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"), instructions: SKSpriteNode = SKSpriteNode(imageNamed: "startingInstructions"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -209,7 +210,7 @@ struct CTGameInfo {
         self.tapToStartLabel = tapToStartLabel
 //        tapToStartLabel.fontSize = 8
 //        tapToStartLabel.fontSize = layoutInfo.screenSize.width / 45
-        tapToStartLabel.setScale(0.1)
+        tapToStartLabel.setScale(0.25)
         tapToStartLabel.zPosition = 102
         tapToStartLabel.text = "Tap to Start!"
         
@@ -219,11 +220,16 @@ struct CTGameInfo {
         instructionsLabel.setScale(0.12)
         instructionsLabel.zPosition = 102
         instructionsLabel.text = "Avoid the Police & Don't Run Out of Fuel!"
-        instructionsLabel.fontColor = .yellow
+        instructionsLabel.fontColor = .orange
         
         self.logo = logo
         logo.size = CGSize(width: layoutInfo.screenSize.width / 5, height: layoutInfo.screenSize.height / 10)
         logo.zPosition = 1000
+        
+        self.instructions = instructions
+        let instructionsWidth = layoutInfo.screenSize.width * 0.16
+        instructions.zPosition = 100
+        instructions.size = CGSize(width: instructionsWidth, height: instructionsWidth)
         
         restartButton.zPosition = 1001
         restartButton.yScale = 0.8
@@ -276,6 +282,7 @@ struct CTGameInfo {
             tapToStartLabel.isHidden = true
             instructionsLabel.isHidden = true
             logo.isHidden = true
+            instructions.isHidden = true
         }
         
         if (gameplaySpeed < 1)
