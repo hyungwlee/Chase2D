@@ -172,7 +172,11 @@ struct CTGameInfo {
 //        wantedLevelLabel.fontSize = layoutInfo.screenSize.width / 45
         wantedLevelLabel.setScale(0.5)
         wantedLevelLabel.zPosition = 90
-        wantedLevelLabel.text = "b"
+        let changeToBlue = SKAction.run { wantedLevelLabel.fontColor = .blue }
+        let changeToRed = SKAction.run { wantedLevelLabel.fontColor = .red }
+        let wait = SKAction.wait(forDuration: 1.0)
+        let colorCycle = SKAction.sequence([changeToBlue, wait, changeToRed, wait])
+        wantedLevelLabel.run(SKAction.repeatForever(colorCycle))
         
         self.powerupLabel = powerupLabel
 //        powerupLabel.fontSize = 10
@@ -425,16 +429,6 @@ struct CTGameInfo {
         gameOverLabel.text = "Arrested"
     }
     
-    //    func wantedLights(freq: CGFloat)
-    //    {
-    //        // Create the actions
-    //        let changeToRed = SKAction.run { wantedLevelLabel.fontColor = .red }
-    //        let changeToBlue = SKAction.run { wantedLevelLabel.fontColor = .blue }
-    //        let wait = SKAction.wait(forDuration: freq) // Specify the duration between color switches
-    //        let colorChangeSequence = SKAction.sequence([changeToRed, wait, changeToBlue, wait])
-    ////        wantedLevelLabel.run(SKAction.repeatForever(colorChangeSequence))
-    //        wantedLevelLabel.run(colorChangeSequence)
-    //    }
     
     mutating func reset() {
         
