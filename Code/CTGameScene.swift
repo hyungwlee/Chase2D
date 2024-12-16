@@ -30,6 +30,7 @@ class CTGameScene: SKScene {
     
     var powerupPickupSound: AVAudioPlayer?
     var fuelPickupSound: AVAudioPlayer?
+    var lowFuelAlertSound: AVAudioPlayer?
     
     let GAME_SPEED_INCREASE_RATE = 0.01
     
@@ -106,6 +107,14 @@ class CTGameScene: SKScene {
                  print("Error loading fuel pickup sound: \(error)")
              }
          }
+        if let lowFuelSoundURL = Bundle.main.url(forResource: "low_fuel", withExtension: "mp3") {
+            do {
+                lowFuelAlertSound = try AVAudioPlayer(contentsOf: lowFuelSoundURL)
+                lowFuelAlertSound?.volume = 0.5
+            } catch {
+                print("Error loading fuel pickup sound: \(error)")
+            }
+        }
         
         if gameHasNotStarted {
             // for collision
@@ -128,6 +137,9 @@ class CTGameScene: SKScene {
     {
         context?.stateMachine?.update(deltaTime: currentTime)
         
+        if gameInfo.fuelLevel < 20 {
+            lowFuelAlertSound?.play()
+        }
         
         // don't let the number of cops be less than 0
         if gameInfo.numberOfCops < 0 {
@@ -499,6 +511,17 @@ extension CTGameScene{
         {
             gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
             changePowerupUIText(pUpLabel: "Destroy Nearby Cops", pUpHintText: "Powerup applied automatically.")
+        }
+        
+        for copEntity in copEntities{
+            let fadeOutAction = SKAction.fadeOut(withDuration: 1.0)
+            copEntity.cop.run(fadeOutAction) {
+                if let index =  self.copEntities.firstIndex(of: copEntity) {
+                    copEntity.cop.removeFromParent()
+                    self.copEntities.remove(at: index)
+                }
+            }
+            
         }
         
         for copCarEntity in copCarEntities{

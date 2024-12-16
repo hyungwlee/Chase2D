@@ -55,8 +55,6 @@ class CTGameContext: GameContext{
         }
         
         gameScene.destroyCops(gameRestart: true)
-        // change cop car speed
-        gameScene.copEntities = []
         
     }
 }
