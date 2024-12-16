@@ -35,7 +35,7 @@ struct CTGameInfo {
     let MAX_SPAWN_RADIUS = 10000.0
     let MAX_PLAYABLE_SIZE = 1500.0
     let COP_SPAWN_RADIUS = 150.0
-    let PICKUP_SPAWN_RADIUS = 350.0
+    let PICKUP_SPAWN_RADIUS = 400.0
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0
