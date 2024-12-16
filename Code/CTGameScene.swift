@@ -55,6 +55,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.powerUp)
         self.addChild(gameInfo.reverseLabel)
         self.addChild(gameInfo.fuelLabel)
+        self.addChild(gameInfo.fuelValue)
         self.addChild(gameInfo.wantedLevelLabel)
         self.addChild(gameInfo.tapToStartLabel)
         self.addChild(gameInfo.instructionsLabel)
@@ -111,7 +112,7 @@ class CTGameScene: SKScene {
         if let lowFuelSoundURL = Bundle.main.url(forResource: "low_fuel", withExtension: "mp3") {
             do {
                 lowFuelAlertSound = try AVAudioPlayer(contentsOf: lowFuelSoundURL)
-                lowFuelAlertSound?.volume = 0.5
+                lowFuelAlertSound?.volume = 0.25
             } catch {
                 print("Error loading fuel pickup sound: \(error)")
             }
@@ -138,7 +139,7 @@ class CTGameScene: SKScene {
     {
         context?.stateMachine?.update(deltaTime: currentTime)
         
-        if gameInfo.fuelLevel < 20 {
+        if (gameInfo.fuelLevel < 20) && (gameInfo.fuelLevel > 5) {
             lowFuelAlertSound?.play()
         }
         
@@ -182,6 +183,8 @@ class CTGameScene: SKScene {
         let healthXModifier: CGFloat = 10
         let healthYModifier: CGFloat = 10
         
+        let fuelYModifier: CGFloat = 12
+        
         let startMenuTextYModifier: CGFloat = 25.0
         
         let speedometerYModifier: CGFloat = 9
@@ -193,7 +196,16 @@ class CTGameScene: SKScene {
 //        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
         
         gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
-        gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 12))
+        if (gameInfo.fuelLevel <= 0)
+        {
+            gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier))
+        }
+        else
+        {
+            gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier))
+        }
+        gameInfo.fuelValue.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier))
+        
         gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85))
         
         gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 0.445))

@@ -115,7 +115,7 @@ class CTDrivingComponent: GKComponent {
                 self.carNode.physicsBody?.linearDamping = 10.0
                 let directionX = -sin(self.carNode.zRotation) * MOVE_FORCE * 30
                 let directionY = cos(self.carNode.zRotation) * MOVE_FORCE * 30
-                let force = CGVector(dx: -directionX, dy: -directionY)
+                let force = CGVector(dx: -2 * directionX, dy: -2 * directionY)
                 self.carNode.physicsBody?.applyForce(force)
             }
         } else if driveDir == .forward {

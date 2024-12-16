@@ -78,7 +78,7 @@ class CTGamePlayState: GKState {
             playerAlreadySpawned = true
         }
         
-        if let copStarIncreaseURL = Bundle.main.url(forResource: "copSiren", withExtension: "mp3") {
+        if let copStarIncreaseURL = Bundle.main.url(forResource: "copSirenShortened", withExtension: "mp3") {
             do {
                 copStarIncreaseSound = try AVAudioPlayer(contentsOf: copStarIncreaseURL)
                 copStarIncreaseSound?.volume = 0.5

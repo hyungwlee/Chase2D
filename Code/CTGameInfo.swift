@@ -87,6 +87,7 @@ struct CTGameInfo {
 //    var cashLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var reverseLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var fuelLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var fuelValue = SKLabelNode(fontNamed: "Eating Pasta")
     var wantedLevelLabel = SKLabelNode(fontNamed: "Star Things")
     var tapToStartLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var instructionsLabel = SKLabelNode(fontNamed: "Eating Pasta")
@@ -106,7 +107,7 @@ struct CTGameInfo {
     var backgroundNode = SKSpriteNode(color: UIColor(red: 0, green: 0, blue: 0, alpha: 0.7), size: CGSize(width: 1000, height: 1000))
     
     var readyToRestart = false
-    
+    var pressedPlay = false
     
 //    let blurryOverlay = SKEffectNode()
 //    let blurFilter = CIFilter(name: "CIGaussianBlur")
@@ -115,7 +116,7 @@ struct CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "Star Things"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"), instructions: SKSpriteNode = SKSpriteNode(imageNamed: "startingInstructions"))
+    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "Star Things"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"), instructions: SKSpriteNode = SKSpriteNode(imageNamed: "startingInstructions"), fuelValue: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"))
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -123,7 +124,6 @@ struct CTGameInfo {
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         
-        //TODO: Font size needs to scale with screen size
 //        self.scoreLabel = scoreLabel
 //        scoreLabel.fontSize = 6
 //        scoreLabel.zPosition = 100
@@ -133,7 +133,7 @@ struct CTGameInfo {
         self.timeLabel = timeLabel
 //        timeLabel.fontSize = 6
 //        timeLabel.fontSize = layoutInfo.screenSize.width / 45
-        timeLabel.setScale(0.5)
+        timeLabel.setScale(0.7)
         timeLabel.zPosition = 100
         
 //        self.healthLabel = healthLabel
@@ -166,11 +166,19 @@ struct CTGameInfo {
 //        fuelLabel.fontSize = layoutInfo.screenSize.width / 66
         fuelLabel.setScale(0.4)
         fuelLabel.zPosition = 102
+        fuelLabel.text = "Fuel:"
+        fuelLabel.fontColor = .white
+        fuelLabel.isHidden = true
+        
+        self.fuelValue = fuelValue
+        fuelValue.setScale(0.4)
+        fuelValue.zPosition = 102
+        fuelValue.isHidden = true
         
         self.wantedLevelLabel = wantedLevelLabel
 //        wantedLevelLabel.fontSize = 10
 //        wantedLevelLabel.fontSize = layoutInfo.screenSize.width / 45
-        wantedLevelLabel.setScale(0.5)
+        wantedLevelLabel.setScale(0.4)
         wantedLevelLabel.zPosition = 90
         let changeToBlue = SKAction.run { wantedLevelLabel.fontColor = .blue }
         let changeToRed = SKAction.run { wantedLevelLabel.fontColor = .red }
@@ -287,6 +295,17 @@ struct CTGameInfo {
             instructionsLabel.isHidden = true
             logo.isHidden = true
             instructions.isHidden = true
+            
+            fuelLabel.isHidden = false
+            fuelValue.isHidden = false
+            
+            if !pressedPlay
+            {
+                score = 0
+                pastValue = ProcessInfo.processInfo.systemUptime
+            }
+            
+            pressedPlay = true
         }
         
         if (gameplaySpeed < 1)
@@ -294,8 +313,11 @@ struct CTGameInfo {
             gameplaySpeed += 0.01
         }
         
-        seconds += (phoneRuntime - pastValue)
-        pastValue = phoneRuntime
+        if pressedPlay
+        {
+            seconds += (phoneRuntime - pastValue)
+            pastValue = phoneRuntime
+        }
         
         timeLabel.text = String(Int(seconds))
 //        scoreLabel.text = "Score: " + String(score)
@@ -391,35 +413,35 @@ struct CTGameInfo {
     {
         if (fuelLevel > 75)
         {
-            fuelLabel.fontColor = .green
-            fuelLabel.setScale(0.40)
+            fuelValue.fontColor = .green
+            fuelValue.setScale(0.40)
         }
         else if (fuelLevel > 50)
         {
-            fuelLabel.fontColor = .yellow
-            fuelLabel.setScale(0.42)
+            fuelValue.fontColor = .yellow
+            fuelValue.setScale(0.42)
         }
         else if (fuelLevel > 25)
         {
-            fuelLabel.fontColor = .orange
-            fuelLabel.setScale(0.44)
+            fuelValue.fontColor = .orange
+            fuelValue.setScale(0.44)
         }
         else
         {
-            fuelLabel.fontColor = .red
-            fuelLabel.setScale(0.48)
+            fuelValue.fontColor = .red
+            fuelValue.setScale(0.48)
         }
         
         if (fuelLevel > 0 && !gameOver && !isPaused)
         {
-            fuelLabel.text = "Fuel: " + String(Int(fuelLevel)) + "%"
+            fuelValue.text = String(Int(fuelLevel)) + "%"
         }
         else if (fuelLevel <= 0)
         {
+            fuelValue.isHidden = true
             fuelLabel.text = "Out of Fuel"
             
             arrestMade()
-//            gameOverLabel.text = "Game Over"
         }
     }
     
@@ -452,6 +474,7 @@ struct CTGameInfo {
         fuelPosition = CGPoint(x: 0.0, y: 0.0)
         fuelLevel = 100.0
         score = 0
+        pastValue = ProcessInfo.processInfo.systemUptime
         scoreChangeFrequency = 1.0
         bulletShootInterval = 1
         
@@ -461,5 +484,7 @@ struct CTGameInfo {
         restartButton.isHidden = true
         logo.isHidden = false
         backgroundNode.isHidden = true
+        
+        fuelLabel.text = "Fuel:"
     }
 }

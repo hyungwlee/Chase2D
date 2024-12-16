@@ -20,6 +20,6 @@ struct CTLayoutInfo{
     
     // UI
     let screenSize: CGSize
-    let pickUpPointArrow: CGSize = .init(width: 20.0, height: 20.0)
+    let pickUpPointArrow: CGSize = .init(width: 15.0, height: 15.0)
     
 }

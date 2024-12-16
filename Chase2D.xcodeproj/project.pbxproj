@@ -13,6 +13,7 @@
 		1ACC53682D0B2D6D000263E0 /* outlineShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC53672D0B2D61000263E0 /* outlineShader.fsh */; };
 		1ACC536B2D0CB506000263E0 /* starthings.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC536A2D0CB506000263E0 /* starthings.ttf */; };
 		1ACC536D2D0CB85A000263E0 /* Eating Pasta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */; };
+		1AEDA8DA2D10E9BF007DA6FC /* copSirenShortened.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AEDA8D92D10E9BF007DA6FC /* copSirenShortened.mp3 */; };
 		9E16A6E92CF29F490086D22E /* CTCashNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6E82CF29F490086D22E /* CTCashNode.swift */; };
 		9E16A6EB2CF6C3F80086D22E /* CTCopBulletNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EA2CF6C3F80086D22E /* CTCopBulletNode.swift */; };
 		9E16A6ED2CF6C6C60086D22E /* CTShootingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */; };
@@ -115,6 +116,7 @@
 		1ACC53692D0CB0D9000263E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1ACC536A2D0CB506000263E0 /* starthings.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = starthings.ttf; sourceTree = "<group>"; };
 		1ACC536C2D0CB85A000263E0 /* Eating Pasta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eating Pasta.ttf"; sourceTree = "<group>"; };
+		1AEDA8D92D10E9BF007DA6FC /* copSirenShortened.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = copSirenShortened.mp3; sourceTree = "<group>"; };
 		9E16A6E82CF29F490086D22E /* CTCashNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCashNode.swift; sourceTree = "<group>"; };
 		9E16A6EA2CF6C3F80086D22E /* CTCopBulletNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCopBulletNode.swift; sourceTree = "<group>"; };
 		9E16A6EC2CF6C6C60086D22E /* CTShootingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTShootingComponent.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				9E593ED02D0FC1F100099F2A /* track2.mp3 */,
 				9E593ECF2D0FC1F100099F2A /* track3.mp3 */,
 				9E593EE22D0FF1FA00099F2A /* copSiren.mp3 */,
+				1AEDA8D92D10E9BF007DA6FC /* copSirenShortened.mp3 */,
 				9E593EDE2D0FC8DE00099F2A /* explosion.mp3 */,
 				9E593ED32D0FC1F200099F2A /* track4.mp3 */,
 				9E593ED12D0FC1F200099F2A /* track5.mp3 */,
@@ -544,6 +547,7 @@
 				9E593EC32D0FA88400099F2A /* Sounds.xcassets in Resources */,
 				9E593ECC2D0FC11A00099F2A /* fuel_pickup.mp3 in Resources */,
 				9E593EC72D0FB7C300099F2A /* engine_running.mp3 in Resources */,
+				1AEDA8DA2D10E9BF007DA6FC /* copSirenShortened.mp3 in Resources */,
 				9E593ED92D0FC1F200099F2A /* track4.mp3 in Resources */,
 				9E593ED82D0FC1F200099F2A /* tarck6.mp3 in Resources */,
 				9E593EAD2D0A48C800099F2A /* CTCarSmoke.sks in Resources */,
