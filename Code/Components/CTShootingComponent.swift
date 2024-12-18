@@ -15,17 +15,23 @@ class CTShootingComponent: GKComponent {
     
     init(carNode: SKSpriteNode) {
         self.car = carNode
+       
         super.init()
     }
     
     required init?(coder: NSCoder) {
         fatalError("NSCoder not implementd")
+       
     }
     
     func shoot(target: CGPoint) {
         
         if reloading { return }
         var bullet: SKSpriteNode
+        var flameParticle = SKEmitterNode(fileNamed: "CTBulletFlame")
+        flameParticle?.position = CGPoint(x: 0.0, y: car.size.height / 2.0)
+        flameParticle?.particleSize = CGSize(width: 10, height: 10)
+        
         if car.name == "player" {
             bullet = CTPlayerBulletNode(imageNamed: "damageBoost", size: CGSize(width: 2.0, height: 2.0))
         } else {
@@ -42,6 +48,8 @@ class CTShootingComponent: GKComponent {
         let direction = CGVector(dx: dVector.dx/dVectorMagnitude, dy: dVector.dy / dVectorMagnitude)
         
         car.scene?.addChild(bullet)
+        flameParticle?.targetNode = car.scene
+        bullet.addChild(flameParticle!)
        
         if let physicsBody = bullet.physicsBody {
          physicsBody.velocity = CGVector(

@@ -165,26 +165,29 @@ class CTGamePlayState: GKState {
         
         guard let gameScene = scene else { return }
         guard let playerCarEntity = gameScene.playerCarEntity else { return }
-        
-        var points: [CGPoint] = []
-        
-        for copCarEntity in gameScene.copTruckEntities{
-            points.append(copCarEntity.carNode.position)
-        }
-        
-        for copCarEntity in gameScene.copCarEntities{
-            points.append(copCarEntity.carNode.position)
-        }
-        
-        for copCarEntity in gameScene.copTankEntities{
-            points.append(copCarEntity.carNode.position)
-        }
-        
-        let minPoint = points.min(by: {
-            playerCarEntity.carNode.calculateSquareDistance(pointA: $0, pointB: playerCarEntity.carNode.position) <
-                playerCarEntity.carNode.calculateSquareDistance(pointA: $1, pointB: playerCarEntity.carNode.position)
-        })
+
         if let shootingComponenet = playerCarEntity.component(ofType: CTShootingComponent.self) {
+            
+            var points: [CGPoint] = []
+            
+            for copCarEntity in gameScene.copTruckEntities{
+                points.append(copCarEntity.carNode.position)
+            }
+            
+            for copCarEntity in gameScene.copCarEntities{
+                points.append(copCarEntity.carNode.position)
+            }
+            
+            for copCarEntity in gameScene.copTankEntities{
+                points.append(copCarEntity.carNode.position)
+            }
+            
+            let minPoint = points.min(by: {
+                playerCarEntity.carNode.calculateSquareDistance(pointA: $0, pointB: playerCarEntity.carNode.position) <
+                    playerCarEntity.carNode.calculateSquareDistance(pointA: $1, pointB: playerCarEntity.carNode.position)
+            })
+            print(minPoint)
+            
             shootingComponenet.interval = gameScene.gameInfo.gunShootInterval
             shootingComponenet.shoot(target: minPoint ?? CGPoint(x: 0.0, y: 0.0))
         }
@@ -424,11 +427,11 @@ class CTGamePlayState: GKState {
                 height: gameScene.gameInfo.layoutInfo.fuelSize.height * 2
             )
             
-            let debugNode = SKShapeNode(rect: spawnRect)
-            debugNode.strokeColor = .red
-            debugNode.lineWidth = 2
-            debugNode.path = CGPath(rect: spawnRect, transform: nil)
-            gameScene.addChild(debugNode)
+//            let debugNode = SKShapeNode(rect: spawnRect)
+//            debugNode.strokeColor = .red
+//            debugNode.lineWidth = 2
+//            debugNode.path = CGPath(rect: spawnRect, transform: nil)
+//            gameScene.addChild(debugNode)
             
             isOverlapping = false
            
@@ -438,13 +441,13 @@ class CTGamePlayState: GKState {
 
                 gameScene.physicsWorld.enumerateBodies(in: spawnRect) { body, _ in
                     if let node = body.node, node != gameScene.playerCarEntity?.carNode, node != gameScene, body.node?.name != "road" {
-                        print("Overlap Detected with \(node.name ?? "Unnamed Node")")
+//                        print("Overlap Detected with \(node.name ?? "Unnamed Node")")
                         isOverlapping = true
                     }
                 }
             }
             
-            print("No Overlap Detected with Node")
+//            print("No Overlap Detected with Node")
             
         } while isOverlapping
         

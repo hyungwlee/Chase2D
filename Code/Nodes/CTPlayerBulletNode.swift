@@ -2,9 +2,8 @@
 //  CTPlayerBulletNode.swift
 //  Chase2D
 //
-//  Created by Roshan Thapa Magar on 12/1/24.
+//  Created by Roshan Thapa Magar on 12/17/24.
 //
-
 import SpriteKit
 
 class CTPlayerBulletNode: SKSpriteNode {
@@ -22,10 +21,10 @@ class CTPlayerBulletNode: SKSpriteNode {
             physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2.0)
             physicsBody?.isDynamic = true
             physicsBody?.affectedByGravity = false
-            physicsBody?.mass = 0.05
+            physicsBody?.mass = 300
             physicsBody?.friction = 0
             physicsBody?.categoryBitMask = CTPhysicsCategory.playerBullet
-            physicsBody?.contactTestBitMask = CTPhysicsCategory.car | CTPhysicsCategory.copCar | CTPhysicsCategory.copTank | CTPhysicsCategory.copTruck | CTPhysicsCategory.ped | CTPhysicsCategory.building
+            physicsBody?.contactTestBitMask = CTPhysicsCategory.copCar | CTPhysicsCategory.ped | CTPhysicsCategory.copTruck | CTPhysicsCategory.copTank | CTPhysicsCategory.building
         }
     }
         

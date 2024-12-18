@@ -91,6 +91,12 @@ class CTGameScene: SKScene {
             emitter.removeFromParent()
         }
         
+        if let emitter = SKEmitterNode(fileNamed: "CTBulletFlame") {
+            emitter.position = CGPoint(x: 5000.0, y: 5000.0)
+            addChild(emitter)
+            emitter.removeFromParent()
+        }
+        
         
         
         
@@ -387,7 +393,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
                 powerupPickupSound?.play()
                 
                 if gameInfo.cashCollected == 1 {
-                    activatePowerUp()
+//                    activatePowerUp()
+                    giveShootingAbility()
                     gameInfo.cashCollected = 0
                 }
             }
