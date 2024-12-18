@@ -513,6 +513,7 @@ class CTGamePlayState: GKState {
         {
             scene.gameInfo.wantedLevelLabel.text = "a"
 //            copStarIncreaseSound?.play()
+            scene.gameInfo.fuelConsumptionRate = 0.06
         }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
@@ -523,6 +524,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.canSpawnPoliceTrucks = true
             firstWaveSet = true
             copStarIncreaseSound?.play()
+            scene.gameInfo.fuelConsumptionRate = 0.085
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
@@ -532,6 +534,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.wantedLevelLabel.text = "aaa"
             secondWaveSet = true
             copStarIncreaseSound?.play()
+            scene.gameInfo.fuelConsumptionRate = 0.085
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
@@ -542,6 +545,7 @@ class CTGamePlayState: GKState {
             scene.gameInfo.wantedLevelLabel.text = "aaaa"
             thirdWaveSet = true
             copStarIncreaseSound?.play()
+            scene.gameInfo.fuelConsumptionRate = 0.095
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 3
@@ -551,10 +555,13 @@ class CTGamePlayState: GKState {
             scene.gameInfo.wantedLevelLabel.text = "aaaaa"
             fourthWaveSet = true
             copStarIncreaseSound?.play()
+            scene.gameInfo.fuelConsumptionRate = 0.1
         }
     }
        
     func handleTouchStart(_ touches: Set<UITouch>) {
+//        print("handleTouchStart called")
+        
         guard let scene else { return }
         isTouchingSingle = false
         isTouchingDouble = false
@@ -567,10 +574,14 @@ class CTGamePlayState: GKState {
                 self.touchLocations.append(touch.location(in: scene.view))
                 return
             }
-        }else if(touches.count == 1){
+//            print("Two finger control")
+        }
+        else if(touches.count == 1){
             isTouchingSingle = true
             self.driveDir = CTDrivingComponent.driveDir.forward
             self.touchLocations.append((touches.first?.location(in: scene.view))!)
+            
+//            print("One finger steering")
         }
     }
     

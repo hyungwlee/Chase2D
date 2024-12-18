@@ -338,10 +338,13 @@ class CTGameScene: SKScene {
         //Two-finger touch
         let activeTouches = event?.allTouches?.filter { $0.phase == .began || $0.phase == .stationary }
         
+        // Start State Touch
         if let state = context?.stateMachine?.currentState as? CTStartMenuState {
 //            state.handleTouchStart(touches)
             state.handleTouchStart(activeTouches ?? touches)
         }
+        
+        // Play State Touch
         if let state = context?.stateMachine?.currentState as? CTGamePlayState {
 //            state.handleTouchStart(touches)
             state.handleTouchStart(activeTouches ?? touches)
