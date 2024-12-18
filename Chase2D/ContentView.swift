@@ -24,7 +24,10 @@ struct ContentView: View {
         if let loadedScene = SKScene(fileNamed: "CTGameScene") as? CTGameScene {
             loadedScene.context = context
             loadedScene.size = screenSize
+//            loadedScene.scaleMode = .resizeFill
+            
             self.scene = loadedScene
+//            self.scene.scaleMode = .resizeFill
             
         }else{
             self.scene = SKScene(size: screenSize)

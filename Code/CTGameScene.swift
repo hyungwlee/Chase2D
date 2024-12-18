@@ -347,16 +347,9 @@ class CTGameScene: SKScene {
             state.handleTouchStart(activeTouches ?? touches)
         }
         
-//        if activeTouches?.count == 2 {
-//            handleTwoFingerTouch()
-//        }
         
     }
     
-//    func handleTwoFingerTouch() {
-//        print("Two-finger touch detected!")
-//        // Trigger your game event here
-//    }
     
     // only for testing purpose
     
@@ -380,8 +373,6 @@ extension CTGameScene: SKPhysicsContactDelegate {
         if collision == (CTPhysicsCategory.car | CTPhysicsCategory.cash) ||
             collision == (CTPhysicsCategory.car | CTPhysicsCategory.fuel) {
             
-            // Haptic feedback for non-damage/pick-up collision
-            triggerHapticFeedback(style: .soft, intensity: 0.75)
             
             let colliderNode = (contact.bodyA.categoryBitMask != CTPhysicsCategory.car) ? contact.bodyA.node : contact.bodyB.node
             _ = (contact.bodyA.categoryBitMask == CTPhysicsCategory.car) ? contact.bodyB.node : contact.bodyA.node
@@ -397,12 +388,30 @@ extension CTGameScene: SKPhysicsContactDelegate {
                     giveShootingAbility()
                     gameInfo.cashCollected = 0
                 }
+                
+                // Haptic feedback for powerup pickup
+                let pulse1 = SKAction.run {
+                    self.triggerHapticFeedback(style: .soft, intensity: 0.25)
+                }
+                let wait1 = SKAction.wait(forDuration: 0.4)
+                let pulse2 = SKAction.run {
+                    self.triggerHapticFeedback(style: .light, intensity: 0.5)
+                }
+                let wait2 = SKAction.wait(forDuration: 0.2)
+                let pulse3 = SKAction.run {
+                    self.triggerHapticFeedback(style: .heavy, intensity: 0.75)
+                }
+                let seq = SKAction.sequence([pulse1, wait1, pulse2, wait2, pulse3, wait2, pulse3])
+                self.run(seq)
             }
             
             if categoryA == CTPhysicsCategory.fuel || categoryB == CTPhysicsCategory.fuel {
                 fuelPickupSound?.play()
                 gameInfo.refillFuel(amount: 50.0)
                 gameInfo.isFuelPickedUp = true
+                
+                // Haptic feedback for gas pickup
+                triggerHapticFeedback(style: .soft, intensity: 0.75)
             }
         }
 
@@ -410,7 +419,7 @@ extension CTGameScene: SKPhysicsContactDelegate {
         if categoryB == CTPhysicsCategory.copBullet || categoryA == CTPhysicsCategory.copBullet {
             let bullet = (contact.bodyA.categoryBitMask == CTPhysicsCategory.copBullet) ? contact.bodyA.node as? CTCopBulletNode : contact.bodyB.node as? CTCopBulletNode
             bullet?.removeFromParent()
-            triggerHapticFeedback(style: .rigid, intensity: 1.0)
+//            triggerHapticFeedback(style: .rigid, intensity: 1.0)
         }
 
         if categoryB == CTPhysicsCategory.playerBullet || categoryA == CTPhysicsCategory.playerBullet {
