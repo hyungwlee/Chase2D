@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "Mountain1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Mountain1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "chase2dLogo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "chase2dLogo@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

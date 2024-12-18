@@ -6,10 +6,12 @@
       "scale" : "1x"
     },
     {
+      "filename" : "speedBoost@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "speedBoost@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
