@@ -55,6 +55,7 @@ class CTGameContext: GameContext{
         }
         
         gameScene.destroyCops(gameRestart: true)
+        gameScene.disableAllPowerup()
         
     }
 }

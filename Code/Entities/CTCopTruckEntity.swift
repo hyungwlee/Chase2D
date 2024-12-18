@@ -21,7 +21,7 @@ class CTCopTruckEntity: GKEntity {
     func prepareComponents(){
             
         let drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
-        drivingComponent.MOVE_FORCE = (gameInfo?.copCarSpeed ?? 100) * 1.5
+        drivingComponent.MOVE_FORCE = (gameInfo?.copCarSpeed ?? 100) * 3
         for driftParticle in drivingComponent.driftParticles {
             driftParticle.targetNode = gameScene
         }

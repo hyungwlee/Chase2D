@@ -34,10 +34,11 @@ class CTArrestingCopComponent: GKComponent {
             if(speed < 3 && distance < 15){
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) //it takes 2 seconds for cop to decide to get out of car
                 {
-                    if (speed < 3 && distance < 15)
+                    if (speed < 3 && distance < 15 && !self.spawned)
                     {
                         self.spawnCop()
                         self.startArrest(playerPosition: playerCarNode.position)
+                        self.spawned = true
                     }
                 }
                 
@@ -84,20 +85,19 @@ class CTArrestingCopComponent: GKComponent {
         guard let copEntity else { return }
         guard let gameScene else { return }
         
-        
-        if spawned { return }
-        
-        if let steeringComponent = entity?.component(ofType: CTSteeringComponent.self) {
-            steeringComponent.STEER_IMPULSE = 0.0
+        guard let entity = self.entity else { return }
+       
+       
+        if let steeringComponent = entity.component(ofType: CTSteeringComponent.self) {
+            entity.removeComponent(ofType: CTSteeringComponent.self)
         }
-        if let drivingComponent = entity?.component(ofType: CTDrivingComponent.self) {
-            drivingComponent.MOVE_FORCE = 0.0
+        if entity.component(ofType: CTDrivingComponent.self) != nil {
+            entity.removeComponent(ofType: CTDrivingComponent.self)
         }
         
         copEntity.cop.position = CGPoint(x: carNode.position.x - 2.0, y: carNode.position.y + 2.0)
         gameScene.addChild(copEntity.cop)
         gameScene.gameInfo.numberOfCops -= 1
-        spawned = true
         
     }
 

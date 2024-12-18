@@ -656,6 +656,19 @@ extension CTGameScene{
         }
     }
     
+    func disableAllPowerup(){
+        self.hidePowerupUI()
+        if let playerCarEntity = self.playerCarEntity {
+            playerCarEntity.removeComponent(ofType: CTShootingComponent.self)
+        }
+        if let playerCarEntity = self.playerCarEntity {
+            if let drivingComponent = playerCarEntity.component(ofType: CTDrivingComponent.self){
+                drivingComponent.MOVE_FORCE = gameInfo.playerSpeed
+            }
+        }
+        
+    }
+    
     func giveShootingAbility() {
         gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
         

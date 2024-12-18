@@ -122,7 +122,7 @@ class CTGamePlayState: GKState {
         
         if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: self.driveDir)
-//            drivingComponent.MOVE_FORCE = scene.gameInfo.playerSpeed
+            drivingComponent.MOVE_FORCE = scene.gameInfo.playerSpeed
         }
         
         if let steerComponent = scene.playerCarEntity?.component(ofType: CTSteeringComponent.self){
@@ -186,7 +186,6 @@ class CTGamePlayState: GKState {
                 playerCarEntity.carNode.calculateSquareDistance(pointA: $0, pointB: playerCarEntity.carNode.position) <
                     playerCarEntity.carNode.calculateSquareDistance(pointA: $1, pointB: playerCarEntity.carNode.position)
             })
-            print(minPoint)
             
             shootingComponenet.interval = gameScene.gameInfo.gunShootInterval
             shootingComponenet.shoot(target: minPoint ?? CGPoint(x: 0.0, y: 0.0))
@@ -229,8 +228,8 @@ class CTGamePlayState: GKState {
                 copCarEntity.carNode.removeFromParent()
                 if let index =  copCarEntities.firstIndex(of: copCarEntity) {
                     copCarEntities.remove(at: index)
+                    gameInfo.numberOfCops -= 1
                 }
-                gameInfo.numberOfCops -= 1
                 continue;
             }
             
@@ -241,8 +240,8 @@ class CTGamePlayState: GKState {
                 }
                 if let index =  copCarEntities.firstIndex(of: copCarEntity) {
                     copCarEntities.remove(at: index)
+                    gameInfo.numberOfCops -= 1
                 }
-                gameInfo.numberOfCops -= 1
                 continue;
             }
             
@@ -269,7 +268,7 @@ class CTGamePlayState: GKState {
             }
             if let drivingComponent = copCarEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
-//                drivingComponent.MOVE_FORCE = gameScene.gameInfo.copCarSpeed
+                drivingComponent.MOVE_FORCE = gameScene.gameInfo.copCarSpeed
             }
             
             if let shootingComponent = copCarEntity.component(ofType: CTShootingComponent.self) {
@@ -319,7 +318,7 @@ class CTGamePlayState: GKState {
             }
             if let drivingComponent = copTruckEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
-//                drivingComponent.MOVE_FORCE = gameScene.gameInfo.copCarSpeed
+                drivingComponent.MOVE_FORCE = gameInfo.copCarSpeed * 2
             }
             
             if let shootingComponent = copTruckEntity.component(ofType: CTShootingComponent.self) {
@@ -369,6 +368,7 @@ class CTGamePlayState: GKState {
             }
             if let drivingComponent = copTankEntity.component(ofType: CTDrivingComponent.self) {
                 drivingComponent.drive(driveDir: .forward)
+                drivingComponent.MOVE_FORCE = gameInfo.copCarSpeed * 5
             }
             
             if let shootingComponent = copTankEntity.component(ofType: CTShootingComponent.self) {
@@ -529,7 +529,7 @@ class CTGamePlayState: GKState {
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
             scene.gameInfo.playerSpeed += 50
-            scene.gameInfo.copCarSpeed += 50
+            scene.gameInfo.copCarSpeed += 100
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "aaa"
             secondWaveSet = true
@@ -538,8 +538,8 @@ class CTGamePlayState: GKState {
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
-            scene.gameInfo.playerSpeed += 25
-            scene.gameInfo.copCarSpeed += 25
+            scene.gameInfo.playerSpeed += 100
+            scene.gameInfo.copCarSpeed += 100
             scene.gameInfo.canSpawnTanks = true
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "aaaa"
@@ -549,8 +549,8 @@ class CTGamePlayState: GKState {
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 3
-            scene.gameInfo.playerSpeed += 25
-            scene.gameInfo.copCarSpeed += 25
+            scene.gameInfo.playerSpeed += 50
+            scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
             scene.gameInfo.wantedLevelLabel.text = "aaaaa"
             fourthWaveSet = true
