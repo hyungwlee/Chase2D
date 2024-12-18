@@ -44,7 +44,7 @@ class CTCashNode: SKSpriteNode {
             let y = sin(x) * amplitude * 0.2
             
             // Move the node by the calculated offsets
-            let move = SKAction.moveBy(x: amplitude / CGFloat(steps), y: y, duration: stepDuration)
+            let move = SKAction.moveBy(x: 0.0, y: y, duration: stepDuration)
             actions.append(move)
         }
         

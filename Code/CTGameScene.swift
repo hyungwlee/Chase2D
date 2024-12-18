@@ -73,6 +73,27 @@ class CTGameScene: SKScene {
 //        ]
         
         context?.stateMachine?.enter(CTStartMenuState.self)
+        
+        // emitter lag spike fix
+        if let emitter = SKEmitterNode(fileNamed: "CTCarSmoke") {
+            emitter.position = CGPoint(x: 5000.0, y: 5000.0)
+            addChild(emitter)
+            emitter.removeFromParent()
+        }
+        if let emitter = SKEmitterNode(fileNamed: "CTCarExplosion") {
+            emitter.position = CGPoint(x: 5000.0, y: 5000.0)
+            addChild(emitter)
+            emitter.removeFromParent()
+        }
+        if let emitter = SKEmitterNode(fileNamed: "CTDriftParticle") {
+            emitter.position = CGPoint(x: 5000.0, y: 5000.0)
+            addChild(emitter)
+            emitter.removeFromParent()
+        }
+        
+        
+        
+        
     }
     
     override func didMove(to view: SKView) {

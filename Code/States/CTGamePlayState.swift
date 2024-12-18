@@ -382,7 +382,7 @@ class CTGamePlayState: GKState {
         
         let playerNode = gameScene.playerCarEntity?.carNode
         let playerPosition = playerNode?.position ?? CGPoint(x: 0.0, y: 0.0)
-        let radius = gameScene.gameInfo.PICKUP_SPAWN_RADIUS + 100
+        let radius = gameScene.gameInfo.PICKUP_SPAWN_RADIUS
         var nearbyNodes: [SKNode] = []
         
         let queryRect = CGRect(x: playerPosition.x - radius, y: playerPosition.y - radius, width: radius * 2, height: radius * 2)
@@ -418,8 +418,8 @@ class CTGamePlayState: GKState {
             
             // Create a frame for the new spawn position
             let spawnRect = CGRect(
-                x: spawnPoint.x - gameScene.gameInfo.layoutInfo.fuelSize.width / 2,
-                y: spawnPoint.y - gameScene.gameInfo.layoutInfo.fuelSize.height / 2,
+                x: spawnPoint.x - gameScene.gameInfo.layoutInfo.fuelSize.width,
+                y: spawnPoint.y - gameScene.gameInfo.layoutInfo.fuelSize.height,
                 width: gameScene.gameInfo.layoutInfo.fuelSize.width * 2,
                 height: gameScene.gameInfo.layoutInfo.fuelSize.height * 2
             )
@@ -427,15 +427,24 @@ class CTGamePlayState: GKState {
             let debugNode = SKShapeNode(rect: spawnRect)
             debugNode.strokeColor = .red
             debugNode.lineWidth = 2
-//            gameScene.addChild(debugNode)
+            debugNode.path = CGPath(rect: spawnRect, transform: nil)
+            gameScene.addChild(debugNode)
             
             isOverlapping = false
+           
             for nodeAround in getNodesAround() {
-                if spawnRect.intersects(nodeAround.frame) {
-                    isOverlapping = true
-                    break
+//                print("Spawn Rect: \(spawnRect)")
+//                print("Node Frame: \(nodeAround.calculateAccumulatedFrame())")
+
+                gameScene.physicsWorld.enumerateBodies(in: spawnRect) { body, _ in
+                    if let node = body.node, node != gameScene.playerCarEntity?.carNode, node != gameScene, body.node?.name != "road" {
+                        print("Overlap Detected with \(node.name ?? "Unnamed Node")")
+                        isOverlapping = true
+                    }
                 }
             }
+            
+            print("No Overlap Detected with Node")
             
         } while isOverlapping
         
@@ -468,7 +477,7 @@ class CTGamePlayState: GKState {
         let spawnPoint = getRandomSpawnPoint()
         let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.fuelSize)
         fuelNode.position = spawnPoint
-        fuelNode.zPosition = 5
+        fuelNode.zPosition = 1
         fuelNode.name = "fuel"
         gameScene.gameInfo.fuelPosition = fuelNode.position
         gameScene.addChild(fuelNode)
@@ -487,6 +496,7 @@ class CTGamePlayState: GKState {
         let cashNode = CTCashNode(imageNamed: "lightning", nodeSize: context.layoutInfo.powerupSize)
         cashNode.name = "cash" //TODO: should this be "cash"?
         cashNode.position = spawnPoint
+        cashNode.zPosition = 1
         gameScene.addChild(cashNode)
         
         gameScene.gameInfo.isCashPickedUp = false
@@ -502,7 +512,7 @@ class CTGamePlayState: GKState {
 //            copStarIncreaseSound?.play()
         }
         if(elapsedTime > scene.gameInfo.FIRST_WAVE_TIME && elapsedTime < scene.gameInfo.FIRST_WAVE_TIME + 1 && !firstWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 3
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 2
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
@@ -512,7 +522,7 @@ class CTGamePlayState: GKState {
             copStarIncreaseSound?.play()
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 3
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 2
             scene.gameInfo.playerSpeed += 50
             scene.gameInfo.copCarSpeed += 50
             scene.gameInfo.currentWave += 1
@@ -521,7 +531,7 @@ class CTGamePlayState: GKState {
             copStarIncreaseSound?.play()
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
-            scene.gameInfo.MAX_NUMBER_OF_COPS += 3
+            scene.gameInfo.MAX_NUMBER_OF_COPS += 2
             scene.gameInfo.playerSpeed += 25
             scene.gameInfo.copCarSpeed += 25
             scene.gameInfo.canSpawnTanks = true
@@ -546,11 +556,6 @@ class CTGamePlayState: GKState {
         isTouchingSingle = false
         isTouchingDouble = false
          
-        let loc = touches.first?.location(in: scene.view)
-        
-        
-        // this code is for emulator only
-//        if(loc?.y ?? 0.0 > (scene.frame.height - 100)){
         if (touches.count == 2) {
             print("reversing")
             isTouchingDouble = true
@@ -564,16 +569,6 @@ class CTGamePlayState: GKState {
             self.driveDir = CTDrivingComponent.driveDir.forward
             self.touchLocations.append((touches.first?.location(in: scene.view))!)
         }
-        
-//        if(touches.count > 1){
-//            isTouchingDouble = true
-//            for touch in touches{
-//                self.touchLocations?.append(touch.location(in: scene.view))
-//            }
-//        }else if(touches.count == 1){
-//            isTouchingSingle = true
-//            self.touchLocations?.append((touches.first?.location(in: scene.view))!)
-//        }
     }
     
     func handleTouchEnded(_ touch: UITouch) {
