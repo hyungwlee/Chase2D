@@ -146,7 +146,7 @@ struct CTGameInfo {
 //        gameOverLabel.fontSize = 12
 //        gameOverLabel.fontSize = layoutInfo.screenSize.width / 33
         gameOverLabel.setScale(0.5)
-        gameOverLabel.zPosition = 100
+        gameOverLabel.zPosition = 2000
         gameOverLabel.text = "GAME OVER"
         gameOverLabel.isHidden = true
         

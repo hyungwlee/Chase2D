@@ -228,8 +228,8 @@ class CTGamePlayState: GKState {
                 copCarEntity.carNode.removeFromParent()
                 if let index =  copCarEntities.firstIndex(of: copCarEntity) {
                     copCarEntities.remove(at: index)
-                    gameInfo.numberOfCops -= 1
                 }
+                gameInfo.numberOfCops -= 1
                 continue;
             }
             
@@ -240,8 +240,8 @@ class CTGamePlayState: GKState {
                 }
                 if let index =  copCarEntities.firstIndex(of: copCarEntity) {
                     copCarEntities.remove(at: index)
-                    gameInfo.numberOfCops -= 1
                 }
+                gameInfo.numberOfCops -= 1
                 continue;
             }
             

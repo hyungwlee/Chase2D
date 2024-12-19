@@ -28,8 +28,9 @@ class CTShootingComponent: GKComponent {
         
         if reloading { return }
         var bullet: SKSpriteNode
-        var flameParticle = SKEmitterNode(fileNamed: "CTBulletFlame")
-        flameParticle?.position = CGPoint(x: 0.0, y: car.size.height / 2.0)
+        let flameParticle = SKEmitterNode(fileNamed: "CTBulletFlame")
+//        flameParticle?.position = CGPoint(x: 0.0, y: car.size.height / 2.0)
+        flameParticle?.position = CGPoint(x: 0.0, y: 0.0)
         flameParticle?.particleSize = CGSize(width: 10, height: 10)
         
         if car.name == "player" {

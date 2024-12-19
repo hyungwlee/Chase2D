@@ -22,7 +22,7 @@ class CTCopBulletNode: SKSpriteNode {
             physicsBody = SKPhysicsBody(circleOfRadius: size.width / 2.0)
             physicsBody?.isDynamic = true
             physicsBody?.affectedByGravity = false
-            physicsBody?.mass = 300
+            physicsBody?.mass = 100
             physicsBody?.friction = 0
             physicsBody?.categoryBitMask = CTPhysicsCategory.copBullet
             physicsBody?.collisionBitMask = CTPhysicsCategory.car
