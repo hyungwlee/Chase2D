@@ -82,6 +82,7 @@ class CTGameInfo {
     var powerupLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var powerupHintLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var lowFuelAlert = SKLabelNode(fontNamed: "Eating Pasta")
+    let starDupe = SKLabelNode(fontNamed: "Star Things")
     
     var powerUp = SKSpriteNode()
     
@@ -109,19 +110,21 @@ class CTGameInfo {
 //      ###  UI Element Scaling:  ###
         
         timeLabel.setScale(             0.0007 * layoutInfo.screenSize.height)
-        gameOverLabel.setScale(         0.0007 * layoutInfo.screenSize.height)
-        reverseLabel.setScale(          0.00025 * layoutInfo.screenSize.height)
+        gameOverLabel.setScale(         0.00065 * layoutInfo.screenSize.height)
+        reverseLabel.setScale(          0.000225 * layoutInfo.screenSize.height)
         fuelLabel.setScale(             0.0004 * layoutInfo.screenSize.height)
         fuelValue.setScale(             0.0004 * layoutInfo.screenSize.height)
         wantedLevelLabel.setScale(      0.0004 * layoutInfo.screenSize.height)
         powerupLabel.setScale(          0.00035 * layoutInfo.screenSize.height)
         powerupHintLabel.setScale(      0.00025 * layoutInfo.screenSize.height)
         tapToStartLabel.setScale(       0.00025 * layoutInfo.screenSize.height)
-        instructionsLabel.setScale(     0.00015 * layoutInfo.screenSize.height)
+        instructionsLabel.setScale(     0.00013 * layoutInfo.screenSize.height)
         logo.setScale(                  0.00025 * layoutInfo.screenSize.height)
-        instructions.setScale(          0.00025 * layoutInfo.screenSize.height)
+        instructions.setScale(          0.0002 * layoutInfo.screenSize.height)
         restartButton.setScale(         0.001 * layoutInfo.screenSize.height)
         lowFuelAlert.setScale(          0.0004 * layoutInfo.screenSize.height)
+        starDupe.setScale(      0.0005 * layoutInfo.screenSize.height) // Original is 0.0004
+        
         
         //  Positioning information can be found in CTGameScene.
         
@@ -129,6 +132,7 @@ class CTGameInfo {
 //      ###  UI Element Z position/layers:  ###
 
         backgroundNode.zPosition =      50
+        starDupe.zPosition =            89
         reverseLabel.zPosition =        90
         wantedLevelLabel.zPosition =    90
         timeLabel.zPosition =           100
@@ -158,7 +162,7 @@ class CTGameInfo {
         restartButton.isHidden =        true
         backgroundNode.isHidden =       true
         lowFuelAlert.isHidden =         true
-        
+        starDupe.isHidden =             true
         
         
 //      ###  Text Element Values  ###
@@ -179,7 +183,8 @@ class CTGameInfo {
         lowFuelAlert.fontColor = .red
         restartButton.yScale = 0.8
         backgroundNode.alpha = 0.5
-        
+        starDupe.fontColor = .white
+        starDupe.alpha = 0.85
         
         
 //      ###  Stars Animation  ###
@@ -190,14 +195,14 @@ class CTGameInfo {
         let colorCycle = SKAction.sequence([changeToBlue, wait, changeToRed, wait])
         wantedLevelLabel.run(SKAction.repeatForever(colorCycle))
         
-//      ### Tap to Start Animation ###
+//      ###  Tap to Start Animation  ###
         
         let startFadeIn = SKAction.fadeIn(withDuration: 0.5)
         let startFadeOut = SKAction.fadeOut(withDuration: 0.75)
         let startSeq = SKAction.sequence([startFadeIn, startFadeOut])
         tapToStartLabel.run(SKAction.repeatForever(startSeq))
         
-//      ### Low Fuel Alert Animation ###
+//      ###  Low Fuel Alert Animation  ###
         
         let lowFuelFadeIn = SKAction.fadeIn(withDuration: 0.35)
         let lowFuelFadeOut = SKAction.fadeOut(withDuration: 0.5)
@@ -223,7 +228,7 @@ class CTGameInfo {
             return
         }
         
-        if !gameOver && fuelLevel < 35
+        if fuelLevel < 35 && fuelLevel > 0
         {
             lowFuelAlert.isHidden = false
         }
@@ -344,6 +349,18 @@ class CTGameInfo {
     {
         gameOver = true
         gameOverLabel.text = "Arrested"
+    }
+    
+//  ###  Star Increase Animation  ###
+    func starIncreaseEffect()
+    {
+        starDupe.text = wantedLevelLabel.text
+        starDupe.isHidden = false
+        
+        let starPulse = SKAction.fadeOut(withDuration: 1.5)
+        let starHide = SKAction.run {self.starDupe.isHidden = true}
+        let starSeq = SKAction.sequence([starPulse, starHide])
+        starDupe.run(starSeq)
     }
     
     

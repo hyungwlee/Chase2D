@@ -525,6 +525,7 @@ class CTGamePlayState: GKState {
             firstWaveSet = true
             copStarIncreaseSound?.play()
             scene.gameInfo.fuelConsumptionRate = 0.085
+            scene.gameInfo.starIncreaseEffect()
         }
         if(elapsedTime > scene.gameInfo.SECOND_WAVE_TIME && elapsedTime < scene.gameInfo.SECOND_WAVE_TIME + 1 && !secondWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
@@ -535,6 +536,7 @@ class CTGamePlayState: GKState {
             secondWaveSet = true
             copStarIncreaseSound?.play()
             scene.gameInfo.fuelConsumptionRate = 0.085
+            scene.gameInfo.starIncreaseEffect()
         }
         if(elapsedTime > scene.gameInfo.THIRD_WAVE_TIME && elapsedTime < scene.gameInfo.THIRD_WAVE_TIME + 1 && !thirdWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 2
@@ -546,6 +548,7 @@ class CTGamePlayState: GKState {
             thirdWaveSet = true
             copStarIncreaseSound?.play()
             scene.gameInfo.fuelConsumptionRate = 0.095
+            scene.gameInfo.starIncreaseEffect()
         }
         if(elapsedTime > scene.gameInfo.FOURTH_WAVE_TIME && elapsedTime < scene.gameInfo.FOURTH_WAVE_TIME + 1 && !fourthWaveSet) {
             scene.gameInfo.MAX_NUMBER_OF_COPS += 3
@@ -556,6 +559,7 @@ class CTGamePlayState: GKState {
             fourthWaveSet = true
             copStarIncreaseSound?.play()
             scene.gameInfo.fuelConsumptionRate = 0.1
+            scene.gameInfo.starIncreaseEffect()
         }
     }
        

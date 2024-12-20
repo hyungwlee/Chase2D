@@ -71,6 +71,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.instructions)
         self.addChild(gameInfo.backgroundNode)
         self.addChild(gameInfo.lowFuelAlert)
+        self.addChild(gameInfo.starDupe)
         
 //        outlineShader.uniforms = [
 //            SKUniform(name: "outlineWidth", float: 0.02),
@@ -253,6 +254,10 @@ class CTGameScene: SKScene {
         gameInfo.wantedLevelLabel.position = CGPoint(
             x: cameraNode!.position.x,
             y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85)
+        )
+        gameInfo.starDupe.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.825)
         )
         
         gameInfo.tapToStartLabel.position = CGPoint(
