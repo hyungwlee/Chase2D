@@ -70,7 +70,7 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.logo)
         self.addChild(gameInfo.instructions)
         self.addChild(gameInfo.backgroundNode)
-//        self.addChild(gameInfo.blurryOverlay)
+        self.addChild(gameInfo.lowFuelAlert)
         
 //        outlineShader.uniforms = [
 //            SKUniform(name: "outlineWidth", float: 0.02),
@@ -213,49 +213,89 @@ class CTGameScene: SKScene {
         let speedometerYModifier: CGFloat = 9
         
         // Text UI Components
-//        gameInfo.scoreLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
-        gameInfo.timeLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier))
-        gameInfo.gameOverLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 16))
-//        gameInfo.cashLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
+        gameInfo.timeLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + (layoutInfo.screenSize.height / scoreAndTimeYModifier)
+        )
+        gameInfo.gameOverLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + (layoutInfo.screenSize.height / 16)
+        )
         
-        gameInfo.reverseLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18))
+        gameInfo.reverseLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + (layoutInfo.screenSize.height / 18)
+        )
+        
         if (gameInfo.fuelLevel <= 0)
         {
-            gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier))
+            gameInfo.fuelLabel.position = CGPoint(
+                x: cameraNode!.position.x,
+                y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier)
+            )
         }
         else
         {
-            gameInfo.fuelLabel.position = CGPoint(x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier))
+            gameInfo.fuelLabel.position = CGPoint(
+                x: cameraNode!.position.x - (layoutInfo.screenSize.width / scoreAndTimeXModifier),
+                y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier)
+            )
         }
-        gameInfo.fuelValue.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier))
+        gameInfo.fuelValue.position = CGPoint(
+            x: cameraNode!.position.x + (layoutInfo.screenSize.width / scoreAndTimeXModifier),
+            y: cameraNode!.position.y - (layoutInfo.screenSize.height / fuelYModifier)
+        )
+        gameInfo.lowFuelAlert.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: gameInfo.fuelLabel.position.y + 50
+        )
         
-        gameInfo.wantedLevelLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85))
+        gameInfo.wantedLevelLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + ((layoutInfo.screenSize.height / scoreAndTimeYModifier) * 0.85)
+        )
         
-        gameInfo.tapToStartLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 0.445))
-        gameInfo.instructionsLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 0.2)
+        gameInfo.tapToStartLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y - ((layoutInfo.screenSize.height / startMenuTextYModifier) / 0.445)
+        )
+        gameInfo.instructionsLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 0.2
+        )
         
-        gameInfo.powerupLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 8))
-        gameInfo.powerupHintLabel.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / 6))
+        gameInfo.powerupLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y - (layoutInfo.screenSize.height / 8)
+        )
+        gameInfo.powerupHintLabel.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y - (layoutInfo.screenSize.height / 6)
+        )
         
-//        gameInfo.healthLabel.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier) )
-//        gameInfo.setHealthLabel(value: gameInfo.playerHealth)
-//        // Non-text UI components
-//        gameInfo.healthIndicator.position = CGPoint(x: cameraNode!.position.x + (layoutInfo.screenSize.width / healthXModifier), y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
-//        gameInfo.healthIndicator.alpha = 0.5
+        gameInfo.powerUp.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier)
+        )
         
+        gameInfo.restartButton.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y
+        )
         
-//        gameInfo.speedometer.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
-//        gameInfo.speedometerBG.position = CGPoint(x: cameraNode!.position.x + gameInfo.updateSpeed(speed: speed), y: cameraNode!.position.y - (layoutInfo.screenSize.height / speedometerYModifier))
+        gameInfo.logo.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1.4
+        )
+        gameInfo.instructions.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier)
+        )
         
-        gameInfo.powerUp.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / healthYModifier))
-        
-        gameInfo.restartButton.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
-        
-        gameInfo.logo.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y + (layoutInfo.screenSize.height / startMenuTextYModifier) * 1.4)
-        gameInfo.instructions.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y - (layoutInfo.screenSize.height / startMenuTextYModifier))
-        
-        gameInfo.backgroundNode.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
-//        gameInfo.blurryOverlay.position = CGPoint(x: cameraNode!.position.x, y: cameraNode!.position.y)
+        gameInfo.backgroundNode.position = CGPoint(
+            x: cameraNode!.position.x,
+            y: cameraNode!.position.y
+        )
         
         updatePedCarComponents()
     }

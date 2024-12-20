@@ -81,6 +81,7 @@ class CTGameInfo {
     var instructionsLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var powerupLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var powerupHintLabel = SKLabelNode(fontNamed: "Eating Pasta")
+    var lowFuelAlert = SKLabelNode(fontNamed: "Eating Pasta")
     
     var powerUp = SKSpriteNode()
     
@@ -96,22 +97,7 @@ class CTGameInfo {
     
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0,
-         scoreIncrementAmount: Int = 1,
-         timeLabel: SKLabelNode =           SKLabelNode(fontNamed:      "Eating Pasta"),
-         gameOverLabel: SKLabelNode =       SKLabelNode(fontNamed:      "Eating Pasta"),
-         reverseLabel: SKLabelNode =        SKLabelNode(fontNamed:      "Eating Pasta"),
-         fuelLabel: SKLabelNode =           SKLabelNode(fontNamed:      "Eating Pasta"),
-         wantedLevelLabel: SKLabelNode =    SKLabelNode(fontNamed:      "Star Things"),
-         tapToStartLabel: SKLabelNode =     SKLabelNode(fontNamed:      "Eating Pasta"),
-         instructionsLabel: SKLabelNode =   SKLabelNode(fontNamed:      "Eating Pasta"),
-         powerupLabel: SKLabelNode =        SKLabelNode(fontNamed:      "Eating Pasta"),
-         powerupHintLabel: SKLabelNode =    SKLabelNode(fontNamed:      "Eating Pasta"),
-         logo: SKSpriteNode =               SKSpriteNode(imageNamed:    "chase2dLogo"),
-         instructions: SKSpriteNode =       SKSpriteNode(imageNamed:    "startingInstructions"),
-         fuelValue: SKLabelNode =           SKLabelNode(fontNamed:      "Eating Pasta")
-    )
-    
+    init(score: Int = 0)
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -119,26 +105,12 @@ class CTGameInfo {
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         let zoomValue = 0.35            // This is the camera zoom value
         
-        self.timeLabel = timeLabel
-        self.gameOverLabel = gameOverLabel
-        self.reverseLabel = reverseLabel
-        self.fuelLabel = fuelLabel
-        self.fuelValue = fuelValue
-        self.wantedLevelLabel = wantedLevelLabel
-        self.powerupLabel = powerupLabel
-        self.powerupHintLabel = powerupHintLabel
-        self.tapToStartLabel = tapToStartLabel
-        self.instructionsLabel = instructionsLabel
-        self.logo = logo
-        self.instructions = instructions
-        
-        
         
 //      ###  UI Element Scaling:  ###
         
         timeLabel.setScale(             0.0007 * layoutInfo.screenSize.height)
         gameOverLabel.setScale(         0.0007 * layoutInfo.screenSize.height)
-        reverseLabel.setScale(          0.0002 * layoutInfo.screenSize.height)
+        reverseLabel.setScale(          0.00025 * layoutInfo.screenSize.height)
         fuelLabel.setScale(             0.0004 * layoutInfo.screenSize.height)
         fuelValue.setScale(             0.0004 * layoutInfo.screenSize.height)
         wantedLevelLabel.setScale(      0.0004 * layoutInfo.screenSize.height)
@@ -149,6 +121,7 @@ class CTGameInfo {
         logo.setScale(                  0.00025 * layoutInfo.screenSize.height)
         instructions.setScale(          0.00025 * layoutInfo.screenSize.height)
         restartButton.setScale(         0.001 * layoutInfo.screenSize.height)
+        lowFuelAlert.setScale(          0.0004 * layoutInfo.screenSize.height)
         
         //  Positioning information can be found in CTGameScene.
         
@@ -167,6 +140,7 @@ class CTGameInfo {
         tapToStartLabel.zPosition =     102
         fuelValue.zPosition =           102
         instructionsLabel.zPosition =   102
+        lowFuelAlert.zPosition =        102
         logo.zPosition =                1000
         restartButton.zPosition =       1001
         gameOverLabel.zPosition =       2000
@@ -183,6 +157,7 @@ class CTGameInfo {
         powerupHintLabel.isHidden =     true
         restartButton.isHidden =        true
         backgroundNode.isHidden =       true
+        lowFuelAlert.isHidden =         true
         
         
         
@@ -193,13 +168,15 @@ class CTGameInfo {
         fuelLabel.text =                "Fuel:"
         tapToStartLabel.text =          "Tap to Start!"
         instructionsLabel.text =        "Avoid the Police & Don't Run Out of Fuel!"
+        lowFuelAlert.text =             "!! LOW FUEL !!"
         
         
         
 //      ###  Miscellaneous  ###
         
-        fuelLabel.fontColor = .white
+        fuelLabel.fontColor = .white // I think the default is white, so this may be unnecessary
         instructionsLabel.fontColor = .orange
+        lowFuelAlert.fontColor = .red
         restartButton.yScale = 0.8
         backgroundNode.alpha = 0.5
         
@@ -207,12 +184,25 @@ class CTGameInfo {
         
 //      ###  Stars Animation  ###
         
-        let changeToBlue = SKAction.run { wantedLevelLabel.fontColor = .blue }
-        let changeToRed = SKAction.run { wantedLevelLabel.fontColor = .red }
+        let changeToBlue = SKAction.run { self.wantedLevelLabel.fontColor = .blue }
+        let changeToRed = SKAction.run { self.wantedLevelLabel.fontColor = .red }
         let wait = SKAction.wait(forDuration: 1.0)
         let colorCycle = SKAction.sequence([changeToBlue, wait, changeToRed, wait])
         wantedLevelLabel.run(SKAction.repeatForever(colorCycle))
         
+//      ### Tap to Start Animation ###
+        
+        let startFadeIn = SKAction.fadeIn(withDuration: 0.5)
+        let startFadeOut = SKAction.fadeOut(withDuration: 0.75)
+        let startSeq = SKAction.sequence([startFadeIn, startFadeOut])
+        tapToStartLabel.run(SKAction.repeatForever(startSeq))
+        
+//      ### Low Fuel Alert Animation ###
+        
+        let lowFuelFadeIn = SKAction.fadeIn(withDuration: 0.35)
+        let lowFuelFadeOut = SKAction.fadeOut(withDuration: 0.5)
+        let lowFuelSeq = SKAction.sequence([lowFuelFadeIn, lowFuelFadeOut])
+        lowFuelAlert.run(SKAction.repeatForever(lowFuelSeq))
         
         
         //  Not sure if this necessarily needs to be here...
@@ -230,9 +220,14 @@ class CTGameInfo {
         {
             gameOverLabel.isHidden = false
             backgroundNode.isHidden = false
-            
             return
         }
+        
+        if !gameOver && fuelLevel < 35
+        {
+            lowFuelAlert.isHidden = false
+        }
+        else {lowFuelAlert.isHidden = true}
         
         if isPaused
         {
@@ -294,6 +289,7 @@ class CTGameInfo {
         {
             fuelLevel -= fuelConsumptionRate
         }
+        else {fuelLevel = 0}
     }
     
     func refillFuel(amount: CGFloat)
