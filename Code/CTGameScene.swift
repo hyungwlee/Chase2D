@@ -124,7 +124,7 @@ class CTGameScene: SKScene {
              }
          }
          
-         if let fuelSoundURL = Bundle.main.url(forResource: "fuel_pickup", withExtension: "mp3") {
+         if let fuelSoundURL = Bundle.main.url(forResource: "fuel_pickup1", withExtension: "mp3") {
              do {
                  fuelPickupSound = try AVAudioPlayer(contentsOf: fuelSoundURL)
                  fuelPickupSound?.volume = 0.5
