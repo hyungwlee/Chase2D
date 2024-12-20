@@ -121,147 +121,108 @@ class CTGameInfo {
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
-        
         self.score = score
         self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
-        
-//        self.scoreLabel = scoreLabel
-//        scoreLabel.fontSize = 6
-//        scoreLabel.zPosition = 100
-//        // comment the line below if you want to display score
-//        scoreLabel.isHidden = true
+        let zoomValue = 0.35            // This is the camera zoom value
         
         self.timeLabel = timeLabel
-//        timeLabel.fontSize = 6
-//        timeLabel.fontSize = layoutInfo.screenSize.width / 45
-        timeLabel.setScale(0.7)
-        timeLabel.zPosition = 100
-        
-//        self.healthLabel = healthLabel
-//        healthLabel.fontSize = 8
-//        healthLabel.zPosition = 100
-//        healthLabel.isHidden = true
-        
         self.gameOverLabel = gameOverLabel
-//        gameOverLabel.fontSize = 12
-//        gameOverLabel.fontSize = layoutInfo.screenSize.width / 33
-        gameOverLabel.setScale(0.5)
-        gameOverLabel.zPosition = 2000
-        gameOverLabel.text = "GAME OVER"
-        gameOverLabel.isHidden = true
-        
-//        self.cashLabel = cashLabel
-//        cashLabel.fontSize = 8
-//        cashLabel.zPosition = 100
-        
         self.reverseLabel = reverseLabel
-//        reverseLabel.fontSize = 6
-//        reverseLabel.fontSize = layoutInfo.screenSize.width / 66
-        reverseLabel.setScale(0.2)
-        reverseLabel.zPosition = 90
-        reverseLabel.isHidden = true
-        reverseLabel.text = "Two Fingers to Reverse!"
-        
         self.fuelLabel = fuelLabel
-//        fuelLabel.fontSize = 8
-//        fuelLabel.fontSize = layoutInfo.screenSize.width / 66
-        fuelLabel.setScale(0.4)
-        fuelLabel.zPosition = 102
-        fuelLabel.text = "Fuel:"
-        fuelLabel.fontColor = .white
-        fuelLabel.isHidden = true
-        
         self.fuelValue = fuelValue
-        fuelValue.setScale(0.4)
-        fuelValue.zPosition = 102
-        fuelValue.isHidden = true
-        
         self.wantedLevelLabel = wantedLevelLabel
-//        wantedLevelLabel.fontSize = 10
-//        wantedLevelLabel.fontSize = layoutInfo.screenSize.width / 45
-        wantedLevelLabel.setScale(0.4)
-        wantedLevelLabel.zPosition = 90
+        self.powerupLabel = powerupLabel
+        self.powerupHintLabel = powerupHintLabel
+        self.tapToStartLabel = tapToStartLabel
+        self.instructionsLabel = instructionsLabel
+        self.logo = logo
+        self.instructions = instructions
+        
+        
+        
+//      ###  UI Element Scaling:  ###
+        
+        timeLabel.setScale(             0.0007 * layoutInfo.screenSize.height)
+        gameOverLabel.setScale(         0.0007 * layoutInfo.screenSize.height)
+        reverseLabel.setScale(          0.0002 * layoutInfo.screenSize.height)
+        fuelLabel.setScale(             0.0004 * layoutInfo.screenSize.height)
+        fuelValue.setScale(             0.0004 * layoutInfo.screenSize.height)
+        wantedLevelLabel.setScale(      0.0004 * layoutInfo.screenSize.height)
+        powerupLabel.setScale(          0.00035 * layoutInfo.screenSize.height)
+        powerupHintLabel.setScale(      0.00025 * layoutInfo.screenSize.height)
+        tapToStartLabel.setScale(       0.00025 * layoutInfo.screenSize.height)
+        instructionsLabel.setScale(     0.00015 * layoutInfo.screenSize.height)
+        logo.setScale(                  0.00025 * layoutInfo.screenSize.height)
+        instructions.setScale(          0.00025 * layoutInfo.screenSize.height)
+        restartButton.setScale(         0.001 * layoutInfo.screenSize.height)
+        
+        //  Positioning information can be found in CTGameScene.
+        
+        
+//      ###  UI Element Z position/layers:  ###
+
+        backgroundNode.zPosition =      50
+        reverseLabel.zPosition =        90
+        wantedLevelLabel.zPosition =    90
+        timeLabel.zPosition =           100
+        instructions.zPosition =        100
+        powerupHintLabel.zPosition =    101
+        powerupLabel.zPosition =        101
+        powerUp.zPosition =             101
+        fuelLabel.zPosition =           102
+        tapToStartLabel.zPosition =     102
+        fuelValue.zPosition =           102
+        instructionsLabel.zPosition =   102
+        logo.zPosition =                1000
+        restartButton.zPosition =       1001
+        gameOverLabel.zPosition =       2000
+        
+        
+        
+//      ###  UI Starting Visibility:  ###
+        
+        gameOverLabel.isHidden =        true
+        reverseLabel.isHidden =         true
+        fuelLabel.isHidden =            true
+        fuelValue.isHidden =            true
+        powerupLabel.isHidden =         true
+        powerupHintLabel.isHidden =     true
+        restartButton.isHidden =        true
+        backgroundNode.isHidden =       true
+        
+        
+        
+//      ###  Text Element Values  ###
+        
+        gameOverLabel.text =            "GAME OVER"
+        reverseLabel.text =             "Two Fingers to Reverse!"
+        fuelLabel.text =                "Fuel:"
+        tapToStartLabel.text =          "Tap to Start!"
+        instructionsLabel.text =        "Avoid the Police & Don't Run Out of Fuel!"
+        
+        
+        
+//      ###  Miscellaneous  ###
+        
+        fuelLabel.fontColor = .white
+        instructionsLabel.fontColor = .orange
+        restartButton.yScale = 0.8
+        backgroundNode.alpha = 0.5
+        
+        
+        
+//      ###  Stars Animation  ###
+        
         let changeToBlue = SKAction.run { wantedLevelLabel.fontColor = .blue }
         let changeToRed = SKAction.run { wantedLevelLabel.fontColor = .red }
         let wait = SKAction.wait(forDuration: 1.0)
         let colorCycle = SKAction.sequence([changeToBlue, wait, changeToRed, wait])
         wantedLevelLabel.run(SKAction.repeatForever(colorCycle))
         
-        self.powerupLabel = powerupLabel
-//        powerupLabel.fontSize = 10
-//        powerupLabel.fontSize = layoutInfo.screenSize.width / 33
-        powerupLabel.setScale(0.35)
-        powerupLabel.zPosition = 101
-        powerupLabel.isHidden = true
         
-        self.powerupHintLabel = powerupHintLabel
-//        powerupHintLabel.fontSize = 8
-//        powerupHintLabel.fontSize = layoutInfo.screenSize.width / 66
-        powerupHintLabel.setScale(0.2)
-        powerupHintLabel.zPosition = 101
-        powerupHintLabel.isHidden = true
-//        powerupHintLabel.text = "Tap the screen to activate!"
         
-        // This is the camera zoom value
-        let zoomValue = 0.35
-        
-//        healthIndicator.size = CGSize(width: (layoutInfo.screenSize.width / 8) * zoomValue, height: (layoutInfo.screenSize.height / 7) * zoomValue)
-//        healthIndicator.zPosition = 90
-//        healthIndicator.isHidden = true
-//        
-//        speedometer.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
-//        speedometer.zPosition = 100
-//        speedometer.isHidden = true
-//        
-//        speedometerBG.size = CGSize(width: layoutInfo.screenSize.width * zoomValue, height: (layoutInfo.screenSize.height / 8) * zoomValue)
-//        speedometerBG.zPosition = 95
-//        speedometerBG.isHidden = true
-        
+        //  Not sure if this necessarily needs to be here...
         powerUp.size = CGSize(width: (layoutInfo.screenSize.height / 10) * zoomValue, height: (layoutInfo.screenSize.height / 10) * zoomValue)
-        powerUp.zPosition = 101
-        
-        self.tapToStartLabel = tapToStartLabel
-//        tapToStartLabel.fontSize = 8
-//        tapToStartLabel.fontSize = layoutInfo.screenSize.width / 45
-        tapToStartLabel.setScale(0.25)
-        tapToStartLabel.zPosition = 102
-        tapToStartLabel.text = "Tap to Start!"
-        
-        self.instructionsLabel = instructionsLabel
-//        instructionsLabel.fontSize = 6
-//        instructionsLabel.fontSize = layoutInfo.screenSize.width / 100
-        instructionsLabel.setScale(0.115)
-        instructionsLabel.zPosition = 102
-        instructionsLabel.text = "Avoid the Police & Don't Run Out of Fuel!"
-        instructionsLabel.fontColor = .orange
-        
-        self.logo = logo
-        logo.size = CGSize(width: layoutInfo.screenSize.width / 5, height: layoutInfo.screenSize.height / 10)
-        logo.zPosition = 1000
-        
-        self.instructions = instructions
-        let instructionsWidth = layoutInfo.screenSize.width * 0.16
-        instructions.zPosition = 100
-        instructions.size = CGSize(width: instructionsWidth, height: instructionsWidth)
-        
-        restartButton.zPosition = 1001
-        restartButton.yScale = 0.8
-        restartButton.setScale(0.75)
-//        restart.onTap = {
-////            print("restart button pressed")
-//            readyToRestart = true
-//        }
-        restartButton.isHidden = true
-        
-        
-//        blurryOverlay.shouldEnableEffects = false
-//        blurFilter?.setValue(10.0, forKey: kCIInputRadiusKey) // Adjust blur intensity
-//        blurryOverlay.filter = blurFilter
-        
-        
-        backgroundNode.zPosition = 50
-        backgroundNode.alpha = 0.5
-        backgroundNode.isHidden = true
     }
     
     func setGameOver()
