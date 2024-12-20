@@ -16,14 +16,12 @@ class CTGameInfo {
     var playerHealth:CGFloat = 300
     let playerStartingHealth: CGFloat
     var playerSpeed:CGFloat = 810
-//    var playerForwardSpeed: CGFloat = 0
     
     var fuelConsumptionRate = 0.085
     
     var pedSpeed:CGFloat = 500
     var copCarSpeed:CGFloat = 810
     var copSpeed:CGFloat = 20
-    
     
     var numberOfCops = 0
     var numberOfPeds = 0
@@ -36,19 +34,11 @@ class CTGameInfo {
     let MAX_PLAYABLE_SIZE = 1500.0
     let COP_SPAWN_RADIUS = 150.0
     let PICKUP_SPAWN_RADIUS = 400.0
-//    let PICKUP_SPAWN_RADIUS = 50.0 //debug
     
     let FIRST_WAVE_TIME     = 20.0
     let SECOND_WAVE_TIME    = 40.0
     let THIRD_WAVE_TIME     = 90.0
     let FOURTH_WAVE_TIME    = 300.0
-//
-    
-    // debug values
-//    let FIRST_WAVE_TIME     = 5.0
-//    let SECOND_WAVE_TIME    = 5.0
-//    let THIRD_WAVE_TIME     = 5.0
-//    let FOURTH_WAVE_TIME    = 5.0
     
     var currentWave = 0
     
@@ -81,11 +71,8 @@ class CTGameInfo {
     var seconds = 0.0
     var pastValue = ProcessInfo.processInfo.systemUptime
     
-//    var scoreLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var timeLabel = SKLabelNode(fontNamed: "Eating Pasta")
-//    var healthLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var gameOverLabel = SKLabelNode(fontNamed: "Eating Pasta")
-//    var cashLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var reverseLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var fuelLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var fuelValue = SKLabelNode(fontNamed: "Eating Pasta")
@@ -95,9 +82,6 @@ class CTGameInfo {
     var powerupLabel = SKLabelNode(fontNamed: "Eating Pasta")
     var powerupHintLabel = SKLabelNode(fontNamed: "Eating Pasta")
     
-//    var healthIndicator = SKSpriteNode(imageNamed: "player100")
-//    var speedometer = SKSpriteNode(imageNamed: "speedometer")
-//    var speedometerBG = SKSpriteNode(imageNamed: "speedometerBG")
     var powerUp = SKSpriteNode()
     
     var logo = SKSpriteNode(imageNamed: "chase2dLogo")
@@ -110,14 +94,24 @@ class CTGameInfo {
     var readyToRestart = false
     var pressedPlay = false
     
-//    let blurryOverlay = SKEffectNode()
-//    let blurFilter = CIFilter(name: "CIGaussianBlur")
-    
-//    let speedoSize = 0.31
-    
     let layoutInfo: CTLayoutInfo
     
-    init(score: Int = 0, scoreIncrementAmount: Int = 1, /*scoreLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ timeLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*healthLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ gameOverLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), /*cashLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"),*/ reverseLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), fuelLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), wantedLevelLabel: SKLabelNode = SKLabelNode(fontNamed: "Star Things"), tapToStartLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), instructionsLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), powerupHintLabel: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"), logo: SKSpriteNode = SKSpriteNode(imageNamed: "chase2dLogo"), instructions: SKSpriteNode = SKSpriteNode(imageNamed: "startingInstructions"), fuelValue: SKLabelNode = SKLabelNode(fontNamed: "Eating Pasta"))
+    init(score: Int = 0,
+         scoreIncrementAmount: Int = 1,
+         timeLabel: SKLabelNode =           SKLabelNode(fontNamed:      "Eating Pasta"),
+         gameOverLabel: SKLabelNode =       SKLabelNode(fontNamed:      "Eating Pasta"),
+         reverseLabel: SKLabelNode =        SKLabelNode(fontNamed:      "Eating Pasta"),
+         fuelLabel: SKLabelNode =           SKLabelNode(fontNamed:      "Eating Pasta"),
+         wantedLevelLabel: SKLabelNode =    SKLabelNode(fontNamed:      "Star Things"),
+         tapToStartLabel: SKLabelNode =     SKLabelNode(fontNamed:      "Eating Pasta"),
+         instructionsLabel: SKLabelNode =   SKLabelNode(fontNamed:      "Eating Pasta"),
+         powerupLabel: SKLabelNode =        SKLabelNode(fontNamed:      "Eating Pasta"),
+         powerupHintLabel: SKLabelNode =    SKLabelNode(fontNamed:      "Eating Pasta"),
+         logo: SKSpriteNode =               SKSpriteNode(imageNamed:    "chase2dLogo"),
+         instructions: SKSpriteNode =       SKSpriteNode(imageNamed:    "startingInstructions"),
+         fuelValue: SKLabelNode =           SKLabelNode(fontNamed:      "Eating Pasta")
+    )
+    
     {
         readyToRestart = false
         playerStartingHealth = playerHealth
@@ -228,14 +222,7 @@ class CTGameInfo {
     func setGameOver()
     {
         gameOver = true
-        
-//        blurryOverlay.shouldEnableEffects = true
     }
-    
-//    func setHealthLabel(value : Double)
-//    {
-//        healthLabel.text = "Health: " + String(Int(value))
-//    }
     
     func updateScore(phoneRuntime: TimeInterval)
     {
@@ -282,47 +269,7 @@ class CTGameInfo {
         }
         
         timeLabel.text = String(Int(seconds))
-//        scoreLabel.text = "Score: " + String(score)
-//        cashLabel.text = "Cash: " + String(cashCollected) + "/3"
-//        cashLabel.isHidden = true
-        
-//        let cleanSeconds = Int(Double(String(format: "%.2f", seconds))! * 100)
-//        if ((cleanSeconds % Int(scoreChangeFrequency * 100)) == 0)
-//        {
-//            score += SCORE_INCREMENT_AMOUNT
-//        }
-//        
-//        if (((Int(seconds) % FREQUENCY_CHANGE_THRESHHOLD) == 0) && scoreChangeFrequency >= 0.2)
-//        {
-//            scoreChangeFrequency -= 0.1
-//        }
-        
-//        updateHealthUI()
     }
-    
-//    func updateHealthUI()
-//    {
-//        if (playerHealth > playerStartingHealth * 0.75)
-//        {
-//            healthIndicator.texture = SKTexture(imageNamed: "player100")
-//        }
-//        else if (playerHealth > playerStartingHealth * 0.5)
-//        {
-//            healthIndicator.texture = SKTexture(imageNamed: "player75")
-//        }
-//        else if (playerHealth > playerStartingHealth * 0.25)
-//        {
-//            healthIndicator.texture = SKTexture(imageNamed: "player50")
-//        }
-//        else if (playerHealth > 0)
-//        {
-//            healthIndicator.texture = SKTexture(imageNamed: "player25")
-//        }
-//        else
-//        {
-//            healthIndicator.isHidden = true
-//        }
-//    }
     
     func updateSpeed(speed: CGFloat) -> CGFloat
     {
@@ -335,16 +282,6 @@ class CTGameInfo {
     {
         isPaused = val
     }
-    
-//    mutating func increasePlayerHealth(amount: CGFloat)
-//    {
-//        playerHealth += amount
-//    }
-//    
-//    mutating func decreasePlayerHealth(amount: CGFloat)
-//    {
-////        playerHealth -= amount
-//    }
     
     func setReverseIsHiddenVisibility(val: Bool)
     {
@@ -415,7 +352,6 @@ class CTGameInfo {
     
     
      func reset() {
-        
         gameOver = false
         isPaused = true
         seconds = 0
@@ -439,8 +375,6 @@ class CTGameInfo {
         pastValue = ProcessInfo.processInfo.systemUptime
         scoreChangeFrequency = 1.0
         bulletShootInterval = 1
-        
-//        blurryOverlay.shouldEnableEffects = false
         
         gameOverLabel.isHidden = true
         restartButton.isHidden = true
