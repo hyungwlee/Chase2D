@@ -12,13 +12,28 @@ class CTGameContext: GameContext{
         scene as? CTGameScene
     }
     let gameMode: GameModeType
-    var layoutInfo: CTLayoutInfo = .init(screenSize: .zero)
+    var gameInfo: CTGameInfo
+    var layoutInfo: CTLayoutInfo
     
     private(set) var stateMachine: GKStateMachine?
     
     init(dependencies: Dependencies, gameMode: GameModeType) {
         self.gameMode = gameMode
+        self.gameInfo = CTGameInfo()
+        self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         super.init(dependencies: dependencies)
+        
+        // Load the scene from the .sks file
+        if let scene = SKScene(fileNamed: "CTGameScene") as? CTGameScene {
+            scene.setContext(self) // Set the context
+            scene.size = UIScreen.main.bounds.size
+            self.scene = scene
+        } else {
+            fatalError("Failed to load CTGameScene from CTGameScene.sks")
+        }
+        
+        configureStates()
+        stateMachine?.enter(CTStartMenuState.self)
     }
         
     func updateLayoutInfo(withScreenSize size: CGSize){
@@ -58,6 +73,15 @@ class CTGameContext: GameContext{
         gameScene.disableAllPowerup()
         
     }
+    
+//    func play()
+//    {
+//        context.stateMachine?.enter(CTGamePlayState.self)
+//    }
+//    func pause()
+//    {
+//        context.stateMachine?.enter(CTGameIdleState.self)
+//    }
 }
 
 

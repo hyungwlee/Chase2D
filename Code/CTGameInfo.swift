@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 import GameplayKit
 
-struct CTGameInfo {
+class CTGameInfo {
     var gameOver = false
     var isPaused = true
     
@@ -264,7 +264,7 @@ struct CTGameInfo {
         backgroundNode.isHidden = true
     }
     
-    mutating func setGameOver()
+    func setGameOver()
     {
         gameOver = true
         
@@ -276,7 +276,7 @@ struct CTGameInfo {
 //        healthLabel.text = "Health: " + String(Int(value))
 //    }
     
-    mutating func updateScore(phoneRuntime: TimeInterval)
+    func updateScore(phoneRuntime: TimeInterval)
     {
         if gameOver
         {
@@ -370,7 +370,7 @@ struct CTGameInfo {
         return (layoutInfo.screenSize.width * percentage - offset)
     }
     
-    mutating func setIsPaused(val: Bool)
+    func setIsPaused(val: Bool)
     {
         isPaused = val
     }
@@ -385,12 +385,12 @@ struct CTGameInfo {
 ////        playerHealth -= amount
 //    }
     
-    mutating func setReverseIsHiddenVisibility(val: Bool)
+    func setReverseIsHiddenVisibility(val: Bool)
     {
         reverseLabel.isHidden = val
     }
     
-    mutating func consumeFuel()
+    func consumeFuel()
     {
         if !gameOver
         {
@@ -398,7 +398,7 @@ struct CTGameInfo {
         }
     }
     
-    mutating func refillFuel(amount: CGFloat)
+    func refillFuel(amount: CGFloat)
     {
         if ((fuelLevel + amount) < 100.0)
         {
@@ -410,7 +410,7 @@ struct CTGameInfo {
         }
     }
     
-    mutating func updateFuelUI()
+    func updateFuelUI()
     {
         if (fuelLevel > 75)
         {
@@ -446,14 +446,14 @@ struct CTGameInfo {
         }
     }
     
-    mutating func arrestMade()
+    func arrestMade()
     {
         gameOver = true
         gameOverLabel.text = "Arrested"
     }
     
     
-    mutating func reset() {
+     func reset() {
         
         gameOver = false
         isPaused = true

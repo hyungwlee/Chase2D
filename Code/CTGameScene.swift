@@ -10,7 +10,9 @@ import AVFoundation
 import UIKit
 
 class CTGameScene: SKScene {
-    weak var context: CTGameContext?
+    unowned var context: CTGameContext!
+    var gameInfo: CTGameInfo { return context.gameInfo }
+    var layoutInfo: CTLayoutInfo { return context.layoutInfo }
     
     var bgMusicPlayer: AVAudioPlayer?
     let outlineShader = SKShader(fileNamed: "outlineShader.fsh")
@@ -24,8 +26,7 @@ class CTGameScene: SKScene {
     var copTruckEntities: [CTCopTruckEntity] = []
     var copTankEntities: [CTCopTankEntity] = []
     var cameraNode: SKCameraNode?
-    var gameInfo: CTGameInfo
-    var layoutInfo: CTLayoutInfo
+
     var playerSpeed: CGFloat = 0.0
     
     var powerupPickupSound: AVAudioPlayer?
@@ -37,12 +38,16 @@ class CTGameScene: SKScene {
     var gameHasNotStarted = true
     
     
-    
-    
     required init?(coder aDecoder: NSCoder) {
-        self.gameInfo = CTGameInfo()
-        self.layoutInfo = CTLayoutInfo(screenSize: UIScreen.main.bounds.size)
         super.init(coder: aDecoder)
+    }
+    
+    func setContext(_ context: CTGameContext) {
+        self.context = context
+    }
+    
+    override func didMove(to view: SKView) {
+        
         self.view?.isMultipleTouchEnabled = true
 //        self.addChild(gameInfo.scoreLabel)
         self.addChild(gameInfo.timeLabel)
@@ -72,7 +77,7 @@ class CTGameScene: SKScene {
 //            SKUniform(name: "outlineColor", vectorFloat4: SIMD4<Float>(0, 0, 0, 1))
 //        ]
         
-        context?.stateMachine?.enter(CTStartMenuState.self)
+        context.stateMachine?.enter(CTStartMenuState.self)
         
         // emitter lag spike fix
         if let emitter = SKEmitterNode(fileNamed: "CTCarSmoke") {
@@ -97,15 +102,6 @@ class CTGameScene: SKScene {
             emitter.removeFromParent()
         }
         
-        
-        
-        
-    }
-    
-    override func didMove(to view: SKView) {
-        guard let context else {
-            return
-        }
         
         
         if let musicURL = Bundle.main.url(forResource: "track1", withExtension: "mp3") {
@@ -164,7 +160,7 @@ class CTGameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval)
     {
-        context?.stateMachine?.update(deltaTime: currentTime)
+        context.stateMachine?.update(deltaTime: currentTime)
         
         if (gameInfo.fuelLevel < 20) && (gameInfo.fuelLevel > 5) {
             lowFuelAlertSound?.play()
@@ -282,19 +278,12 @@ class CTGameScene: SKScene {
     }
     func prepareGameContext(){
         
-        guard let context else {
-            return
-        }
-        
         context.scene = scene
         context.updateLayoutInfo(withScreenSize: size)
         context.configureStates()
     }
     
     func prepareStartNodes() {
-        guard let context else {
-            return
-        }
         
         // set player car from scene
 //        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
@@ -339,13 +328,13 @@ class CTGameScene: SKScene {
         let activeTouches = event?.allTouches?.filter { $0.phase == .began || $0.phase == .stationary }
         
         // Start State Touch
-        if let state = context?.stateMachine?.currentState as? CTStartMenuState {
+        if let state = context.stateMachine?.currentState as? CTStartMenuState {
 //            state.handleTouchStart(touches)
             state.handleTouchStart(activeTouches ?? touches)
         }
         
         // Play State Touch
-        if let state = context?.stateMachine?.currentState as? CTGamePlayState {
+        if let state = context.stateMachine?.currentState as? CTGamePlayState {
 //            state.handleTouchStart(touches)
             state.handleTouchStart(activeTouches ?? touches)
         }
@@ -357,7 +346,7 @@ class CTGameScene: SKScene {
     // only for testing purpose
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first, let state = context?.stateMachine?.currentState as? CTGamePlayState else {
+        guard let touch = touches.first, let state = context.stateMachine?.currentState as? CTGamePlayState else {
             return
         }
         state.handleTouchEnded(touch)
