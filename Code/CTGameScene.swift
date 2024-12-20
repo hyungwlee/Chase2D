@@ -387,8 +387,8 @@ extension CTGameScene: SKPhysicsContactDelegate {
                 powerupPickupSound?.play()
                 
                 if gameInfo.cashCollected == 1 {
-//                    activatePowerUp()
-                    giveShootingAbility()
+                    activatePowerUp()
+//                    giveShootingAbility()
                     gameInfo.cashCollected = 0
                 }
                 
