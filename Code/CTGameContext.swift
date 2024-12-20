@@ -72,6 +72,10 @@ class CTGameContext: GameContext{
         gameScene.destroyCops(gameRestart: true)
         gameScene.disableAllPowerup()
         
+
+        gameScene.bgMusicPlayer?.currentTime = 0
+        gameScene.bgMusicPlayer?.play()
+        
     }
     
 //    func play()

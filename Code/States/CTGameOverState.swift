@@ -6,11 +6,14 @@
 //
 
 import GameplayKit
+import AVFAudio
 
 class CTGameOverState: GKState {
     
     let context: CTGameContext
     let scene: CTGameScene
+    
+    var gameOverSound: AVAudioPlayer?
     
     var gamePlayState: CTGamePlayState?
     
@@ -31,6 +34,17 @@ class CTGameOverState: GKState {
         scene.gameInfo.restartButton.isHidden = false
         scene.gameInfo.restartButton.tapped = false
         
+        scene.bgMusicPlayer?.stop()
+        if let gameOverURL = Bundle.main.url(forResource: "gameOver", withExtension: "mp3") {
+            do {
+                gameOverSound = try AVAudioPlayer(contentsOf: gameOverURL)
+                gameOverSound?.volume = 0.4
+                gameOverSound?.play()
+            } catch {
+                print("Error loading gameOver sound: \(error)")
+            }
+        }
+        
         scene.speed = 0.01
 
     }
@@ -47,6 +61,7 @@ class CTGameOverState: GKState {
     func handlePlayerDeath(){
         
         scene.gameInfo.setGameOver()
+
         
         if let drivingComponent = scene.playerCarEntity?.component(ofType: CTDrivingComponent.self){
             drivingComponent.drive(driveDir: .none)

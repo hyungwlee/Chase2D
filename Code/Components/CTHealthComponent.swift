@@ -28,7 +28,7 @@ class CTHealthComponent: GKComponent {
         // have a more drastic death effect later
         
         let fadeOut = SKAction.fadeOut(withDuration: 0.1)
-        let scale = SKAction.scale(by: 1.3, duration: 0.1)
+        let scale = SKAction.scale(by: 1.1, duration: 0.1)
         
         self.car.run(scale)
         self.car.run(fadeOut){
@@ -41,7 +41,7 @@ class CTHealthComponent: GKComponent {
         playExplosionSound()
         if let explosion = SKEmitterNode(fileNamed: "CTCarExplosion") {
             explosion.position = car.position
-            explosion.particleSize = CGSize(width: 100.0, height: 100.0)
+            explosion.particleSize = CGSize(width: 70.0, height: 70.0)
             gameScene.addChild(explosion)
 
             // Remove the emitter after 3 seconds
