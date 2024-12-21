@@ -13,8 +13,11 @@ class CTPlayerCarEntity: GKEntity {
     var gameInfo: CTGameInfo?
     weak var gameScene: CTGameScene?
     
+    let drivingComponent: CTDrivingComponent
+    
     init(carNode: CTCarNode) {
         self.carNode = carNode
+        self.drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
         super.init()
     }
     
@@ -22,7 +25,7 @@ class CTPlayerCarEntity: GKEntity {
         
         guard let gameScene else { return }
         
-        let drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
+//        let drivingComponent = CTDrivingComponent(carNode: carNode, enableSmoke: true)
         drivingComponent.MOVE_FORCE = gameInfo?.playerSpeed ?? 1300
         drivingComponent.enableEngineSound = true
         

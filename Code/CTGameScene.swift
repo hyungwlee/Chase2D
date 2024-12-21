@@ -157,6 +157,11 @@ class CTGameScene: SKScene {
     {
         context.stateMachine?.update(deltaTime: currentTime)
         
+        if gameInfo.gameOver
+        {
+            playerCarEntity?.drivingComponent.stopSounds()
+        }
+        
         if (gameInfo.fuelLevel < 20) && (gameInfo.fuelLevel > 5) {
             lowFuelAlertSound?.play()
         }

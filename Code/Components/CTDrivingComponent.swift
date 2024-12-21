@@ -101,11 +101,6 @@ class CTDrivingComponent: GKComponent {
             soundSetup = true
         }
              
-        if carNode.speed < 10
-        {
-            enginePlayer?.stop()
-            driftPlayer?.stop()
-        }
        
 //        if enableSmoke {
 //            smokeParticle.particleSystemUpdate()
@@ -163,6 +158,12 @@ class CTDrivingComponent: GKComponent {
         } else {
             print("Engine drift sound file not found.")
         }
+    }
+    
+    func stopSounds()
+    {
+        enginePlayer?.stop()
+        driftPlayer?.stop()
     }
     
     func reduceLateralVelocity() {
