@@ -80,7 +80,7 @@ class CTPedAINode: SKNode{
             previousPosition = targetPoint
 
             // Create actions for rotation and movement
-            let rotateAction = SKAction.rotate(toAngle: targetAngle - .pi / 2.0, duration: 0.3, shortestUnitArc: true)
+            let rotateAction = SKAction.rotate(toAngle: targetAngle - .pi / 2.0, duration: 0.2, shortestUnitArc: true)
             let moveAction = SKAction.move(to: targetPoint, duration: 0.01 * distance)
             let groupAction = SKAction.group([rotateAction, moveAction])
 
