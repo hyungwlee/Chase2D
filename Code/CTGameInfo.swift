@@ -123,7 +123,7 @@ class CTGameInfo {
         instructions.setScale(          0.0002 * layoutInfo.screenSize.height)
         restartButton.setScale(         0.001 * layoutInfo.screenSize.height)
         lowFuelAlert.setScale(          0.0004 * layoutInfo.screenSize.height)
-        starDupe.setScale(      0.0005 * layoutInfo.screenSize.height) // Original is 0.0004
+        starDupe.setScale(              0.0005 * layoutInfo.screenSize.height) // Original is 0.0004
         
         
         //  Positioning information can be found in CTGameScene.
@@ -340,6 +340,7 @@ class CTGameInfo {
         {
             fuelValue.isHidden = true
             fuelLabel.text = "Out of Fuel"
+            fuelLabel.fontColor = .red
             
             arrestMade()
         }
@@ -395,5 +396,6 @@ class CTGameInfo {
         backgroundNode.isHidden = true
         
         fuelLabel.text = "Fuel:"
+        fuelLabel.fontColor = .white
     }
 }
