@@ -22,6 +22,7 @@ class CTPedCarNode: SKSpriteNode, DriveableNode {
             physicsBody = SKPhysicsBody(rectangleOf: self.size)
         }
         physicsBody?.isDynamic = true
+        physicsBody?.allowsRotation = false
         physicsBody?.affectedByGravity = false
         physicsBody?.mass = 50 // Adjust for realistic movement
         physicsBody?.friction = 0

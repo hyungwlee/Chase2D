@@ -328,9 +328,9 @@ class CTGameScene: SKScene {
 //        let playerCarNode = CTCarNode(imageNamed: "red", size: (context.layoutInfo.playerCarSize) )
       
         // spawns ped cars
-        pedCarSpawner = self.childNode(withName: "PedAI") as? CTPedAINode
+        pedCarSpawner = CTPedAINode()
         pedCarSpawner?.context = context
-        pedCarSpawner?.populateAI()
+        pedCarSpawner?.setupPedestrianCars()
         
         // spawns cop cars
         copCarSpawner = self.childNode(withName: "CopAI") as? CTCopAINode
