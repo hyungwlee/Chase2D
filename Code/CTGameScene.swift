@@ -668,19 +668,14 @@ extension CTGameScene{
         //TODO: on click:
         
         if let playerCarEntity {
-            if let drivingComponent = playerCarEntity.component(ofType: CTDrivingComponent.self){
-                drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE * 1.5
-            }
+            gameInfo.playerSpeed = gameInfo.playerSpeed * 1.5
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0)
         {
             self.hidePowerupUI()
-            if let playerCarEntity = self.playerCarEntity {
-                if let drivingComponent = playerCarEntity.component(ofType: CTDrivingComponent.self){
-                    drivingComponent.MOVE_FORCE = drivingComponent.MOVE_FORCE / 1.5
-                }
-            }
+            
+            self.gameInfo.playerSpeed = self.gameInfo.playerSpeed / 1.5
         }
     }
     
