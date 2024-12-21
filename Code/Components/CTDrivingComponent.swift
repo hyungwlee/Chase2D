@@ -132,7 +132,7 @@ class CTDrivingComponent: GKComponent {
     
     func playEngineSound() {
         // Load the engine running sound from the main bundle
-        if let url = Bundle.main.url(forResource: "engine_running", withExtension: "mp3") {
+        if let url = Bundle.main.url(forResource: "CT_engine_running", withExtension: "mp3") {
             do {
                 enginePlayer = try AVAudioPlayer(contentsOf: url)
                 enginePlayer?.numberOfLoops = -1 // Loop indefinitely
@@ -148,7 +148,7 @@ class CTDrivingComponent: GKComponent {
     
     func playDriftSound() {
         // Load the engine running sound from the main bundle
-        if let url = Bundle.main.url(forResource: "drift", withExtension: "mp3") {
+        if let url = Bundle.main.url(forResource: "CT_drift", withExtension: "mp3") {
             do {
                 driftPlayer = try AVAudioPlayer(contentsOf: url)
                 driftPlayer?.volume = 0.25 // Set constant volume

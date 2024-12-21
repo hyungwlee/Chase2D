@@ -10,7 +10,7 @@ import SpriteKit
 class CTPedAINode: SKNode{
     
     weak var context: CTGameContext?
-    let spriteArray = ["pedCar1", "pedCar2", "pedCar3", "pedTruck1", "pedTruck2"]
+    let spriteArray = ["CTpedCar1", "CTpedCar2", "CTpedCar3", "CTpedTruck1", "CTpedTruck2"]
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

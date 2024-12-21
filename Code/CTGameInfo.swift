@@ -71,23 +71,23 @@ class CTGameInfo {
     var seconds = 0.0
     var pastValue = ProcessInfo.processInfo.systemUptime
     
-    var timeLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var gameOverLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var reverseLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var fuelLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var fuelValue = SKLabelNode(fontNamed: "Eating Pasta")
-    var wantedLevelLabel = SKLabelNode(fontNamed: "Star Things")
-    var tapToStartLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var instructionsLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var powerupLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var powerupHintLabel = SKLabelNode(fontNamed: "Eating Pasta")
-    var lowFuelAlert = SKLabelNode(fontNamed: "Eating Pasta")
-    let starDupe = SKLabelNode(fontNamed: "Star Things")
+    var timeLabel = SKLabelNode(fontNamed:          "Eating Pasta")
+    var gameOverLabel = SKLabelNode(fontNamed:      "Eating Pasta")
+    var reverseLabel = SKLabelNode(fontNamed:       "Eating Pasta")
+    var fuelLabel = SKLabelNode(fontNamed:          "Eating Pasta")
+    var fuelValue = SKLabelNode(fontNamed:          "Eating Pasta")
+    var wantedLevelLabel = SKLabelNode(fontNamed:   "Star Things")
+    var tapToStartLabel = SKLabelNode(fontNamed:    "Eating Pasta")
+    var instructionsLabel = SKLabelNode(fontNamed:  "Eating Pasta")
+    var powerupLabel = SKLabelNode(fontNamed:       "Eating Pasta")
+    var powerupHintLabel = SKLabelNode(fontNamed:   "Eating Pasta")
+    var lowFuelAlert = SKLabelNode(fontNamed:       "Eating Pasta")
+    let starDupe = SKLabelNode(fontNamed:           "Star Things")
     
     var powerUp = SKSpriteNode()
     
-    var logo = SKSpriteNode(imageNamed: "chase2dLogo")
-    var instructions = SKSpriteNode(imageNamed: "startingInstructions")
+    var logo = SKSpriteNode(imageNamed: "CTchase2dLogo")
+    var instructions = SKSpriteNode(imageNamed: "CTstartingInstructions")
     
     let restartButton = CTRestartButtonNode(text: "Restart", size: CGSize(width: 50, height: 25), backgroundColor: UIColor(red: 0.95, green: 0.3, blue: 0.2, alpha: 1.0))
     

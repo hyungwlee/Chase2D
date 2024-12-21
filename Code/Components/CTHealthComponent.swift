@@ -57,7 +57,7 @@ class CTHealthComponent: GKComponent {
     
     func playExplosionSound() {
         // Load the explosion sound
-        if let explosionSoundURL = Bundle.main.url(forResource: "explosion", withExtension: "mp3") {
+        if let explosionSoundURL = Bundle.main.url(forResource: "CT_explosion", withExtension: "mp3") {
             do {
                 explosionSound = try AVAudioPlayer(contentsOf: explosionSoundURL)
                 explosionSound?.play()

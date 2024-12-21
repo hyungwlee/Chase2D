@@ -15,7 +15,6 @@ class CTGameScene: SKScene {
     var layoutInfo: CTLayoutInfo { return context.layoutInfo }
     
     var bgMusicPlayer: AVAudioPlayer?
-    let outlineShader = SKShader(fileNamed: "outlineShader.fsh")
     
     var playerCarEntity: CTPlayerCarEntity?
     var pedCarSpawner: CTPedAINode?
@@ -73,11 +72,6 @@ class CTGameScene: SKScene {
         self.addChild(gameInfo.lowFuelAlert)
         self.addChild(gameInfo.starDupe)
         
-//        outlineShader.uniforms = [
-//            SKUniform(name: "outlineWidth", float: 0.02),
-//            SKUniform(name: "outlineColor", vectorFloat4: SIMD4<Float>(0, 0, 0, 1))
-//        ]
-        
         context.stateMachine?.enter(CTStartMenuState.self)
         
         // emitter lag spike fix
@@ -105,7 +99,7 @@ class CTGameScene: SKScene {
         
         
         
-        if let musicURL = Bundle.main.url(forResource: "track1", withExtension: "mp3") {
+        if let musicURL = Bundle.main.url(forResource: "CT_track1", withExtension: "mp3") {
             do {
                 bgMusicPlayer = try AVAudioPlayer(contentsOf: musicURL)
                 bgMusicPlayer?.volume = 0.4
@@ -116,7 +110,7 @@ class CTGameScene: SKScene {
             }
         }
         
-        if let powerupSoundURL = Bundle.main.url(forResource: "powerup_pickup", withExtension: "mp3") {
+        if let powerupSoundURL = Bundle.main.url(forResource: "CT_powerup_pickup", withExtension: "mp3") {
              do {
                  powerupPickupSound = try AVAudioPlayer(contentsOf: powerupSoundURL)
                  powerupPickupSound?.volume = 0.5
@@ -125,7 +119,7 @@ class CTGameScene: SKScene {
              }
          }
          
-         if let fuelSoundURL = Bundle.main.url(forResource: "fuel_pickup1", withExtension: "mp3") {
+         if let fuelSoundURL = Bundle.main.url(forResource: "CT_fuel_pickup1", withExtension: "mp3") {
              do {
                  fuelPickupSound = try AVAudioPlayer(contentsOf: fuelSoundURL)
                  fuelPickupSound?.volume = 0.5
@@ -133,7 +127,7 @@ class CTGameScene: SKScene {
                  print("Error loading fuel pickup sound: \(error)")
              }
          }
-        if let lowFuelSoundURL = Bundle.main.url(forResource: "low_fuel", withExtension: "mp3") {
+        if let lowFuelSoundURL = Bundle.main.url(forResource: "CT_low_fuel", withExtension: "mp3") {
             do {
                 lowFuelAlertSound = try AVAudioPlayer(contentsOf: lowFuelSoundURL)
                 lowFuelAlertSound?.volume = 0.25
@@ -597,7 +591,7 @@ extension CTGameScene{
     func destroyCops(gameRestart: Bool) {
         if !gameRestart
         {
-            gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+            gameInfo.powerUp.texture = SKTexture(imageNamed: "CTdamageBoost")
             changePowerupUIText(pUpLabel: "Destroy Nearby Cops", pUpHintText: "Powerup applied automatically.")
         }
         
@@ -667,7 +661,7 @@ extension CTGameScene{
     
     func increaseSpeed() {
         print("increase Speed")
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "speedBoost")
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "CTspeedBoost")
         
         changePowerupUIText(pUpLabel: "Speed Boost", pUpHintText: "Powerup applied automatically.")
         
@@ -704,7 +698,7 @@ extension CTGameScene{
     }
     
     func giveShootingAbility() {
-        gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+        gameInfo.powerUp.texture = SKTexture(imageNamed: "CTdamageBoost")
         
         changePowerupUIText(pUpLabel: "Shooting", pUpHintText: "Powerup applied automatically.")
         
@@ -726,7 +720,7 @@ extension CTGameScene{
     
     func giveMachineGun() {
         if ((playerCarEntity?.component(ofType: CTShootingComponent.self)) != nil) {
-            gameInfo.powerUp.texture = SKTexture(imageNamed: "damageBoost")
+            gameInfo.powerUp.texture = SKTexture(imageNamed: "CTdamageBoost")
             changePowerupUIText(pUpLabel: "Machine Gun", pUpHintText: "Powerup applied automatically.")
             
             gameInfo.gunShootInterval = 4_000_000

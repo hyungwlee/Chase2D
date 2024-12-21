@@ -35,7 +35,7 @@ class CTGameOverState: GKState {
         scene.gameInfo.restartButton.tapped = false
         
         scene.bgMusicPlayer?.stop()
-        if let gameOverURL = Bundle.main.url(forResource: "gameOver", withExtension: "mp3") {
+        if let gameOverURL = Bundle.main.url(forResource: "CT_gameOver", withExtension: "mp3") {
             do {
                 gameOverSound = try AVAudioPlayer(contentsOf: gameOverURL)
                 gameOverSound?.volume = 0.4

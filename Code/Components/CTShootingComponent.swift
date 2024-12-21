@@ -34,9 +34,9 @@ class CTShootingComponent: GKComponent {
         flameParticle?.particleSize = CGSize(width: 10, height: 10)
         
         if car.name == "player" {
-            bullet = CTPlayerBulletNode(imageNamed: "damageBoost", size: CGSize(width: 2.0, height: 2.0))
+            bullet = CTPlayerBulletNode(imageNamed: "CTdamageBoost", size: CGSize(width: 2.0, height: 2.0))
         } else {
-            bullet = CTCopBulletNode(imageNamed: "damageBoost", size: CGSize(width: 2.0, height: 2.0))
+            bullet = CTCopBulletNode(imageNamed: "CTdamageBoost", size: CGSize(width: 2.0, height: 2.0))
         }
         bullet.position = car.position
         

@@ -118,7 +118,7 @@ class CTCopAINode: SKNode{
         
         if(gameScene.gameInfo.currentWave == 0) {
              //            let copCar = CTCopNode(imageNamed: "black", size:
-            let copCar = CTCopCarNode(imageNamed: "squadCar", size: context.layoutInfo.copCarSize)
+            let copCar = CTCopCarNode(imageNamed: "CTsquadCar", size: context.layoutInfo.copCarSize)
             copCar.position = spawnPoint
             copCar.name = "cop"
             
@@ -129,7 +129,7 @@ class CTCopAINode: SKNode{
              
             
             if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
-                let cop = CTCopNode(imageName: "copOnFoot", size: gameScene.layoutInfo.copSize)
+                let cop = CTCopNode(imageName: "CTcopOnFoot", size: gameScene.layoutInfo.copSize)
                 let copEntity = CTCopEntity(cop: cop)
                 copEntity.gameInfo = gameScene.gameInfo
                 copEntity.prepareComponents()
@@ -146,7 +146,7 @@ class CTCopAINode: SKNode{
             
         } else if gameScene.gameInfo.canSpawnPoliceTrucks && gameScene.gameInfo.currentWave >= 1 {
             //            let copCar = CTCopNode(imageNamed: "black", size:
-            let copCar = CTCopTruckNode(imageNamed: "copTruck2", size: context.layoutInfo.copTruckSize)
+            let copCar = CTCopTruckNode(imageNamed: "CTcopTruck2", size: context.layoutInfo.copTruckSize)
             copCar.position = spawnPoint
             copCar.name = "cop"
             
@@ -156,7 +156,7 @@ class CTCopAINode: SKNode{
             carEntity.prepareComponents()
             
             if let arrestingComponent = carEntity.component(ofType: CTArrestingCopComponent.self) {
-                let cop = CTCopNode(imageName: "copOnFoot", size: gameScene.layoutInfo.copSize)
+                let cop = CTCopNode(imageName: "CTcopOnFoot", size: gameScene.layoutInfo.copSize)
                 let copEntity = CTCopEntity(cop: cop)
                 copEntity.gameInfo = gameScene.gameInfo
                 copEntity.prepareComponents()
@@ -175,7 +175,7 @@ class CTCopAINode: SKNode{
         if(gameScene.gameInfo.canSpawnTanks &&
            (gameScene.gameInfo.currentWave >= 3)) {
             //            let copCar = CTCopNode(imageNamed: "black", size:
-            let copCar = CTCopTankNode(imageNamed: "tank1", size: context.layoutInfo.copTankSize)
+            let copCar = CTCopTankNode(imageNamed: "CTtank1", size: context.layoutInfo.copTankSize)
             copCar.position = spawnPoint
             copCar.name = "cop"
             

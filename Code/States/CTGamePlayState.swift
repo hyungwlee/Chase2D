@@ -78,7 +78,7 @@ class CTGamePlayState: GKState {
             playerAlreadySpawned = true
         }
         
-        if let copStarIncreaseURL = Bundle.main.url(forResource: "copSirenShortened", withExtension: "mp3") {
+        if let copStarIncreaseURL = Bundle.main.url(forResource: "CT_copSirenShortened", withExtension: "mp3") {
             do {
                 copStarIncreaseSound = try AVAudioPlayer(contentsOf: copStarIncreaseURL)
                 copStarIncreaseSound?.volume = 0.5
@@ -459,7 +459,7 @@ class CTGamePlayState: GKState {
         guard let context else { return }
         guard let gameScene = scene else { return }
         
-        let playerCarNode = CTCarNode(imageNamed: "playerCar", size: (context.layoutInfo.playerCarSize) )
+        let playerCarNode = CTCarNode(imageNamed: "CTplayerCar", size: (context.layoutInfo.playerCarSize) )
         playerCarNode.name = "player"
         playerCarNode.position = CGPoint(x: 0.0, y: 0.0)
         gameScene.playerCarEntity = CTPlayerCarEntity(carNode: playerCarNode)
@@ -478,7 +478,7 @@ class CTGamePlayState: GKState {
         if !gameScene.gameInfo.isFuelPickedUp { return }
         
         let spawnPoint = getRandomSpawnPoint()
-        let fuelNode = CTFuelNode(imageNamed: "fuelCan", nodeSize: context.layoutInfo.fuelSize)
+        let fuelNode = CTFuelNode(imageNamed: "CTfuelCan", nodeSize: context.layoutInfo.fuelSize)
         fuelNode.position = spawnPoint
         fuelNode.zPosition = 1
         fuelNode.name = "fuel"
@@ -496,7 +496,7 @@ class CTGamePlayState: GKState {
         if !gameScene.gameInfo.isCashPickedUp { return }
         
         let spawnPoint = getRandomSpawnPoint()
-        let cashNode = CTCashNode(imageNamed: "lightning", nodeSize: context.layoutInfo.powerupSize)
+        let cashNode = CTCashNode(imageNamed: "CTlightning", nodeSize: context.layoutInfo.powerupSize)
         cashNode.name = "cash" //TODO: should this be "cash"?
         cashNode.position = spawnPoint
         cashNode.zPosition = 1
