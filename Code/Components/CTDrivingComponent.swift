@@ -101,6 +101,11 @@ class CTDrivingComponent: GKComponent {
             soundSetup = true
         }
              
+        if carNode.speed < 10
+        {
+            enginePlayer?.stop()
+            driftPlayer?.stop()
+        }
        
 //        if enableSmoke {
 //            smokeParticle.particleSystemUpdate()

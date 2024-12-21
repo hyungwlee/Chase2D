@@ -38,7 +38,7 @@ class CTGameOverState: GKState {
         if let gameOverURL = Bundle.main.url(forResource: "CT_gameOver", withExtension: "mp3") {
             do {
                 gameOverSound = try AVAudioPlayer(contentsOf: gameOverURL)
-                gameOverSound?.volume = 0.4
+                gameOverSound?.volume = 0.7
                 gameOverSound?.play()
             } catch {
                 print("Error loading gameOver sound: \(error)")

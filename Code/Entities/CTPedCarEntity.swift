@@ -55,9 +55,9 @@ class CTPedCarEntity: GKEntity {
             currentTarget = checkPointsList[currentTargetIndex].position
            
             // debug
-            let sq = SKShapeNode(rect: CGRect(x: currentTarget.x, y: currentTarget.y, width: 1, height: 1))
-            sq.fillColor = .red
-            self.carNode.scene?.addChild(sq)
+//            let sq = SKShapeNode(rect: CGRect(x: currentTarget.x, y: currentTarget.y, width: 1, height: 1))
+//            sq.fillColor = .red
+//            self.carNode.scene?.addChild(sq)
             
         }
         

@@ -94,6 +94,9 @@ class CTGamePlayState: GKState {
         
         if(scene.gameInfo.gameOver){
             context.stateMachine?.enter(CTGameOverState.self)
+            
+            copStarIncreaseSound?.stop()
+            
             return
         }
         
@@ -598,7 +601,6 @@ class CTGamePlayState: GKState {
     }
     
     func handleCameraMovement() {
-            
         let randomNumber = CGFloat(GKRandomDistribution(lowestValue: 0, highestValue: 5).nextInt())
         let randomOffsetX = sin(time * 2) * (10 + randomNumber)
         let randomOffsetY = cos(time * 2) * (10 + randomNumber)

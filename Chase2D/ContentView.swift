@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            SpriteView(scene: context.scene!, debugOptions: [.showsFPS, .showsNodeCount])
+            SpriteView(scene: context.scene!/*, debugOptions: [.showsFPS, .showsNodeCount]*/)
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 .edgesIgnoringSafeArea(.all)
         }
