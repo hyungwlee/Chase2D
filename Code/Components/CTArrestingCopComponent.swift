@@ -9,13 +9,15 @@ import GameplayKit
 
 class CTArrestingCopComponent: GKComponent {
     let carNode: SKSpriteNode
-    var copEntity: CTCopEntity?
-    var gameScene: CTGameScene?
+    weak var copEntity: CTCopEntity?
+    weak var gameScene: CTGameScene?
     var distancewithPlayer = 100.0
     var spawned = false
+    weak var parentEntity: GKEntity?
     
-    init(carNode: DriveableNode) {
+    init(carNode: DriveableNode, entity: GKEntity) {
         self.carNode = carNode
+        self.parentEntity = entity
         super.init()
     }
     
@@ -82,10 +84,9 @@ class CTArrestingCopComponent: GKComponent {
 
     func spawnCop(){
         
-        guard let copEntity else { return }
-        guard let gameScene else { return }
-        
-        guard let entity = self.entity else { return }
+        guard let copEntity = copEntity,
+              let gameScene = gameScene,
+              let entity = self.parentEntity else { return }
        
        
         if let steeringComponent = entity.component(ofType: CTSteeringComponent.self) {

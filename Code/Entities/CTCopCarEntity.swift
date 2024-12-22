@@ -40,7 +40,7 @@ class CTCopCarEntity: GKEntity {
         addComponent(steeringComponent)
         addComponent(CTSelfDrivingComponent(carNode: carNode))
         addComponent(healthComponent)
-        addComponent(CTArrestingCopComponent(carNode: carNode))
+        addComponent(CTArrestingCopComponent(carNode: carNode, entity: self))
          
     }
     

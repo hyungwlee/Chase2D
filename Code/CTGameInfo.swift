@@ -26,7 +26,7 @@ class CTGameInfo {
     var numberOfCops = 0
     var numberOfPeds = 0
     
-    var MAX_NUMBER_OF_COPS = 10
+    var MAX_NUMBER_OF_COPS = 5
     var MAX_NUMBER_OF_PEDS = 10
     let ITEM_DESPAWN_DIST = 300.0
     let MIN_SPAWN_RADIUS = 200.0

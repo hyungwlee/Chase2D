@@ -29,6 +29,7 @@ class CTCopAINode: SKNode{
            
             // calculates how many more cops we need for the wave
             let inSceneCopDifference = gameScene.gameInfo.MAX_NUMBER_OF_COPS - gameScene.gameInfo.numberOfCops
+            print(gameScene.gameInfo.MAX_NUMBER_OF_COPS, gameScene.gameInfo.numberOfCops)
             if inSceneCopDifference != 0 {
                 self.spawnCop()
             }
@@ -115,6 +116,7 @@ class CTCopAINode: SKNode{
         
         let spawnPoint = getRandomSpawnPoint()
         gameScene.gameInfo.numberOfCops += 1
+        print("here")
         
         if(gameScene.gameInfo.currentWave == 0) {
              //            let copCar = CTCopNode(imageNamed: "black", size:
