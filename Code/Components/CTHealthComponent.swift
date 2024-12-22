@@ -17,6 +17,7 @@ class CTHealthComponent: GKComponent {
     init(carNode: SKSpriteNode) {
         self.car = carNode
         super.init()
+        preloadExplosionSound()
     }
     
     required init?(coder: NSCoder) {
@@ -33,12 +34,12 @@ class CTHealthComponent: GKComponent {
         self.car.run(scale)
         self.car.run(fadeOut){
             self.explode()
+            self.playExplosionSound()
             self.car.removeFromParent()
         }
     }
     func explode() {
         guard let gameScene else { return }
-        playExplosionSound()
         if let explosion = SKEmitterNode(fileNamed: "CTCarExplosion") {
             explosion.position = car.position
             explosion.particleSize = CGSize(width: 70.0, height: 70.0)
@@ -54,15 +55,19 @@ class CTHealthComponent: GKComponent {
             explosion.run(SKAction.sequence([wait, reduce_emmission, wait2, remove]))
         }
     }
-    
     func playExplosionSound() {
-        // Load the explosion sound
+        if explosionSound?.isPlaying == false {
+            explosionSound?.play()
+        }
+    }
+    
+    func preloadExplosionSound() {
         if let explosionSoundURL = Bundle.main.url(forResource: "CT_explosion", withExtension: "mp3") {
             do {
                 explosionSound = try AVAudioPlayer(contentsOf: explosionSoundURL)
-                explosionSound?.play()
+                explosionSound?.prepareToPlay()
             } catch {
-                print("Error loading explosion sound: \(error)")
+                print("Error preloading explosion sound: \(error)")
             }
         }
     }
